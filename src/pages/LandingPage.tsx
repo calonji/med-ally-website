@@ -30,7 +30,7 @@ const LandingPage: React.FC = () => {
             Welcome to <span className="text-blue-500">Med Ally</span>
           </h1>
           <p className="text-lg mb-8">
-            Your partner in cutting-edge medical solutions.
+            Your partner in cutting-edge medical solution
           </p>
           <FontAwesomeIcon icon={faStethoscope} size="3x" className="text-blue-500" />
         </motion.div>
