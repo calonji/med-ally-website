@@ -1,14 +1,15 @@
-import { HelmetProvider } from 'react-helmet-async'
-import LandingPage from './pages/LandingPage'
+import { type FC } from 'react';
+import { HelmetProvider } from 'react-helmet-async';
+import LandingPage from '@/pages/LandingPage';
 
-function App() {
+const App: FC = () => {
   return (
     <HelmetProvider>
-      <div className="App">
+      <div className="min-h-screen w-full bg-background">
         <LandingPage />
       </div>
     </HelmetProvider>
-  )
-}
+  );
+};
 
-export default App
+export default App;
