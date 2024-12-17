@@ -1,4 +1,4 @@
-import { type FC, useEffect, useState } from 'react';
+import { type FC, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { 
@@ -22,21 +22,26 @@ const Header: FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Smooth scroll function
-  const scrollToSection = (href: string) => {
-    const element = document.querySelector(href);
-    if (element) {
-      const headerOffset = 80;
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+  // Update scrollToSection function
+  const scrollToSection = useCallback((href: string) => {
+    // First close the menu to prevent layout shifts
+    setIsMenuOpen(false);
+    
+    // Small delay to allow menu close animation to complete
+    setTimeout(() => {
+      const element = document.querySelector(href);
+      if (element) {
+        const headerOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = window.scrollY + elementPosition - headerOffset;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth'
-      });
-      setIsMenuOpen(false); // Close mobile menu after clicking
-    }
-  };
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+      }
+    }, 100);
+  }, []);
 
   // Handle click outside to close mobile menu
   useEffect(() => {
@@ -126,16 +131,18 @@ const Header: FC = () => {
 
           {/* CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
-            {['Log In', 'Get Started Free'].map((text, i) => (
-              <motion.div key={text} whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-                <Button
-                  variant={i === 0 ? "outline" : "default"}
-                  className={`text-sm px-3 py-1.5 ${i === 0 ? "border-2" : "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700"}`}
-                >
-                  {text}
-                </Button>
-              </motion.div>
-            ))}
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button variant="outline" className="text-sm px-3 py-1.5 border-2">
+                Log In
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button 
+                className="text-sm px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500"
+              >
+                Get Started Free
+              </Button>
+            </motion.div>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -167,7 +174,11 @@ const Header: FC = () => {
             {navItems.map((item) => (
               <motion.button
                 key={item.name}
-                onClick={() => scrollToSection(item.href)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  scrollToSection(item.href);
+                }}
                 className={`flex items-center w-full px-4 py-2 rounded-lg text-left ${
                   activeSection === item.href.slice(1)
                     ? 'bg-blue-50 text-blue-600 font-medium'
@@ -183,7 +194,7 @@ const Header: FC = () => {
               <Button variant="outline" className="w-full justify-center">
                 Log In
               </Button>
-              <Button className="w-full bg-blue-600 hover:bg-blue-700 justify-center">
+              <Button className="w-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 justify-center">
                 Get Started Free
               </Button>
             </div>

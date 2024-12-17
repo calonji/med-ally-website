@@ -18,8 +18,8 @@ const CTASection: FC = () => {
         "Basic SOAP Note Structure",
         "Limited Specialty Templates",
       ],
-      button: "Start Free Trial",
-      color: "blue",
+      button: "Get Started Free",
+      color: "orange",
       popular: false
     },
     {
@@ -36,7 +36,7 @@ const CTASection: FC = () => {
         "Risk Assessment & Mitigation"
       ],
       button: "Get Started Free",
-      color: "purple",
+      color: "orange",
       popular: true
     },
     {
@@ -238,7 +238,7 @@ const CTASection: FC = () => {
                 </ul>
 
                 <Button 
-                  className={`w-full group ${plan.popular ? 'bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700' : ''}`}
+                  className={`w-full group ${plan.popular ? 'bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500' : ''}`}
                   variant={plan.popular ? 'default' : 'outline'}
                 >
                   <span className="flex items-center">
@@ -284,7 +284,7 @@ const CTASection: FC = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
               <Button 
                 size="lg"
-                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 group relative overflow-hidden"
+                className="text-sm px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500"
               >
                 <motion.div
                   className="absolute inset-0 bg-white"

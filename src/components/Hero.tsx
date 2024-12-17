@@ -91,7 +91,7 @@ const Hero: FC = () => {
           >
             <Button 
               size="lg" 
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+              className="text-sm px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500"
               onClick={handleGetStarted}
             >
               Get Started Free
