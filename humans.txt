@@ -1,0 +1,12 @@
+/* TEAM */
+    Developer: MedAlly Development Team
+    Contact: dev@medally.ai
+    Twitter: @medally
+    From: Global
+
+/* SITE */
+    Last update: 2024/01/20
+    Language: English
+    Doctype: HTML5
+    IDE: VS Code, WebStorm
+    Stack: React, TypeScript, Tailwind CSS 
