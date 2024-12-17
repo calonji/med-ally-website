@@ -69,8 +69,8 @@ const Footer: FC = () => {
             <ul className="space-y-3">
               <li className="flex items-center text-gray-400 text-sm">
                 <Mail className="w-4 h-4 mr-2" />
-                <a href="mailto:info@medally.com" className="hover:text-blue-400">
-                  info@medally.com
+                <a href="mailto:info@medally.ai" className="hover:text-blue-400">
+                  info@medally.ai
                 </a>
               </li>
               {/* <li className="flex items-center text-gray-400 text-sm">
