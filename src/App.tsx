@@ -1,11 +1,14 @@
 import { useEffect } from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import { trackPerformanceMetrics } from '@/utils/performance';
 import { Analytics } from '@/utils/analytics';
 import { type FC } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import LandingPage from '@/pages/LandingPage';
 import { TrackingProvider } from '@/providers/TrackingProvider';
+import PrivacyPolicy from '@/pages/PrivacyPolicy';
+import TermsOfService from '@/pages/TermsOfService';
+import Contact from '@/pages/Contact';
 
 const App: FC = () => {
   useEffect(() => {
@@ -14,15 +17,18 @@ const App: FC = () => {
   }, []);
 
   return (
-    <BrowserRouter>
+    <Router>
       <TrackingProvider measurementId="G-XXXXXXXXXX">
         <HelmetProvider>
-          <div className="min-h-screen w-full bg-background">
-            <LandingPage />
-          </div>
+          <Routes>
+            <Route path="/" element={<LandingPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
+            <Route path="/contact" element={<Contact />} />
+          </Routes>
         </HelmetProvider>
       </TrackingProvider>
-    </BrowserRouter>
+    </Router>
   );
 };
 

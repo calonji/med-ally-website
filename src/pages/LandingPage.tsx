@@ -2,15 +2,14 @@
 import { type FC, Suspense, lazy } from 'react';
 import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { SEO } from '@/components/SEO';
-import Header from '@/components/Header';
 import Hero from '@/components/Hero';
 import HowItWorks from '@/components/HowItWorks';
 import CaseStudies from '@/components/CaseStudies';
 import FAQ from '@/components/FAQ';
 import CTASection from '@/components/CTASection';
-import Footer from '@/components/Footer';
 import AboutUs from '@/components/AboutUs';
 import WhyChoose from '@/components/WhyChoose';
+import Layout from '@/components/Layout';
 
 // Lazy loaded components
 const Features = lazy(() => Promise.resolve(import('@/components/Features')));
@@ -18,10 +17,9 @@ const ROICalculator = lazy(() => Promise.resolve(import('@/components/ROICalcula
 
 const LandingPage: FC = () => {
   return (
-    <div className="flex flex-col w-full">
+    <Layout>
       <SEO />
-      <Header />
-      <main className="flex flex-col w-full pt-16">
+      <main>
         <section id="hero">
           <Hero />
         </section>
@@ -54,8 +52,7 @@ const LandingPage: FC = () => {
           <CTASection />
         </section>
       </main>
-      <Footer />
-    </div>
+    </Layout>
   );
 };
 
