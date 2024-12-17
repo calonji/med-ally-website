@@ -27,4 +27,23 @@ export interface Plan {
   color: ColorVariant;
   popular?: boolean;
   comingSoon?: boolean;
+}
+
+export interface ROIFormData {
+  patientsPerDay: number;
+  minutesPerNote: number;
+  daysPerWeek: number;
+  hourlyRate: number;
+}
+
+export interface ROIMetrics {
+  hoursSaved: number;
+  moneySaved: number;
+  patientsPerYear: number;
+  additionalPatientsCapacity: number;
+}
+
+export interface FetchEvent extends Event {
+  request: Request;
+  respondWith(response: Promise<Response> | Response): void;
 } 

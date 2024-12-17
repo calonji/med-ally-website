@@ -1,0 +1,158 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Hero Component > matches snapshot 1`] = `
+<div>
+  <section
+    aria-label="Main hero section"
+    class="relative min-h-screen flex items-center justify-center overflow-hidden"
+    id="hero"
+    role="banner"
+  >
+    <div
+      class="absolute inset-0 overflow-hidden "
+    >
+      <div
+        class="absolute inset-0 bg-gradient-to-br from-blue-50 via-white to-purple-50"
+      />
+      <div
+        class="absolute inset-0 opacity-20"
+      />
+    </div>
+    <div
+      class="absolute inset-0 pointer-events-none"
+      style="opacity: 0;"
+    >
+      <div
+        class="absolute top-1/4 -left-12 w-24 h-24 bg-blue-500/10 rounded-full blur-xl"
+      />
+      <div
+        class="absolute bottom-1/4 -right-12 w-24 h-24 bg-purple-500/10 rounded-full blur-xl"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 54.87263646418086%; left: 76.94258843473227%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 24.43308004703979%; left: 35.47077136199028%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 34.80413766119024%; left: 64.37453752166542%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 54.11609986577264%; left: 73.64458987273198%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 86.57773617747758%; left: 59.72221342174544%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 29.465642583118033%; left: 11.173471459608763%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 14.572110748851363%; left: 92.28601511624265%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 21.81945092723383%; left: 38.8389421439761%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 9.01130368618861%; left: 15.628958306526641%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 96.0734068000397%; left: 15.010438910648794%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 73.92357129941911%; left: 98.74676791990775%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 79.25215193863315%; left: 77.53761946950495%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 0.0904924695591447%; left: 93.4641682430237%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 91.78738427101183%; left: 11.944916687579132%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 85.18720188800377%; left: 77.04334548991942%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 94.10595530516402%; left: 82.69499157867288%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 34.186599284070574%; left: 61.871301673648446%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 26.316142960247536%; left: 4.160756999314552%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 28.366240924444284%; left: 56.5588139064122%;"
+      />
+      <div
+        class="absolute w-2 h-2 bg-blue-500/20 rounded-full"
+        style="top: 4.429021157170743%; left: 10.078978102809376%;"
+      />
+    </div>
+    <div
+      class="container mx-auto px-4 relative z-10"
+    >
+      <div
+        class="text-center max-w-4xl mx-auto"
+      >
+        <div
+          style="opacity: 0; transform: translateY(20px);"
+        >
+          <h1
+            class="text-5xl md:text-6xl font-bold text-gray-900 mb-6"
+          >
+            Spend More Time with Patients,
+             
+            <span
+              class="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600"
+            >
+              Not Paperwork
+            </span>
+          </h1>
+        </div>
+        <p
+          class="text-xl text-gray-600 mb-8"
+          style="opacity: 0; transform: translateY(20px);"
+        >
+          MedAlly is your AI-powered clinical assistant that simplifies documentation, enhances diagnostic accuracy, and supports better patient outcomes—all in one easy-to-use platform.
+        </p>
+        <div
+          class="flex flex-col sm:flex-row gap-4 justify-center"
+          style="opacity: 0; transform: translateY(20px);"
+        >
+          <button
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 bg-primary shadow hover:bg-primary/90 h-10 rounded-md px-8 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+          >
+            Get Started Free
+          </button>
+          <button
+            class="inline-flex items-center justify-center gap-2 whitespace-nowrap text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0 border-input bg-background shadow-sm hover:text-accent-foreground h-10 rounded-md px-8 border-2 hover:bg-gray-50"
+          >
+            Watch Demo
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+`;

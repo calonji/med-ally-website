@@ -1,167 +1,106 @@
 import { type FC } from 'react';
 import { motion } from 'framer-motion';
 import { 
-  Accordion, 
-  AccordionContent, 
-  AccordionItem, 
-  AccordionTrigger 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
 } from "@/components/ui/accordion";
-import { BackgroundEffects } from "@/components/ui/background-effects";
 import { Badge } from "@/components/ui/badge";
+import { BackgroundEffects } from "@/components/ui/background-effects";
+import { FAQIllustration } from '@/components/ui/illustrations/FAQIllustration';
+import { Search } from 'lucide-react';
 
 const FAQ: FC = () => {
   const faqs = [
     {
-      question: "How accurate is the AI transcription?",
-      answer: "Our AI achieves 98%+ accuracy in medical transcription, trained on millions of clinical notes. The system continuously learns and improves from user feedback."
+      question: "How does MedAlly's voice-to-text feature work?",
+      answer: "MedAlly uses advanced AI to convert your natural speech into structured clinical notes in real-time. Simply speak naturally while examining patients, and our system automatically organizes the information into proper medical documentation format."
     },
     {
       question: "Is MedAlly HIPAA compliant?",
-      answer: "Yes, MedAlly is fully HIPAA compliant. We maintain strict security protocols, regular audits, and provide BAAs to covered entities. All data is encrypted at rest and in transit."
+      answer: "Yes, MedAlly is fully HIPAA compliant. We implement industry-leading security measures to protect patient data, including end-to-end encryption, secure data centers, and regular security audits."
     },
     {
-      question: "Which EHR systems do you integrate with?",
-      answer: "MedAlly integrates seamlessly with major EHR systems including Epic, Cerner, Allscripts, and many others through our secure API. Custom integrations are also available."
+      question: "Can MedAlly integrate with my existing EHR system?",
+      answer: "MedAlly is designed to integrate seamlessly with major EHR systems. We provide API access and dedicated support for custom integrations to ensure smooth workflow incorporation."
     },
     {
-      question: "How long does implementation take?",
-      answer: "Typical implementation takes 2-4 weeks, including integration, training, and customization. Our dedicated team ensures a smooth transition with minimal disruption to your workflow."
+      question: "What specialties does MedAlly support?",
+      answer: "MedAlly supports a wide range of medical specialties including Primary Care, Cardiology, Pediatrics, and more. Our AI system is trained on specialty-specific data to provide relevant suggestions and documentation templates."
     },
     {
-      question: "What languages are supported?",
-      answer: "Currently, MedAlly supports English, Spanish, French, and Mandarin, with more languages being added regularly. Each language model is specifically trained on medical terminology."
-    },
-    {
-      question: "How do you handle specialty-specific terminology?",
-      answer: "Our AI is trained on specialty-specific datasets and can be further customized to your practice's terminology. We support 30+ medical specialties with dedicated terminology models."
+      question: "How accurate is the AI-powered diagnostic support?",
+      answer: "Our AI diagnostic support system maintains a 95% accuracy rate, validated through extensive clinical trials. It serves as a supportive tool to enhance, not replace, physician decision-making."
     }
   ];
 
   return (
-    <section className="relative py-24 overflow-hidden">
-      <BackgroundEffects variant="circuit" />
+    <section className="relative py-20 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50">
+      <BackgroundEffects variant="grid3d" />
       
       <div className="container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left Column - Image */}
+        <motion.div 
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-16"
+        >
+          <Badge className="mb-4 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800">
+            FAQ
+          </Badge>
+          <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
+            Frequently Asked Questions
+          </h2>
+          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+            Find answers to common questions about MedAlly's features, security, and implementation
+          </p>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">
+          {/* FAQ Illustration */}
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
-            className="relative"
+            className="hidden lg:block"
           >
-            {/* Main Image */}
-            <div className="relative z-10 rounded-2xl overflow-hidden shadow-2xl">
-              <img 
-                src="/assets/images/doctor-ai.jpg" 
-                alt="Doctor using AI assistant"
-                className="w-full h-auto"
-              />
-              {/* Gradient Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 to-transparent" />
-            </div>
-
-            {/* Decorative Elements */}
-            <div className="absolute -top-4 -left-4 w-24 h-24 bg-blue-500/10 rounded-full blur-2xl" />
-            <div className="absolute -bottom-4 -right-4 w-32 h-32 bg-purple-500/10 rounded-full blur-2xl" />
-            
-            {/* Floating Badge */}
-            <motion.div
-              initial={{ y: 20, opacity: 0 }}
-              whileInView={{ y: 0, opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="absolute -bottom-6 -right-6 bg-white shadow-lg rounded-lg p-4 z-20"
-            >
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-xl font-bold">98%</span>
-                </div>
-                <div className="text-sm">
-                  <div className="font-semibold text-gray-900">Accuracy Rate</div>
-                  <div className="text-gray-500">in transcription</div>
-                </div>
-              </div>
-            </motion.div>
+            <FAQIllustration />
           </motion.div>
 
-          {/* Right Column - FAQ */}
-          <div>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="mb-8"
-            >
-              <Badge className="mb-4 bg-blue-100 text-blue-800 hover:bg-blue-200">
-                FAQ
-              </Badge>
-              <h2 className="text-3xl font-bold text-gray-900 mb-4">
-                Frequently Asked Questions
-              </h2>
-              <p className="text-gray-600">
-                Everything you need to know about MedAlly and how it can transform your practice
-              </p>
-            </motion.div>
+          {/* FAQ Accordion */}
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            className="space-y-6"
+          >
+            <div className="relative mb-8">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+              <input
+                type="text"
+                placeholder="Search questions..."
+                className="w-full pl-12 pr-4 py-3 rounded-xl border border-gray-200 focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all"
+              />
+            </div>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-            >
-              <Accordion type="single" collapsible className="w-full space-y-4">
-                {faqs.map((faq, index) => (
-                  <AccordionItem 
-                    key={index} 
-                    value={`item-${index}`}
-                    className="bg-white/50 backdrop-blur-sm rounded-lg border border-gray-200"
-                  >
-                    <AccordionTrigger className="px-6 hover:no-underline">
-                      <span className="text-left font-semibold text-gray-900">
-                        {faq.question}
-                      </span>
-                    </AccordionTrigger>
-                    <AccordionContent className="px-6 pb-4 text-gray-600">
-                      {faq.answer}
-                    </AccordionContent>
-                  </AccordionItem>
-                ))}
-              </Accordion>
-            </motion.div>
-
-            {/* Contact CTA */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.4 }}
-              className="mt-8 text-center"
-            >
-              <p className="text-gray-600 mb-4">
-                Still have questions?
-              </p>
-              <a 
-                href="#contact" 
-                className="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium"
-              >
-                Contact our support team
-                <svg 
-                  className="w-5 h-5 ml-2" 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq, index) => (
+                <AccordionItem
+                  key={index}
+                  value={`item-${index}`}
+                  className="border border-gray-200 rounded-xl overflow-hidden bg-white/80 backdrop-blur-sm hover:shadow-md transition-all"
                 >
-                  <path 
-                    strokeLinecap="round" 
-                    strokeLinejoin="round" 
-                    strokeWidth={2} 
-                    d="M17 8l4 4m0 0l-4 4m4-4H3" 
-                  />
-                </svg>
-              </a>
-            </motion.div>
-          </div>
+                  <AccordionTrigger className="px-6 py-4 text-left hover:no-underline">
+                    <span className="text-gray-900 font-semibold">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4">
+                    <p className="text-gray-600">{faq.answer}</p>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </motion.div>
         </div>
       </div>
     </section>

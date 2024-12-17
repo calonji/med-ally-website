@@ -42,6 +42,7 @@ const Signup: React.FC = () => {
                   value={formData.email}
                   onChange={handleChange}
                   required
+                  aria-label="Email"
                 />
               </div>
               <div>
@@ -55,6 +56,7 @@ const Signup: React.FC = () => {
                   value={formData.password}
                   onChange={handleChange}
                   required
+                  aria-label="Password"
                 />
               </div>
               <div>

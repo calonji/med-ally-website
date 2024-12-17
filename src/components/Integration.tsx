@@ -2,7 +2,14 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { MedicalIcons, FeatureIcons, Icon3D } from "@/components/ui/medical-icons";
+import { Icon3D } from "@/components/ui/medical-icons";
+
+interface IntegrationStep {
+  iconName: string;
+  title: string;
+  description: string;
+  color: string;
+}
 
 const Integration: React.FC = () => {
   const integrations = [
@@ -32,21 +39,21 @@ const Integration: React.FC = () => {
     }
   ];
 
-  const workflowSteps = [
+  const steps: IntegrationStep[] = [
     {
-      icon: <FeatureIcons.Integration className="w-8 h-8" />,
-      title: "Connect",
-      description: "Secure connection to your EHR system",
+      iconName: "DNA",
+      title: "Map",
+      description: "Automated data mapping and validation",
       color: "blue"
     },
     {
-      icon: <MedicalIcons.DNA className="w-8 h-8" />,
-      title: "Map",
-      description: "Automated data mapping and validation",
+      iconName: "Integration",
+      title: "Connect",
+      description: "Secure connection to your EHR system",
       color: "green"
     },
     {
-      icon: <FeatureIcons.Analytics className="w-8 h-8" />,
+      iconName: "Analytics",
       title: "Sync",
       description: "Real-time bidirectional synchronization",
       color: "purple"
@@ -93,7 +100,7 @@ const Integration: React.FC = () => {
             {/* Connection Lines */}
             <div className="absolute top-1/2 left-0 w-full h-0.5 bg-gradient-to-r from-blue-200 via-green-200 to-purple-200 -translate-y-1/2 hidden md:block" />
             
-            {workflowSteps.map((step, index) => (
+            {steps.map((step, index) => (
               <motion.div
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
@@ -106,7 +113,7 @@ const Integration: React.FC = () => {
                   <CardContent className="p-6 text-center">
                     <div className="mb-4 flex justify-center">
                       <Icon3D 
-                        icon={step.icon}
+                        icon={step.iconName}
                         color={step.color}
                       />
                     </div>

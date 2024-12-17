@@ -1,0 +1,7 @@
+Contact: mailto:security@medally.ai
+Expires: 2025-01-01T00:00:00.000Z
+Encryption: https://medally.ai/pgp-key.txt
+Acknowledgments: https://medally.ai/security/hall-of-fame
+Preferred-Languages: en
+Canonical: https://medally.ai/.well-known/security.txt
+Policy: https://medally.ai/security-policy 

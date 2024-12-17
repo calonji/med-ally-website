@@ -2,10 +2,27 @@ import { type FC } from 'react';
 import { motion } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { BackgroundEffects } from "@/components/ui/background-effects";
+import { useTracking } from '@/hooks/useTracking';
 
 const Hero: FC = () => {
+  const { trackEvent } = useTracking();
+
+  const handleGetStarted = () => {
+    trackEvent({
+      category: 'CTA',
+      action: 'Click',
+      label: 'Hero Get Started'
+    });
+    // ... rest of handler
+  };
+
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
+    <section 
+      id="hero" 
+      role="banner" 
+      aria-label="Main hero section"
+      className="relative min-h-screen flex items-center justify-center overflow-hidden"
+    >
       <BackgroundEffects variant="gradient" />
       
       {/* Floating Elements */}
@@ -49,11 +66,10 @@ const Hero: FC = () => {
             transition={{ duration: 0.5 }}
           >
             <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-            Spend More Time with Patients, Not Paperwork.
+              Spend More Time with Patients,{" "}
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                {" "}AI-Powered{" "}
+                Not Paperwork
               </span>
-              Documentation
             </h1>
           </motion.div>
 
@@ -63,7 +79,8 @@ const Hero: FC = () => {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-xl text-gray-600 mb-8"
           >
-            MedAlly is your AI-powered clinical assistant that simplifies documentation, enhances diagnostic accuracy, and supports better patient outcomes—all in one easy-to-use platform.
+            MedAlly is your AI-powered clinical assistant that simplifies documentation, 
+            enhances diagnostic accuracy, and supports better patient outcomes—all in one easy-to-use platform.
           </motion.p>
 
           <motion.div
@@ -72,10 +89,18 @@ const Hero: FC = () => {
             transition={{ duration: 0.5, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 justify-center"
           >
-            <Button size="lg" className="bg-blue-600 hover:bg-blue-700">
-            Get Started for Free
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white"
+              onClick={handleGetStarted}
+            >
+              Get Started Free
             </Button>
-            <Button size="lg" variant="outline">
+            <Button 
+              size="lg" 
+              variant="outline"
+              className="border-2 hover:bg-gray-50"
+            >
               Watch Demo
             </Button>
           </motion.div>

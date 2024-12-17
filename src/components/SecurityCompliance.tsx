@@ -1,49 +1,35 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Card, CardContent } from "@/components/ui/card";
-import { MedicalIcons, FeatureIcons, Icon3D } from "@/components/ui/medical-icons";
+import { Icon3D } from "@/components/ui/medical-icons";
 import { cn } from "@/lib/utils";
 
+interface SecurityFeature {
+  title: string;
+  description: string;
+  iconName: string;
+  color: string;
+}
+
 const SecurityCompliance: React.FC = () => {
-  const securityFeatures = [
+  const securityFeatures: SecurityFeature[] = [
     {
-      icon: <FeatureIcons.Security className="w-8 h-8" />,
-      title: "HIPAA Compliance",
-      description: "Full HIPAA compliance with regular audits and certifications",
-      features: [
-        "BAA provided",
-        "PHI encryption",
-        "Access controls",
-        "Audit trails"
-      ],
-      color: "blue",
-      status: "Active"
+      title: "HIPAA Compliant",
+      description: "Enterprise-grade security protocols",
+      iconName: "Shield",
+      color: "blue"
     },
     {
-      icon: <MedicalIcons.Lab className="w-8 h-8" />,
       title: "Data Encryption",
       description: "Enterprise-grade encryption for all data in transit and at rest",
-      features: [
-        "AES-256 encryption",
-        "TLS 1.3 protocol",
-        "End-to-end encryption",
-        "Secure key management"
-      ],
-      color: "green",
-      status: "Active"
+      iconName: "Lock",
+      color: "green"
     },
     {
-      icon: <FeatureIcons.Security className="w-8 h-8" />,
       title: "Access Control",
       description: "Granular role-based access control and authentication",
-      features: [
-        "2FA/MFA support",
-        "Role-based access",
-        "SSO integration",
-        "IP whitelisting"
-      ],
-      color: "purple",
-      status: "Active"
+      iconName: "Lock",
+      color: "purple"
     }
   ];
 
@@ -166,7 +152,7 @@ const SecurityCompliance: React.FC = () => {
                 <CardContent className="p-6">
                   <div className="mb-6">
                     <Icon3D 
-                      icon={feature.icon}
+                      icon={feature.iconName}
                       color={feature.color}
                     />
                   </div>
@@ -178,7 +164,7 @@ const SecurityCompliance: React.FC = () => {
                     <div className="flex items-center space-x-2">
                       <SecurityPulse color={feature.color} />
                       <span className={`text-${feature.color}-600 text-sm font-medium`}>
-                        {feature.status}
+                        Active
                       </span>
                     </div>
                   </div>
@@ -188,21 +174,7 @@ const SecurityCompliance: React.FC = () => {
                   </p>
 
                   <ul className="space-y-3">
-                    {feature.features.map((item, idx) => (
-                      <motion.li 
-                        key={idx} 
-                        className="flex items-center text-gray-700"
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{ delay: idx * 0.1 }}
-                      >
-                        <svg className={`w-5 h-5 text-${feature.color}-500 mr-2`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                        </svg>
-                        {item}
-                      </motion.li>
-                    ))}
+                    {/* Security Features */}
                   </ul>
                 </CardContent>
               </Card>
