@@ -2,28 +2,32 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: [main]
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
       - uses: actions/checkout@v3
-        with:
-          persist-credentials: false
 
-      - name: Install dependencies
-        run: npm install
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm ci
 
       - name: Build
         run: npm run build
 
+      - name: Add CNAME file
+        run: echo "medally.ai" > dist/CNAME
+
       - name: Deploy
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          personal_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
           branch: gh-pages
+          folder: dist
+          clean: true
