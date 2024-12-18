@@ -1,9 +1,11 @@
 import { type FC, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Button } from "@/components/ui/button";
+import { Logo } from '@/components/ui/Logo';
 import { 
   Info, Settings, Star, BarChart, Calculator, 
-  FileText, HelpCircle, Menu, X, MessageSquare 
+  FileText, HelpCircle, Menu, X, MessageSquare,
+  Stethoscope
 } from 'lucide-react';
 
 const Header: FC = () => {
@@ -91,17 +93,24 @@ const Header: FC = () => {
         style={{ scaleX }}
       />
 
-      <div className="container mx-auto px-3">
-        <div className="flex items-center justify-between h-14">
+      <div className="container mx-auto px-4">
+        <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <motion.button
-            onClick={() => scrollToSection('#hero')}
-            className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent"
-            whileHover={{ scale: 1.05, textShadow: "0 0 8px rgb(59, 130, 246, 0.5)" }}
-            whileTap={{ scale: 0.95 }}
+          <motion.a
+            href="/"
+            className="flex items-center space-x-1"
+            whileHover={{ scale: 1.02 }}
           >
-            MedAlly
-          </motion.button>
+            <Logo className="w-10 h-10" />
+            <div className="flex flex-col">
+              <span className="text-2xl font-extrabold tracking-tight text-gray-900 font-display">
+                MedAlly
+              </span>
+              <span className="text-[10px] text-gray-500 tracking-wider -mt-1">
+                AI-Powered Healthcare
+              </span>
+            </div>
+          </motion.a>
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-4">
