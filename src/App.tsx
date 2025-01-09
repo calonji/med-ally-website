@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { HashRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { trackPerformanceMetrics } from '@/utils/performance';
 import { Analytics } from '@/utils/analytics';
 import { type FC } from 'react';
@@ -22,9 +22,18 @@ const App: FC = () => {
         <HelmetProvider>
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/about-us" element={<LandingPage />} />
+            <Route path="/how-it-works" element={<LandingPage />} />
+            <Route path="/features" element={<LandingPage />} />
+            <Route path="/benefits" element={<LandingPage />} />
+            {/* <Route path="/case-studies" element={<LandingPage />} /> */}
+            <Route path="/roi-calculator" element={<LandingPage />} />
+            <Route path="/faq" element={<LandingPage />} />
+            <Route path="/pricing" element={<LandingPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </HelmetProvider>
       </TrackingProvider>

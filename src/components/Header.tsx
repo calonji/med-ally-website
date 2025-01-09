@@ -2,6 +2,7 @@ import { type FC, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Button } from "@/components/ui/button";
 import { Logo } from '@/components/ui/Logo';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { 
   Info, Settings, Star, BarChart, Calculator, 
   FileText, HelpCircle, Menu, X, MessageSquare,
@@ -9,29 +10,18 @@ import {
 } from 'lucide-react';
 
 const Header: FC = () => {
+  const navigate = useNavigate();
+  const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
-  // Intersection Observer setup
+  // Handle initial path on page load
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(entry => entry.isIntersecting && setActiveSection(entry.target.id)),
-      { rootMargin: '-50% 0px', threshold: 0 }
-    );
-    document.querySelectorAll('section[id]').forEach(section => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
-
-  // Update scrollToSection function
-  const scrollToSection = useCallback((href: string) => {
-    // First close the menu to prevent layout shifts
-    setIsMenuOpen(false);
-    
-    // Small delay to allow menu close animation to complete
-    setTimeout(() => {
-      const element = document.querySelector(href);
+    const path = location.pathname.slice(1); // Remove leading slash
+    if (path) {
+      const element = document.getElementById(path);
       if (element) {
         const headerOffset = 80;
         const elementPosition = element.getBoundingClientRect().top;
@@ -42,8 +32,52 @@ const Header: FC = () => {
           behavior: 'smooth'
         });
       }
-    }, 100);
+    }
+  }, [location]);
+
+  // Intersection Observer setup
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      entries => entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          setActiveSection(entry.target.id);
+          // Update URL without triggering navigation
+          const newPath = entry.target.id === 'hero' ? '/' : `/${entry.target.id}`;
+          window.history.replaceState(null, '', newPath);
+        }
+      }),
+      { rootMargin: '-50% 0px', threshold: 0 }
+    );
+    document.querySelectorAll('section[id]').forEach(section => observer.observe(section));
+    return () => observer.disconnect();
   }, []);
+
+  // Update scrollToSection function
+  const scrollToSection = useCallback((sectionId: string) => {
+    // First close the menu to prevent layout shifts
+    setIsMenuOpen(false);
+    
+    // Remove the leading # if present
+    const targetId = sectionId.replace('#', '');
+    
+    // Small delay to allow menu close animation to complete
+    setTimeout(() => {
+      const element = document.getElementById(targetId);
+      if (element) {
+        const headerOffset = 80;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = window.scrollY + elementPosition - headerOffset;
+
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth'
+        });
+
+        // Update URL without hash
+        navigate(`/${targetId}`, { replace: true });
+      }
+    }, 100);
+  }, [navigate]);
 
   // Handle click outside to close mobile menu
   useEffect(() => {
@@ -68,19 +102,17 @@ const Header: FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [isMenuOpen]);
 
-  // Navigation items
+  // Navigation items - updated without # in hrefs
   const navItems = [
-    { name: 'About Us', href: '#about-us', icon: <Info className="w-4 h-4" /> },
-    { name: 'How It Works', href: '#how-it-works', icon: <Settings className="w-4 h-4" /> },
-    { name: 'Features', href: '#features', icon: <Star className="w-4 h-4" /> },
-    { name: 'Benefits', href: '#benefits', icon: <BarChart className="w-4 h-4" /> },
-    { name: 'Case Studies', href: '#case-studies', icon: <FileText className="w-4 h-4" /> },
-    { name: 'ROI Calculator', href: '#roi-calculator', icon: <Calculator className="w-4 h-4" /> },
-    { name: 'FAQ', href: '#faq', icon: <HelpCircle className="w-4 h-4" /> },
-    { name: 'Contact', href: '#cta', icon: <MessageSquare className="w-4 h-4" /> }
+    { name: 'About Us', href: 'about-us', icon: <Info className="w-4 h-4" /> },
+    { name: 'How It Works', href: 'how-it-works', icon: <Settings className="w-4 h-4" /> },
+    { name: 'Features', href: 'features', icon: <Star className="w-4 h-4" /> },
+    { name: 'Benefits', href: 'benefits', icon: <BarChart className="w-4 h-4" /> },
+    // { name: 'Case Studies', href: 'case-studies', icon: <FileText className="w-4 h-4" /> },
+    { name: 'ROI Calculator', href: 'roi-calculator', icon: <Calculator className="w-4 h-4" /> },
+    { name: 'FAQ', href: 'faq', icon: <HelpCircle className="w-4 h-4" /> },
+    { name: 'Pricing', href: 'pricing', icon: <MessageSquare className="w-4 h-4" /> }
   ];
-
-  // Animation variants
 
   return (
     <motion.header 
@@ -97,8 +129,11 @@ const Header: FC = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <motion.a
-            href="/"
-            className="flex items-center space-x-1"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate('/');
+            }}
+            className="flex items-center space-x-1 cursor-pointer"
             whileHover={{ scale: 1.02 }}
           >
             <Logo className="w-10 h-10" />
@@ -117,13 +152,12 @@ const Header: FC = () => {
             {navItems.map((item) => (
               <motion.a
                 key={item.name}
-                href={item.href}
                 onClick={(e) => {
                   e.preventDefault();
                   scrollToSection(item.href);
                 }}
-                className={`flex items-center px-2 py-1 rounded-full text-sm transition-all ${
-                  activeSection === item.href.slice(1)
+                className={`flex items-center px-2 py-1 rounded-full text-sm transition-all cursor-pointer ${
+                  activeSection === item.href
                     ? 'text-blue-600 font-medium bg-blue-50 shadow-sm'
                     : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
                 }`}
@@ -189,7 +223,7 @@ const Header: FC = () => {
                   scrollToSection(item.href);
                 }}
                 className={`flex items-center w-full px-4 py-2 rounded-lg text-left ${
-                  activeSection === item.href.slice(1)
+                  activeSection === item.href
                     ? 'bg-blue-50 text-blue-600 font-medium'
                     : 'text-gray-600 hover:bg-gray-50'
                 }`}

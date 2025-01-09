@@ -4,7 +4,7 @@ import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { SEO } from '@/components/SEO';
 import Hero from '@/components/Hero';
 import HowItWorks from '@/components/HowItWorks';
-import CaseStudies from '@/components/CaseStudies';
+// import CaseStudies from '@/components/CaseStudies';
 import FAQ from '@/components/FAQ';
 import CTASection from '@/components/CTASection';
 import AboutUs from '@/components/AboutUs';
@@ -37,9 +37,9 @@ const LandingPage: FC = () => {
         <section id="benefits">
           <WhyChoose />
         </section>
-        <section id="case-studies">
+        {/* <section id="case-studies">
           <CaseStudies />
-        </section>
+        </section> */}
         <Suspense fallback={<LoadingSpinner />}>
           <section id="roi-calculator">
             <ROICalculator />
@@ -48,7 +48,7 @@ const LandingPage: FC = () => {
         <section id="faq">
           <FAQ />
         </section>
-        <section id="cta">
+        <section id="pricing">
           <CTASection />
         </section>
       </main>
