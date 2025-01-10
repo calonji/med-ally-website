@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>MedAlly - Redirecting...</title>
+  <script>
+    // Get the current path
+    const path = window.location.pathname;
+    // Remove leading and trailing slashes
+    const segment = path.replace(/^\/+|\/+$/g, '');
+    // Redirect to the main page with the correct hash route
+    window.location.replace(`/#/${segment}`);
+  </script>
+</head>
+<body>
+  <p>Redirecting...</p>
+</body>
+</html>
