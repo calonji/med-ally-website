@@ -4,7 +4,16 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "outputDirectory": "dist",
+  "public": true,
   "rewrites": [
+    {
+      "source": "/blog/:path*.html",
+      "destination": "/blog/:path*.html"
+    },
+    {
+      "source": "/blog/:path*",
+      "destination": "/index.html"
+    },
     {
       "source": "/(.*)",
       "destination": "/index.html"
@@ -12,7 +21,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/blog/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
