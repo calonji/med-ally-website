@@ -11,7 +11,6 @@ import {
   Calculator,
   HelpCircle,
   Menu,
-  X,
   MessageSquare,
   BookOpen,
 } from 'lucide-react';
@@ -198,29 +197,16 @@ const Header: FC = () => {
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-4">
             {navItems.map((item) => (
-              <motion.a
+              <a
                 key={item.name}
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (item.isScroll) {
-                    handleNavigation(item.href);
-                  } else {
-                    navigate(item.href);
-                  }
-                }}
-                className={`flex items-center px-2 py-1 rounded-full text-sm transition-all cursor-pointer ${
-                  activeSection === item.href && isLandingPage && item.isScroll
-                    ? 'text-blue-600 font-medium bg-blue-50 shadow-sm'
-                    : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
-                }`}
-                whileHover={{ y: -2 }}
-                whileTap={{ y: 0 }}
+                role="link"
+                onClick={() => handleNavigation(item.href)}
+                className="flex items-center px-2 py-1 rounded-full text-sm transition-all cursor-pointer text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                tabIndex={0}
               >
-                <motion.span className="mr-1.5" whileHover={{ rotate: 360 }}>
-                  {item.icon}
-                </motion.span>
+                <span className="mr-1.5">{item.icon}</span>
                 {item.name}
-              </motion.a>
+              </a>
             ))}
           </nav>
 
@@ -239,21 +225,23 @@ const Header: FC = () => {
           </div>
 
           {/* Mobile Menu Toggle */}
-          <motion.button
-            aria-label="Toggle menu"
-            className="lg:hidden p-1.5"
+          <button
             onClick={() => setIsMenuOpen(!isMenuOpen)}
+            className="lg:hidden p-2 rounded-lg hover:bg-gray-50"
+            aria-label="Toggle Menu"
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-menu"
           >
-            {isMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-          </motion.button>
+            <Menu className="w-6 h-6 text-gray-600" />
+          </button>
         </div>
 
         {/* Mobile Navigation */}
         <motion.nav
+          id="mobile-menu"
           aria-label="mobile-nav"
-          id="mobile-nav"
           className={`lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg w-full ${
-            isMenuOpen ? 'block' : 'hidden'
+            isMenuOpen ? 'translate-x-0' : 'hidden'
           }`}
           initial="closed"
           animate={isMenuOpen ? 'open' : 'closed'}
