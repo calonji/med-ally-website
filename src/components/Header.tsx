@@ -200,7 +200,14 @@ const Header: FC = () => {
               <a
                 key={item.name}
                 role="link"
-                onClick={() => handleNavigation(item.href)}
+                onClick={(e) => {
+                  e.preventDefault();
+                  if (item.isScroll) {
+                    handleNavigation(item.href);
+                  } else {
+                    navigate(item.href);
+                  }
+                }}
                 className="flex items-center px-2 py-1 rounded-full text-sm transition-all cursor-pointer text-gray-600 hover:text-blue-600 hover:bg-gray-50"
                 tabIndex={0}
               >

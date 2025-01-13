@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Twitter, Facebook, Youtube, Mail } from 'lucide-react';
+import { Linkedin, Twitter, Facebook, Youtube } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer: FC = () => {
@@ -44,17 +44,14 @@ const Footer: FC = () => {
             </ul>
           </motion.div>
 
-          {/* Contact Info */}
+          {/* Parent Company */}
           <motion.div {...fadeInUp} className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">Contact Us</h3>
-            <ul className="space-y-3">
-              <li className="flex items-center text-gray-400 text-sm">
-                <Mail className="w-4 h-4 mr-2" />
-                <a href="mailto:info@medally.ai" className="hover:text-blue-400">
-                  info@medally.ai
-                </a>
-              </li>
-            </ul>
+            <h3 className="text-lg font-semibold text-white">Parent Company – Calonji</h3>
+            <p className="text-gray-400 text-sm leading-relaxed">
+              MedAlly is a product of Calonji, Inc. a company committed to building innovative,
+              human-centered solutions that leverage AI and technology to solve real-world
+              challenges in healthcare and beyond.
+            </p>
           </motion.div>
         </div>
 
