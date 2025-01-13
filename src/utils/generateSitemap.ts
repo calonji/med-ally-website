@@ -1,172 +1,197 @@
 import fs from 'fs';
 import path from 'path';
+import globby from 'globby';
+import type { Options } from 'prettier';
 
-interface BlogPost {
-  slug: string;
+const DOMAIN = 'https://medally.ai';
+
+interface SitemapEntry {
+  path: string;
   lastmod: string;
+  changefreq: 'daily' | 'weekly' | 'monthly';
+  priority: number;
 }
 
-interface SitemapImage {
-  loc: string;
+interface ImageEntry {
+  path: string;
   title: string;
-  caption: string;
 }
 
-interface PageImage {
-  url: string;
-  images: SitemapImage[];
-}
-
-const IMAGES: PageImage[] = [
-  {
-    url: 'https://medally.ai/',
-    images: [
-      {
-        loc: 'https://medally.ai/images/hero-image.jpg',
-        title: 'MedAlly AI Healthcare Documentation',
-        caption: 'Transform your medical practice with AI-powered documentation'
-      }
-    ]
-  }
-];
-
-export async function generateSitemap() {
+async function generateSitemap() {
+  let prettierConfig: Options;
   try {
-    const currentDate = new Date().toISOString().split('T')[0];
-    
-    // Get all blog posts
-    const blogDir = path.join(process.cwd(), 'public/blog');
-    const files = fs.readdirSync(blogDir);
-    
-    const blogPosts: BlogPost[] = files
-      .filter(file => file.endsWith('.html'))
-      .map(file => {
-        const filePath = path.join(blogDir, file);
-        const stats = fs.statSync(filePath);
-        return {
-          slug: file.replace('.html', ''),
-          lastmod: stats.mtime.toISOString().split('T')[0]
-        };
-      });
-
-    // Generate main sitemap
-    const mainSitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-        http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-  <!-- Main pages -->
-  <url>
-    <loc>https://medally.ai/</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://medally.ai/about-us</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://medally.ai/how-it-works</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://medally.ai/features</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://medally.ai/benefits</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://medally.ai/case-studies</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://medally.ai/roi-calculator</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://medally.ai/faq</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>
-  <url>
-    <loc>https://medally.ai/pricing</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://medally.ai/blog</loc>
-    <lastmod>${currentDate}</lastmod>
-    <changefreq>daily</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <!-- Blog posts -->
-  ${blogPosts
-    .map(
-      post => `
-  <url>
-    <loc>https://medally.ai/blog/${post.slug}</loc>
-    <lastmod>${post.lastmod}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>`
-    )
-    .join('')}
-</urlset>`;
-
-    // Generate image sitemap
-    const imageSitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  ${IMAGES.map(page => `
-  <url>
-    <loc>${page.url}</loc>
-    ${page.images.map(img => `
-    <image:image>
-      <image:loc>${img.loc}</image:loc>
-      <image:title>${img.title}</image:title>
-      <image:caption>${img.caption}</image:caption>
-    </image:image>`).join('')}
-  </url>`).join('')}
-</urlset>`;
-
-    // Generate sitemap index
-    const sitemapIndex = `<?xml version="1.0" encoding="UTF-8"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <sitemap>
-    <loc>https://medally.ai/sitemap-main.xml</loc>
-    <lastmod>${currentDate}</lastmod>
-  </sitemap>
-  <sitemap>
-    <loc>https://medally.ai/sitemap-images.xml</loc>
-    <lastmod>${currentDate}</lastmod>
-  </sitemap>
-</sitemapindex>`;
-
-    // Write sitemaps to public directory
-    fs.writeFileSync(path.join(process.cwd(), 'public/sitemap.xml'), sitemapIndex);
-    fs.writeFileSync(path.join(process.cwd(), 'public/sitemap-main.xml'), mainSitemap);
-    fs.writeFileSync(path.join(process.cwd(), 'public/sitemap-images.xml'), imageSitemap);
-    
-    console.log('Sitemaps generated successfully');
+    // @ts-expect-error - Dynamic import
+    prettierConfig = await import('prettier').then(prettier => 
+      prettier.resolveConfig('./.prettierrc.js')
+    );
   } catch (error) {
-    console.error('Error generating sitemaps:', error);
+    console.error('Error loading prettier config:', error);
+    prettierConfig = {};
   }
-} 
+
+  // Get all pages except dynamic routes
+  const pages = await globby([
+    'src/pages/**/*.tsx',
+    '!src/pages/_*.tsx',
+    '!src/pages/api',
+    '!src/pages/404.tsx',
+  ]);
+
+  // Get all blog posts
+  const blogPosts = await globby(['content/blog/**/*.mdx']);
+
+  // Get all public images
+  const images = await globby(['public/images/**/*.{png,jpg,jpeg,gif,webp}']);
+
+  const currentDate = new Date().toISOString();
+
+  // Generate sitemap entries for static pages
+  const pageEntries = pages.map((page: string): SitemapEntry => {
+    const pagePath = page
+      .replace('src/pages', '')
+      .replace('.tsx', '')
+      .replace('/index', '');
+    return {
+      path: pagePath,
+      lastmod: currentDate,
+      changefreq: 'weekly',
+      priority: 0.8
+    };
+  });
+
+  // Generate sitemap entries for blog posts
+  const blogEntries = blogPosts.map((post: string): SitemapEntry => {
+    const slug = post
+      .replace('content/blog', '/blog')
+      .replace('.mdx', '');
+    return {
+      path: slug,
+      lastmod: currentDate,
+      changefreq: 'monthly',
+      priority: 0.6
+    };
+  });
+
+  // Generate image sitemap entries
+  const imageEntries = images.map((image: string): ImageEntry => {
+    const imagePath = image.replace('public', '');
+    return {
+      path: imagePath,
+      title: path.basename(image, path.extname(image))
+    };
+  });
+
+  // Create main sitemap
+  const sitemap = `
+    <?xml version="1.0" encoding="UTF-8"?>
+    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+            xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+      <url>
+        <loc>${DOMAIN}</loc>
+        <lastmod>${currentDate}</lastmod>
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        ${imageEntries.map((img: ImageEntry) => `
+          <image:image>
+            <image:loc>${DOMAIN}${img.path}</image:loc>
+            <image:title>${img.title}</image:title>
+          </image:image>
+        `).join('')}
+      </url>
+      ${pageEntries.map((entry: SitemapEntry) => `
+        <url>
+          <loc>${DOMAIN}${entry.path}</loc>
+          <lastmod>${entry.lastmod}</lastmod>
+          <changefreq>${entry.changefreq}</changefreq>
+          <priority>${entry.priority}</priority>
+        </url>
+      `).join('')}
+      ${blogEntries.map((entry: SitemapEntry) => `
+        <url>
+          <loc>${DOMAIN}${entry.path}</loc>
+          <lastmod>${entry.lastmod}</lastmod>
+          <changefreq>${entry.changefreq}</changefreq>
+          <priority>${entry.priority}</priority>
+        </url>
+      `).join('')}
+    </urlset>
+  `;
+
+  // Format sitemap with prettier if available
+  let formatted = sitemap;
+  try {
+    const prettier = await import('prettier');
+    formatted = await prettier.format(sitemap, {
+      ...prettierConfig,
+      parser: 'html',
+    });
+  } catch (error) {
+    console.error('Error formatting sitemap:', error);
+  }
+
+  fs.writeFileSync('public/sitemap.xml', formatted);
+
+  // Create sitemap index
+  const sitemapIndex = `
+    <?xml version="1.0" encoding="UTF-8"?>
+    <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+      <sitemap>
+        <loc>${DOMAIN}/sitemap.xml</loc>
+        <lastmod>${currentDate}</lastmod>
+      </sitemap>
+    </sitemapindex>
+  `;
+
+  // Format sitemap index with prettier if available
+  let formattedIndex = sitemapIndex;
+  try {
+    const prettier = await import('prettier');
+    formattedIndex = await prettier.format(sitemapIndex, {
+      ...prettierConfig,
+      parser: 'html',
+    });
+  } catch (error) {
+    console.error('Error formatting sitemap index:', error);
+  }
+
+  fs.writeFileSync('public/sitemap-index.xml', formattedIndex);
+
+  // Generate RSS feed
+  const rss = `
+    <?xml version="1.0" encoding="UTF-8"?>
+    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+      <channel>
+        <title>MedAlly Blog</title>
+        <link>${DOMAIN}/blog</link>
+        <description>Latest updates and insights from MedAlly</description>
+        <language>en-US</language>
+        <lastBuildDate>${currentDate}</lastBuildDate>
+        <atom:link href="${DOMAIN}/blog/feed.xml" rel="self" type="application/rss+xml"/>
+        ${blogEntries.map((entry: SitemapEntry) => `
+          <item>
+            <title>${path.basename(entry.path, '.mdx')}</title>
+            <link>${DOMAIN}${entry.path}</link>
+            <pubDate>${entry.lastmod}</pubDate>
+            <guid>${DOMAIN}${entry.path}</guid>
+          </item>
+        `).join('')}
+      </channel>
+    </rss>
+  `;
+
+  // Format RSS feed with prettier if available
+  let formattedRss = rss;
+  try {
+    const prettier = await import('prettier');
+    formattedRss = await prettier.format(rss, {
+      ...prettierConfig,
+      parser: 'html',
+    });
+  } catch (error) {
+    console.error('Error formatting RSS feed:', error);
+  }
+
+  fs.writeFileSync('public/blog/feed.xml', formattedRss);
+}
+
+export default generateSitemap; 
