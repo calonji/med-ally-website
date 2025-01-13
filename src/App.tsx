@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { trackPerformanceMetrics } from '@/utils/performance';
-import { Analytics } from '@/utils/analytics';
 import { type FC } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import LandingPage from '@/pages/LandingPage';
@@ -14,13 +13,12 @@ import BlogPost from '@/pages/BlogPost';
 
 const App: FC = () => {
   useEffect(() => {
-    Analytics.init(import.meta.env.VITE_GA_MEASUREMENT_ID);
     trackPerformanceMetrics();
   }, []);
 
   return (
     <Router>
-      <TrackingProvider measurementId="G-XXXXXXXXXX">
+      <TrackingProvider measurementId={import.meta.env.VITE_GA_MEASUREMENT_ID}>
         <HelmetProvider>
           <Routes>
             <Route path="/" element={<LandingPage />} />
