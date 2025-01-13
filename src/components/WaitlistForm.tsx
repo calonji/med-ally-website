@@ -118,13 +118,9 @@ const WaitlistForm: FC = () => {
                     <input type="tel" name="PHONE" class="REQ_CSS" id="mce-PHONE" value="" placeholder="Enter your phone number (optional)">
                   </div>
                   
-                  <!-- Hidden fields for tracking -->
-                  <div style="display: none;">
-                    <input type="hidden" name="SIGNUP" value="waitlist">
-                    <input type="hidden" name="SOURCE" value="website_waitlist">
-                    <input type="hidden" name="STATUS" value="early_access">
-                    <input type="hidden" name="MMERGE5" value="Early Access Waitlist">
-                    <input type="hidden" name="MMERGE6" value="Pending">
+                  <!-- Mailchimp tag -->
+                  <div hidden>
+                    <input type="hidden" name="tags" value="3956289">
                   </div>
                   
                   <div id="mce-responses" class="clear">
@@ -156,12 +152,6 @@ const WaitlistForm: FC = () => {
                 ftypes[1]='text';
                 fnames[4]='PHONE';
                 ftypes[4]='phone';
-                fnames[5]='SIGNUP';
-                ftypes[5]='text';
-                fnames[6]='SOURCE';
-                ftypes[6]='text';
-                fnames[7]='STATUS';
-                ftypes[7]='text';
                 
                 // Initialize form validation on load
                 $(document).ready(function() {
