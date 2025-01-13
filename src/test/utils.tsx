@@ -1,17 +1,18 @@
-import { render as testingLibRender, screen, fireEvent } from '@testing-library/react';
-import { type PropsWithChildren } from 'react';
+import React from 'react';
+import { render, RenderOptions } from '@testing-library/react';
 import { HelmetProvider } from 'react-helmet-async';
+import { BrowserRouter } from 'react-router-dom';
 
-const AllTheProviders = ({ children }: PropsWithChildren) => {
+const AllTheProviders = ({ children }: { children: React.ReactNode }) => {
   return (
-    <HelmetProvider>
-      {children}
-    </HelmetProvider>
+    <BrowserRouter>
+      <HelmetProvider>{children}</HelmetProvider>
+    </BrowserRouter>
   );
 };
 
-export const render = (ui: React.ReactElement) => {
-  return testingLibRender(ui, { wrapper: AllTheProviders });
-};
+const customRender = (ui: React.ReactElement, options?: Omit<RenderOptions, 'wrapper'>) =>
+  render(ui, { wrapper: AllTheProviders, ...options });
 
-export { screen, fireEvent }; 
+export * from '@testing-library/react';
+export { customRender as render };

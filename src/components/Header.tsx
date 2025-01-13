@@ -1,12 +1,19 @@
 import { type FC, useEffect, useState, useCallback } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Button } from "@/components/ui/button";
+import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/Logo';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { 
-  Info, Settings, Star, BarChart, Calculator, 
-  FileText, HelpCircle, Menu, X, MessageSquare,
-  Stethoscope
+import {
+  Info,
+  Settings,
+  Star,
+  BarChart,
+  Calculator,
+  HelpCircle,
+  Menu,
+  X,
+  MessageSquare,
+  BookOpen,
 } from 'lucide-react';
 
 const Header: FC = () => {
@@ -16,68 +23,94 @@ const Header: FC = () => {
   const [activeSection, setActiveSection] = useState('hero');
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const isLandingPage = location.pathname === '/';
 
   // Handle initial path on page load
   useEffect(() => {
-    const path = location.pathname.slice(1); // Remove leading slash
-    if (path) {
-      const element = document.getElementById(path);
-      if (element) {
-        const headerOffset = 80;
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = window.scrollY + elementPosition - headerOffset;
+    if (isLandingPage) {
+      const path = location.pathname.slice(1); // Remove leading slash
+      if (path) {
+        const element = document.getElementById(path);
+        if (element) {
+          const headerOffset = 64;
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = window.scrollY + elementPosition - headerOffset;
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
+          // Add a small delay to ensure proper scrolling after page load
+          setTimeout(() => {
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth',
+            });
+          }, 100);
+        }
       }
     }
-  }, [location]);
+  }, [location, isLandingPage]);
 
-  // Intersection Observer setup
+  // Intersection Observer setup - only on landing page
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      entries => entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          setActiveSection(entry.target.id);
-          // Update URL without triggering navigation
-          const newPath = entry.target.id === 'hero' ? '/' : `/${entry.target.id}`;
-          window.history.replaceState(null, '', newPath);
+    if (isLandingPage) {
+      const observer = new IntersectionObserver(
+        (entries) =>
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setActiveSection(entry.target.id);
+              // Update URL without triggering navigation
+              const newPath = entry.target.id === 'hero' ? '/' : `/${entry.target.id}`;
+              window.history.replaceState(null, '', newPath);
+            }
+          }),
+        {
+          rootMargin: '-64px 0px -90% 0px', // Adjusted rootMargin for better accuracy
+          threshold: 0.1, // Added threshold for better detection
         }
-      }),
-      { rootMargin: '-50% 0px', threshold: 0 }
-    );
-    document.querySelectorAll('section[id]').forEach(section => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
+      );
 
-  // Update scrollToSection function
-  const scrollToSection = useCallback((sectionId: string) => {
-    // First close the menu to prevent layout shifts
-    setIsMenuOpen(false);
-    
-    // Remove the leading # if present
-    const targetId = sectionId.replace('#', '');
-    
-    // Small delay to allow menu close animation to complete
-    setTimeout(() => {
-      const element = document.getElementById(targetId);
-      if (element) {
-        const headerOffset = 80;
-        const elementPosition = element.getBoundingClientRect().top;
-        const offsetPosition = window.scrollY + elementPosition - headerOffset;
+      document.querySelectorAll('section[id]').forEach((section) => observer.observe(section));
+      return () => observer.disconnect();
+    }
+  }, [isLandingPage]);
 
-        window.scrollTo({
-          top: offsetPosition,
-          behavior: 'smooth'
-        });
+  // Update navigation function to handle both scroll and regular navigation
+  const handleNavigation = useCallback(
+    (path: string) => {
+      setIsMenuOpen(false);
 
-        // Update URL without hash
-        navigate(`/${targetId}`, { replace: true });
+      if (isLandingPage) {
+        // Scroll behavior on landing page
+        const element = document.getElementById(path);
+        if (element) {
+          const headerOffset = 64; // Adjusted for header height
+          const elementPosition = element.getBoundingClientRect().top;
+          const offsetPosition = window.scrollY + elementPosition - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth',
+          });
+        }
+      } else {
+        // Regular navigation on other pages
+        navigate('/');
+        // Add a longer delay to ensure the landing page loads before scrolling
+        setTimeout(() => {
+          const element = document.getElementById(path);
+          if (element) {
+            const headerOffset = 64; // Adjusted for header height
+            const elementPosition = element.getBoundingClientRect().top;
+            const offsetPosition = window.scrollY + elementPosition - headerOffset;
+
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth',
+            });
+          }
+        }, 300); // Increased delay for better reliability
       }
-    }, 100);
-  }, [navigate]);
+    },
+    [navigate, isLandingPage]
+  );
 
   // Handle click outside to close mobile menu
   useEffect(() => {
@@ -104,28 +137,43 @@ const Header: FC = () => {
 
   // Navigation items - updated without # in hrefs
   const navItems = [
-    { name: 'About Us', href: 'about-us', icon: <Info className="w-4 h-4" /> },
-    { name: 'How It Works', href: 'how-it-works', icon: <Settings className="w-4 h-4" /> },
-    { name: 'Features', href: 'features', icon: <Star className="w-4 h-4" /> },
-    { name: 'Benefits', href: 'benefits', icon: <BarChart className="w-4 h-4" /> },
-    // { name: 'Case Studies', href: 'case-studies', icon: <FileText className="w-4 h-4" /> },
-    { name: 'ROI Calculator', href: 'roi-calculator', icon: <Calculator className="w-4 h-4" /> },
-    { name: 'FAQ', href: 'faq', icon: <HelpCircle className="w-4 h-4" /> },
-    { name: 'Pricing', href: 'pricing', icon: <MessageSquare className="w-4 h-4" /> }
+    { name: 'About Us', href: 'about-us', icon: <Info className="w-4 h-4" />, isScroll: true },
+    {
+      name: 'How It Works',
+      href: 'how-it-works',
+      icon: <Settings className="w-4 h-4" />,
+      isScroll: true,
+    },
+    { name: 'Features', href: 'features', icon: <Star className="w-4 h-4" />, isScroll: true },
+    { name: 'Benefits', href: 'benefits', icon: <BarChart className="w-4 h-4" />, isScroll: true },
+    {
+      name: 'ROI Calculator',
+      href: 'roi-calculator',
+      icon: <Calculator className="w-4 h-4" />,
+      isScroll: true,
+    },
+    { name: 'FAQ', href: 'faq', icon: <HelpCircle className="w-4 h-4" />, isScroll: true },
+    {
+      name: 'Pricing',
+      href: 'pricing',
+      icon: <MessageSquare className="w-4 h-4" />,
+      isScroll: true,
+    },
+    { name: 'Blog', href: '/blog', icon: <BookOpen className="w-4 h-4" />, isScroll: false },
   ];
 
   return (
-    <motion.header 
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200"
+    <motion.header
+      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 w-full"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
     >
-      <motion.div 
-        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 origin-left"
+      <motion.div
+        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 origin-left w-full"
         style={{ scaleX }}
       />
 
-      <div className="container mx-auto px-4">
+      <div className="max-w-[1400px] mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <motion.a
@@ -154,10 +202,14 @@ const Header: FC = () => {
                 key={item.name}
                 onClick={(e) => {
                   e.preventDefault();
-                  scrollToSection(item.href);
+                  if (item.isScroll) {
+                    handleNavigation(item.href);
+                  } else {
+                    navigate(item.href);
+                  }
                 }}
                 className={`flex items-center px-2 py-1 rounded-full text-sm transition-all cursor-pointer ${
-                  activeSection === item.href
+                  activeSection === item.href && isLandingPage && item.isScroll
                     ? 'text-blue-600 font-medium bg-blue-50 shadow-sm'
                     : 'text-gray-600 hover:text-blue-600 hover:bg-gray-50'
                 }`}
@@ -180,9 +232,7 @@ const Header: FC = () => {
               </Button>
             </motion.div>
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button 
-                className="text-sm px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500"
-              >
+              <Button className="text-sm px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500">
                 Get Started Free
               </Button>
             </motion.div>
@@ -202,28 +252,32 @@ const Header: FC = () => {
         <motion.nav
           aria-label="mobile-nav"
           id="mobile-nav"
-          className={`lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg ${
+          className={`lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg w-full ${
             isMenuOpen ? 'block' : 'hidden'
           }`}
           initial="closed"
-          animate={isMenuOpen ? "open" : "closed"}
+          animate={isMenuOpen ? 'open' : 'closed'}
           variants={{
             open: { opacity: 1, height: 'auto' },
-            closed: { opacity: 0, height: 0 }
+            closed: { opacity: 0, height: 0 },
           }}
           transition={{ duration: 0.2 }}
         >
-          <div className="container mx-auto px-4 py-4 space-y-2">
+          <div className="max-w-[1400px] mx-auto px-4 py-4 space-y-2">
             {navItems.map((item) => (
               <motion.button
                 key={item.name}
                 onClick={(e) => {
                   e.preventDefault();
                   e.stopPropagation();
-                  scrollToSection(item.href);
+                  if (item.isScroll) {
+                    handleNavigation(item.href);
+                  } else {
+                    navigate(item.href);
+                  }
                 }}
                 className={`flex items-center w-full px-4 py-2 rounded-lg text-left ${
-                  activeSection === item.href
+                  activeSection === item.href && isLandingPage && item.isScroll
                     ? 'bg-blue-50 text-blue-600 font-medium'
                     : 'text-gray-600 hover:bg-gray-50'
                 }`}

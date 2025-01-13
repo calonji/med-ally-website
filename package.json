@@ -16,7 +16,21 @@
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui",
     "test:e2e": "playwright test",
-    "test:e2e:all": "playwright test --project=chromium firefox webkit"
+    "test:e2e:all": "playwright test --project=chromium firefox webkit",
+    "generate-sitemap": "ts-node scripts/generate-sitemap.ts",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged"
+  },
+  "lint-staged": {
+    "public/blog/*.html": [
+      "npm run generate-sitemap"
+    ],
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix"
+    ],
+    "*.{json,md}": [
+      "prettier --write"
+    ]
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.7.1",
@@ -28,6 +42,7 @@
     "@radix-ui/react-progress": "^1.1.1",
     "@radix-ui/react-slot": "^1.1.1",
     "@radix-ui/react-tabs": "^1.1.2",
+    "@radix-ui/react-toast": "1.2.4",
     "@shadcn/ui": "^0.0.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -76,6 +91,7 @@
     "typescript-eslint": "^8.15.0",
     "vite": "^6.0.1",
     "vite-tsconfig-paths": "^5.1.4",
-    "vitest": "^1.6.0"
+    "vitest": "^1.6.0",
+    "husky": "^8.0.0"
   }
 }
