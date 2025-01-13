@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Twitter, Facebook, Youtube } from 'lucide-react';
+import { Linkedin, Twitter, Facebook, Youtube, Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer: FC = () => {
@@ -11,6 +11,18 @@ const Footer: FC = () => {
   };
 
   const quickLinks = [{ name: 'Blog', path: '/blog' }];
+
+  const socialLinks = [
+    { Icon: Linkedin, href: 'https://www.linkedin.com/company/medally-ai', label: 'LinkedIn' },
+    { Icon: Twitter, href: 'https://twitter.com/medAllyAI', label: 'X (Twitter)' },
+    {
+      Icon: Facebook,
+      href: 'https://www.facebook.com/profile.php?id=491843437354106',
+      label: 'Facebook',
+    },
+    { Icon: Instagram, href: 'https://www.instagram.com/medally_saas', label: 'Instagram' },
+    { Icon: Youtube, href: 'https://www.youtube.com/@Med-Ally', label: 'YouTube' },
+  ];
 
   return (
     <footer className="bg-gray-900 pt-16 pb-8 text-gray-300">
@@ -60,15 +72,12 @@ const Footer: FC = () => {
           {...fadeInUp}
           className="flex justify-center space-x-6 py-8 border-t border-gray-800"
         >
-          {[
-            { Icon: Linkedin, href: '#', label: 'LinkedIn' },
-            { Icon: Twitter, href: '#', label: 'Twitter' },
-            { Icon: Facebook, href: '#', label: 'Facebook' },
-            { Icon: Youtube, href: '#', label: 'YouTube' },
-          ].map(({ Icon, href, label }) => (
+          {socialLinks.map(({ Icon, href, label }) => (
             <a
               key={label}
               href={href}
+              target="_blank"
+              rel="noopener noreferrer"
               aria-label={label}
               className="text-gray-400 hover:text-blue-400 transition-colors"
             >
