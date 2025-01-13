@@ -1,7 +1,9 @@
 import { type FC } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Twitter, Facebook, Youtube, Instagram } from 'lucide-react';
+import { Linkedin, Twitter, Facebook, Youtube, Instagram, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import WaitlistDialog from './WaitlistDialog';
+import { Button } from '@/components/ui/button';
 
 const Footer: FC = () => {
   const fadeInUp = {
@@ -66,6 +68,20 @@ const Footer: FC = () => {
             </p>
           </motion.div>
         </div>
+
+        {/* Full-width Waitlist Button */}
+        <motion.div {...fadeInUp} className="py-8 border-t border-gray-800">
+          <WaitlistDialog
+            trigger={
+              <Button className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white py-6 text-lg font-semibold group">
+                <span className="flex items-center justify-center">
+                  Join the Future of Healthcare
+                  <ArrowRight className="w-6 h-6 ml-2 group-hover:translate-x-1 transition-transform" />
+                </span>
+              </Button>
+            }
+          />
+        </motion.div>
 
         {/* Social Media Links */}
         <motion.div

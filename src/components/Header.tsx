@@ -14,12 +14,12 @@ import {
   MessageSquare,
   BookOpen,
 } from 'lucide-react';
+import WaitlistDialog from './WaitlistDialog';
 
 const Header: FC = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [activeSection, setActiveSection] = useState('hero');
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
   const isLandingPage = location.pathname === '/';
@@ -54,7 +54,6 @@ const Header: FC = () => {
         (entries) =>
           entries.forEach((entry) => {
             if (entry.isIntersecting) {
-              setActiveSection(entry.target.id);
               // Update URL without triggering navigation
               const newPath = entry.target.id === 'hero' ? '/' : `/${entry.target.id}`;
               window.history.replaceState(null, '', newPath);
@@ -218,16 +217,15 @@ const Header: FC = () => {
           </nav>
 
           {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center space-x-3">
+          <div className="hidden lg:flex items-center">
             <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button variant="outline" className="text-sm px-3 py-1.5 border-2">
-                Log In
-              </Button>
-            </motion.div>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Button className="text-sm px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500">
-                Get Started Free
-              </Button>
+              <WaitlistDialog
+                trigger={
+                  <Button className="text-sm px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500">
+                    Get Early Access
+                  </Button>
+                }
+              />
             </motion.div>
           </div>
 
@@ -248,47 +246,37 @@ const Header: FC = () => {
           id="mobile-menu"
           aria-label="mobile-nav"
           className={`lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg w-full ${
-            isMenuOpen ? 'translate-x-0' : 'hidden'
+            isMenuOpen ? 'block' : 'hidden'
           }`}
-          initial="closed"
-          animate={isMenuOpen ? 'open' : 'closed'}
-          variants={{
-            open: { opacity: 1, height: 'auto' },
-            closed: { opacity: 0, height: 0 },
-          }}
-          transition={{ duration: 0.2 }}
         >
-          <div className="max-w-[1400px] mx-auto px-4 py-4 space-y-2">
+          <div className="px-4 py-3 space-y-1">
             {navItems.map((item) => (
-              <motion.button
+              <a
                 key={item.name}
+                role="link"
                 onClick={(e) => {
                   e.preventDefault();
-                  e.stopPropagation();
                   if (item.isScroll) {
                     handleNavigation(item.href);
                   } else {
                     navigate(item.href);
                   }
                 }}
-                className={`flex items-center w-full px-4 py-2 rounded-lg text-left ${
-                  activeSection === item.href && isLandingPage && item.isScroll
-                    ? 'bg-blue-50 text-blue-600 font-medium'
-                    : 'text-gray-600 hover:bg-gray-50'
-                }`}
-                whileHover={{ x: 4 }}
+                className="flex items-center px-3 py-2 rounded-lg text-sm transition-all cursor-pointer text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                tabIndex={0}
               >
                 <span className="mr-2">{item.icon}</span>
                 {item.name}
-              </motion.button>
+              </a>
             ))}
-            <div className="pt-4 space-y-2 border-t border-gray-100">
-              <Button variant="outline" className="w-full justify-center">
-                Log In
-              </Button>
-              <Button className="w-full bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500 justify-center">
-                Get Started Free
-              </Button>
+            <div className="pt-2 pb-1">
+              <WaitlistDialog
+                trigger={
+                  <Button className="w-full text-sm py-2 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500">
+                    Get Early Access
+                  </Button>
+                }
+              />
             </div>
           </div>
         </motion.nav>

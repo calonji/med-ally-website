@@ -1,43 +1,44 @@
-import { type FC } from 'react'
-import { motion } from 'framer-motion'
-import { Card } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { BackgroundEffects } from "@/components/ui/background-effects"
-import { type Step } from '@/types'
-import { 
-  Mic, Brain, 
-  ClipboardCheck, ArrowRight 
-} from 'lucide-react';
+import { type FC } from 'react';
+import { motion } from 'framer-motion';
+import { Card } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { BackgroundEffects } from '@/components/ui/background-effects';
+import { type Step } from '@/types';
+import { Mic, Brain, ClipboardCheck, ArrowRight } from 'lucide-react';
+import WaitlistDialog from './WaitlistDialog';
 
 const HowItWorks: FC = () => {
   const steps: Step[] = [
     {
       icon: <Mic className="w-10 h-10" />,
-      title: "Voice to Documentation",
-      description: "Speak naturally while seeing patients. MedAlly converts your voice into precise, structured clinical notes in real-time.",
-      color: "blue",
-      features: ["Natural Language Processing", "Real-time Conversion", "SOAP Format"]
+      title: 'Voice to Documentation',
+      description:
+        'Speak naturally while seeing patients. MedAlly converts your voice into precise, structured clinical notes in real-time.',
+      color: 'blue',
+      features: ['Natural Language Processing', 'Real-time Conversion', 'SOAP Format'],
     },
     {
       icon: <Brain className="w-10 h-10" />,
-      title: "AI-Powered Analysis",
-      description: "Get instant diagnostic suggestions, lab interpretations, and evidence-based recommendations as you work.",
-      color: "purple",
-      features: ["Diagnostic Support", "Lab Analysis", "Treatment Suggestions"]
+      title: 'AI-Powered Analysis',
+      description:
+        'Get instant diagnostic suggestions, lab interpretations, and evidence-based recommendations as you work.',
+      color: 'purple',
+      features: ['Diagnostic Support', 'Lab Analysis', 'Treatment Suggestions'],
     },
     {
       icon: <ClipboardCheck className="w-10 h-10" />,
-      title: "Smart Follow-ups",
-      description: "Automatically generate personalized follow-up plans and monitor patient progress over time.",
-      color: "indigo",
-      features: ["Automated Planning", "Progress Tracking", "Patient Monitoring"]
-    }
-  ]
+      title: 'Smart Follow-ups',
+      description:
+        'Automatically generate personalized follow-up plans and monitor patient progress over time.',
+      color: 'indigo',
+      features: ['Automated Planning', 'Progress Tracking', 'Patient Monitoring'],
+    },
+  ];
 
   return (
     <section className="relative py-20 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50">
       <BackgroundEffects variant="grid3d" />
-      
+
       <div className="container relative z-10">
         {/* Header */}
         <motion.div
@@ -61,7 +62,7 @@ const HowItWorks: FC = () => {
         <div className="relative">
           {/* Connecting Lines */}
           <div className="absolute top-1/2 left-0 w-full h-px bg-gradient-to-r from-blue-100 via-purple-100 to-indigo-100 hidden lg:block -translate-y-1/2" />
-          
+
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {steps.map((step, index) => (
               <motion.div
@@ -83,7 +84,7 @@ const HowItWorks: FC = () => {
 
                   {/* Icon */}
                   <div className="mb-6 relative">
-                    <motion.div 
+                    <motion.div
                       className={`w-16 h-16 rounded-2xl bg-${step.color}-50 flex items-center justify-center mb-2 group-hover:scale-110 transition-transform duration-300`}
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.5 }}
@@ -97,9 +98,7 @@ const HowItWorks: FC = () => {
                     {step.title}
                   </h3>
 
-                  <p className="text-gray-600 mb-6">
-                    {step.description}
-                  </p>
+                  <p className="text-gray-600 mb-6">{step.description}</p>
 
                   {/* Features */}
                   <div className="space-y-2">
@@ -116,7 +115,9 @@ const HowItWorks: FC = () => {
                   </div>
 
                   {/* Bottom Gradient Line */}
-                  <div className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-${step.color}-500 to-${step.color}-300 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300`} />
+                  <div
+                    className={`absolute bottom-0 left-0 right-0 h-1 bg-gradient-to-r from-${step.color}-500 to-${step.color}-300 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300`}
+                  />
                 </Card>
               </motion.div>
             ))}
@@ -130,17 +131,18 @@ const HowItWorks: FC = () => {
           viewport={{ once: true }}
           className="text-center mt-16"
         >
-          <a 
-            href="#demo"
-            className="inline-flex items-center px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300"
-          >
-            See It In Action
-            <ArrowRight className="w-5 h-5 ml-2" />
-          </a>
+          <WaitlistDialog
+            trigger={
+              <button className="inline-flex items-center px-8 py-4 rounded-xl bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300">
+                See It In Action
+                <ArrowRight className="w-5 h-5 ml-2" />
+              </button>
+            }
+          />
         </motion.div>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default HowItWorks
+export default HowItWorks;
