@@ -1,12 +1,10 @@
 User-agent: *
 Allow: /
-Disallow: /api/
-Disallow: /admin/
-Disallow: /private/
+Allow: /blog/
+Allow: /public/blog/
+
+# Sitemap
+Sitemap: https://medally.ai/sitemap.xml
 
 # Crawl-delay
-Crawl-delay: 10
-
-# Sitemaps
-Sitemap: https://medally.ai/sitemap.xml
-Sitemap: https://medally.ai/sitemap-images.xml 
+Crawl-delay: 10 

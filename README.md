@@ -30,6 +30,10 @@ The website is automatically deployed to Vercel with the following environments:
 - Preview (develop branch): https://develop.med-ally-website.vercel.app
 - PR Previews: Unique URL for each pull request
 
+## Test Deployment
+
+This is a test change to verify our deployment workflow.
+
 ### Branching Strategy
 
 1. `main` - Production branch

@@ -9,6 +9,8 @@ import { TrackingProvider } from '@/providers/TrackingProvider';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import TermsOfService from '@/pages/TermsOfService';
 import Contact from '@/pages/Contact';
+import Blog from '@/pages/Blog';
+import BlogPost from '@/pages/BlogPost';
 
 const App: FC = () => {
   useEffect(() => {
@@ -22,11 +24,12 @@ const App: FC = () => {
         <HelmetProvider>
           <Routes>
             <Route path="/" element={<LandingPage />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/blog/:slug" element={<BlogPost />} />
             <Route path="/about-us" element={<LandingPage />} />
             <Route path="/how-it-works" element={<LandingPage />} />
             <Route path="/features" element={<LandingPage />} />
             <Route path="/benefits" element={<LandingPage />} />
-            {/* <Route path="/case-studies" element={<LandingPage />} /> */}
             <Route path="/roi-calculator" element={<LandingPage />} />
             <Route path="/faq" element={<LandingPage />} />
             <Route path="/pricing" element={<LandingPage />} />
