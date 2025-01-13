@@ -4,7 +4,12 @@
   "devCommand": "npm run dev",
   "installCommand": "npm install",
   "outputDirectory": "dist",
+  "public": true,
   "rewrites": [
+    {
+      "source": "/blog/:path*.html",
+      "destination": "/blog/:path*.html"
+    },
     {
       "source": "/blog/:path*",
       "destination": "/index.html"
@@ -16,7 +21,7 @@
   ],
   "headers": [
     {
-      "source": "/(.*)",
+      "source": "/blog/(.*)",
       "headers": [
         {
           "key": "Cache-Control",
@@ -30,15 +35,6 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=31536000, immutable"
-        }
-      ]
-    },
-    {
-      "source": "/blog/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
         }
       ]
     }

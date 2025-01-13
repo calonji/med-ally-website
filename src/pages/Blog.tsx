@@ -47,9 +47,18 @@ export default function Blog() {
         setIsLoading(true);
         console.log('Starting blog post fetch...');
 
-        const listResponse = await fetch('/api/blog-posts');
-        const files = (await listResponse.json()) as string[];
-        console.log('Found blog files:', files);
+        // Try to fetch from static JSON first (production), fallback to API (development)
+        let files: string[];
+        try {
+          const staticResponse = await fetch('/api/blog-posts.json');
+          files = await staticResponse.json();
+          console.log('Found blog files from static JSON:', files);
+        } catch {
+          console.log('Falling back to development API');
+          const apiResponse = await fetch('/api/blog-posts');
+          files = await apiResponse.json();
+          console.log('Found blog files from API:', files);
+        }
 
         if (!Array.isArray(files)) {
           throw new Error('Server returned invalid data format');

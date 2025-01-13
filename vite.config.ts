@@ -25,6 +25,28 @@ function blogPlugin(): Plugin {
         }
         next();
       });
+    },
+    // Add build hook to generate blog-posts.json during build
+    buildEnd() {
+      const blogDir = path.join(process.cwd(), 'public/blog');
+      const outputDir = path.join(process.cwd(), 'public/api');
+      
+      try {
+        // Create api directory if it doesn't exist
+        if (!fs.existsSync(outputDir)) {
+          fs.mkdirSync(outputDir, { recursive: true });
+        }
+        
+        // Read blog files and write to json
+        const files = fs.readdirSync(blogDir);
+        const htmlFiles = files.filter(file => file.endsWith('.html'));
+        fs.writeFileSync(
+          path.join(outputDir, 'blog-posts.json'),
+          JSON.stringify(htmlFiles)
+        );
+      } catch (error) {
+        console.error('Error generating blog-posts.json:', error);
+      }
     }
   };
 }
