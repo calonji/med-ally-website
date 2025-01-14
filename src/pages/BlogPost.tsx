@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import Layout from '../components/Layout';
 import { useParams, useNavigate, useLocation } from 'react-router-dom';

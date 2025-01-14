@@ -256,7 +256,7 @@ const ROICalculator: FC = () => {
                         />
                         <YAxis 
                           tick={{ ...chartTextStyle }}
-                          tickFormatter={(value) => `$${(value/1000)}k`}
+                          tickFormatter={(value: number) => `$${(value/1000)}k`}
                           axisLine={{ stroke: '#E5E7EB' }}
                           tickLine={{ stroke: '#E5E7EB' }}
                           width={45}

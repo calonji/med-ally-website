@@ -30,14 +30,14 @@ const WaitlistDialog: FC<WaitlistDialogProps> = ({ trigger, className }) => {
           </Button>
         )}
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[500px] h-[90vh] sm:h-auto overflow-y-auto">
-        <DialogHeader className="space-y-2">
-          <DialogTitle className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center justify-center gap-2">
-            <Sparkles className="w-6 h-6 sm:w-7 sm:h-7 stroke-blue-600" />
+      <DialogContent className="sm:max-w-[500px] sm:h-auto">
+        <DialogHeader className="space-y-1">
+          <DialogTitle className="text-lg sm:text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent flex items-center justify-center gap-2">
+            <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 stroke-blue-600" />
             Join MedAlly Early Access
           </DialogTitle>
-          <DialogDescription className="text-sm sm:text-base text-gray-600">
-            <div className="text-center mb-4">
+          <DialogDescription className="text-xs sm:text-sm text-gray-600">
+            <div className="text-center mb-2">
               <motion.div
                 animate={{ scale: [1, 1.05, 1] }}
                 transition={{ duration: 2, repeat: Infinity }}
@@ -55,12 +55,12 @@ const WaitlistDialog: FC<WaitlistDialogProps> = ({ trigger, className }) => {
                 </Badge>
               </motion.div>
             </div>
-            <div className="space-y-4">
+            <div className="space-y-2">
               <motion.div
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors group"
+                className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-50 transition-colors group"
                 whileHover={{ x: 4 }}
               >
-                <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20">
+                <div className="flex-shrink-0 p-1.5 rounded-lg bg-gradient-to-br from-blue-500/20 to-purple-500/20">
                   <Rocket className="w-5 h-5 text-blue-600 group-hover:text-blue-700" />
                 </div>
                 <div className="text-left">
@@ -73,10 +73,10 @@ const WaitlistDialog: FC<WaitlistDialogProps> = ({ trigger, className }) => {
                 </div>
               </motion.div>
               <motion.div
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors group"
+                className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-50 transition-colors group"
                 whileHover={{ x: 4 }}
               >
-                <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-orange-500/20 to-red-500/20">
+                <div className="flex-shrink-0 p-1.5 rounded-lg bg-gradient-to-br from-orange-500/20 to-red-500/20">
                   <Zap className="w-5 h-5 text-orange-500 group-hover:text-orange-600" />
                 </div>
                 <div className="text-left">
@@ -89,10 +89,10 @@ const WaitlistDialog: FC<WaitlistDialogProps> = ({ trigger, className }) => {
                 </div>
               </motion.div>
               <motion.div
-                className="flex items-center gap-3 p-2 rounded-lg hover:bg-gray-50 transition-colors group"
+                className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-gray-50 transition-colors group"
                 whileHover={{ x: 4 }}
               >
-                <div className="flex-shrink-0 p-2 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20">
+                <div className="flex-shrink-0 p-1.5 rounded-lg bg-gradient-to-br from-purple-500/20 to-pink-500/20">
                   <Lightbulb className="w-5 h-5 text-purple-600 group-hover:text-purple-700" />
                 </div>
                 <div className="text-left">
