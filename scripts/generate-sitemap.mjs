@@ -7,7 +7,7 @@ const DOMAIN = 'https://medally.ai';
 async function generateSitemap() {
   try {
     // Get all pages except dynamic routes and API endpoints
-    const pages: string[] = await globby([
+    const pages = await globby([
       'src/pages/**/*.tsx',
       '!src/pages/api',
       '!src/pages/[id].tsx',
@@ -15,13 +15,13 @@ async function generateSitemap() {
     ]);
 
     // Get all blog posts
-    const blogPosts: string[] = await globby(['public/blog/**/*.md']);
+    const blogPosts = await globby(['public/blog/**/*.md']);
 
     // Get all public images
-    const images: string[] = await globby(['public/images/**/*.{jpg,jpeg,png,gif,webp}']);
+    const images = await globby(['public/images/**/*.{jpg,jpeg,png,gif,webp}']);
 
     // Generate sitemap entries for pages
-    const pageEntries = pages.map((page: string) => {
+    const pageEntries = pages.map(page => {
       const path = page
         .replace('src/pages', '')
         .replace('.tsx', '')
@@ -36,7 +36,7 @@ async function generateSitemap() {
     });
 
     // Generate sitemap entries for blog posts
-    const blogEntries = blogPosts.map((post: string) => {
+    const blogEntries = blogPosts.map(post => {
       const path = post
         .replace('public', '')
         .replace('.md', '');
@@ -50,7 +50,7 @@ async function generateSitemap() {
     });
 
     // Generate sitemap entries for images
-    const imageEntries = images.map((image: string) => {
+    const imageEntries = images.map(image => {
       const path = image.replace('public', '');
       return `
         <url>
