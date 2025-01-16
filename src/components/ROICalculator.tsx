@@ -229,7 +229,7 @@ const ROICalculator: FC = () => {
                           ))}
                         </Pie>
                         <Tooltip 
-                          formatter={formatTime}
+                          formatter={(value: string | number | Array<string | number>) => formatTime(Number(value))}
                           contentStyle={tooltipStyle}
                           labelStyle={{ fontSize: '10px', fontWeight: 600 }}
                         />
@@ -262,7 +262,7 @@ const ROICalculator: FC = () => {
                           width={45}
                         />
                         <Tooltip 
-                          formatter={formatCurrency}
+                          formatter={(value: string | number | Array<string | number>) => formatCurrency(Number(value))}
                           contentStyle={tooltipStyle}
                           labelStyle={{ fontSize: '10px', fontWeight: 600 }}
                         />
@@ -302,7 +302,7 @@ const ROICalculator: FC = () => {
                           width={35}
                         />
                         <Tooltip 
-                          formatter={formatPatients}
+                          formatter={(value: string | number | Array<string | number>) => formatPatients(Number(value))}
                           contentStyle={tooltipStyle}
                           labelStyle={{ fontSize: '10px', fontWeight: 600 }}
                         />
@@ -341,7 +341,7 @@ const ROICalculator: FC = () => {
                           width={80}
                         />
                         <Tooltip 
-                          formatter={formatTime}
+                          formatter={(value: string | number | Array<string | number>) => formatTime(Number(value))}
                           contentStyle={tooltipStyle}
                           labelStyle={{ fontSize: '10px', fontWeight: 600 }}
                         />
