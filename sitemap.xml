@@ -1,96 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://medally.ai/Blog</loc>
-    <lastmod>2025-01-16T21:40:10.846Z</lastmod>
+    <loc>https://medally.ai/about-us</loc>
+    <lastmod>2025-03-06T03:52:56.794Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://medally.ai/BlogPost</loc>
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
+    <loc>https://medally.ai/benefits</loc>
+    <lastmod>2025-03-06T03:52:56.794Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://medally.ai/Contact</loc>
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
+    <loc>https://medally.ai/contact</loc>
+    <lastmod>2025-03-06T03:52:56.794Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://medally.ai/LandingPage</loc>
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
+    <loc>https://medally.ai/faq</loc>
+    <lastmod>2025-03-06T03:52:56.794Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://medally.ai/PrivacyPolicy</loc>
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
+    <loc>https://medally.ai/features</loc>
+    <lastmod>2025-03-06T03:52:56.794Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://medally.ai/TermsOfService</loc>
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
+    <loc>https://medally.ai/how-it-works</loc>
+    <lastmod>2025-03-06T03:52:56.794Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-
   <url>
-    <loc
-      >https://medally.ai/images/blog/bionic-prosthetic-hand-with-artificial-intelligenc-2023-11-27-04-52-55-utc.jpg</loc
-    >
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://medally.ai/</loc>
+    <lastmod>2025-03-06T03:52:56.794Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc
-      >https://medally.ai/images/blog/cropped-image-of-male-doctor-with-prosthetic-arm-u-2024-11-18-18-29-21-utc.jpg</loc
-    >
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://medally.ai/pricing</loc>
+    <lastmod>2025-03-06T03:52:56.794Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
-    <loc
-      >https://medally.ai/images/blog/cropped-image-of-male-doctor-with-prosthetic-arm-w-2024-11-18-18-46-17-utc.jpg</loc
-    >
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc
-      >https://medally.ai/images/blog/doctor-medical-worktable-with-stethoscope-on-resea-2023-11-27-05-14-19-utc.jpg</loc
-    >
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc
-      >https://medally.ai/images/blog/female-doctor-working-at-office-desk-and-smiling-a-2023-12-29-19-55-31-utc.jpg</loc
-    >
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc
-      >https://medally.ai/images/blog/mri-man-and-doctor-on-video-call-talking-and-hea-2023-11-27-05-02-56-utc.jpg</loc
-    >
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc
-      >https://medally.ai/images/blog/partial-view-of-male-doctor-with-prosthetic-arm-ho-2024-11-19-07-10-05-utc.jpg</loc
-    >
-    <lastmod>2025-01-16T21:40:10.847Z</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
+    <loc>https://medally.ai/roi-calculator</loc>
+    <lastmod>2025-03-06T03:52:56.794Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
 </urlset>

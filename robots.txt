@@ -1,10 +1,103 @@
+# MedAlly Robots.txt - Optimized for search engines and AI assistants
+# Last updated: 2025-03-06
+
+# Default rules for all crawlers
 User-agent: *
 Allow: /
-Allow: /blog/
-Allow: /public/blog/
 
-# Sitemap
+# Encourage crawling of important content
+Allow: /features
+Allow: /pricing
+Allow: /about-us
+Allow: /how-it-works
+Allow: /benefits
+Allow: /roi-calculator
+Allow: /faq
+Allow: /contact
+
+# Prevent crawling of admin or private areas
+Disallow: /admin/
+Disallow: /internal/
+Disallow: /dev/
+Disallow: /test/
+Disallow: /staging/
+
+# Sitemaps
 Sitemap: https://medally.ai/sitemap.xml
 
-# Crawl-delay
-Crawl-delay: 10 
+# ===== AI ASSISTANT & LLM CRAWLER RULES =====
+
+# OpenAI's ChatGPT crawler
+User-agent: GPTBot
+Allow: /
+Allow: /features
+Allow: /benefits
+Allow: /how-it-works
+Allow: /faq
+Allow: /roi-calculator
+Disallow: /admin/
+Disallow: /internal/
+Crawl-delay: 2
+
+# Microsoft Bing AI / Copilot
+User-agent: Bingbot
+Allow: /
+Allow: /features
+Allow: /benefits
+Allow: /how-it-works
+Allow: /faq
+Allow: /roi-calculator
+Disallow: /admin/
+Disallow: /internal/
+Crawl-delay: 2
+
+# Google's AI crawler
+User-agent: Google-Extended
+Allow: /
+Allow: /features
+Allow: /benefits
+Allow: /how-it-works
+Allow: /faq
+Allow: /roi-calculator
+Disallow: /admin/
+Disallow: /internal/
+Crawl-delay: 2
+
+# Anthropic Claude crawler
+User-agent: ClaudeBot
+Allow: /
+Allow: /features
+Allow: /benefits
+Allow: /how-it-works
+Allow: /faq
+Allow: /roi-calculator
+Disallow: /admin/
+Disallow: /internal/
+Crawl-delay: 2
+
+# Cohere crawler
+User-agent: CohereBot
+Allow: /
+Allow: /features
+Allow: /benefits
+Allow: /how-it-works
+Allow: /faq
+Allow: /roi-calculator
+Disallow: /admin/
+Disallow: /internal/
+Crawl-delay: 2
+
+# ===== SEARCH ENGINE RULES =====
+
+# Google
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 2
+
+# Baidu
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+# Default crawl delay for other bots
+Crawl-delay: 5 
