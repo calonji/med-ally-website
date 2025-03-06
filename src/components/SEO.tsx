@@ -560,7 +560,7 @@ export const SEO = ({
   };
 
   return (
-    <Helmet>
+    <Helmet prioritizeSeoTags>
       {/* Basic */}
       <html lang="en" />
       <title>{title}</title>
@@ -571,6 +571,28 @@ export const SEO = ({
       <meta name="theme-color" content="#3B82F6" />
       <meta name="mobile-web-app-capable" content="yes" />
       <meta name="application-type" content="Healthcare Software" />
+
+      {/* Canonical URL */}
+      <link rel="canonical" href={canonicalUrl} />
+      
+      {/* Open Graph / Facebook */}
+      <meta property="og:type" content={type} />
+      <meta property="og:url" content={canonicalUrl} />
+      <meta property="og:title" content={title} />
+      <meta property="og:description" content={description} />
+      <meta property="og:image" content={absoluteImageUrl} />
+      <meta property="og:site_name" content="MedAlly" />
+      <meta property="article:published_time" content={publishedTime} />
+      <meta property="article:author" content={author} />
+      <meta property="og:locale" content="en_US" />
+
+      {/* Twitter */}
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:url" content={canonicalUrl} />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:image" content={absoluteImageUrl} />
+      <meta name="twitter:creator" content="@medAllyAI" />
 
       {/* Healthcare Specific */}
       <meta name="healthcare-system-type" content="Clinical Documentation & Lab Encounters" />
@@ -630,32 +652,12 @@ export const SEO = ({
         content="Evidence-based Medicine, Best Practices, Clinical Guidelines"
       />
 
-      {/* Open Graph */}
-      <meta property="og:type" content={type} />
-      <meta property="og:title" content={title} />
-      <meta property="og:description" content={description} />
-      <meta property="og:image" content={absoluteImageUrl} />
-      <meta property="og:url" content={canonicalUrl} />
-      <meta property="og:site_name" content="MedAlly" />
-      <meta property="article:published_time" content={publishedTime} />
-      <meta property="article:author" content={author} />
-      <meta property="og:locale" content="en_US" />
-
-      {/* Twitter */}
-      <meta name="twitter:card" content="summary_large_image" />
-      <meta name="twitter:site" content="@medally" />
-      <meta name="twitter:title" content={title} />
-      <meta name="twitter:description" content={description} />
-      <meta name="twitter:image" content={absoluteImageUrl} />
-      <meta name="twitter:creator" content="@medally" />
-
       {/* Additional SEO */}
       <meta name="googlebot" content="index, follow" />
       <meta
         name="robots"
         content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"
       />
-      <link rel="canonical" href={canonicalUrl} />
 
       {/* PWA */}
       <meta name="application-name" content="MedAlly" />

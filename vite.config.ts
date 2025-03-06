@@ -10,7 +10,8 @@ export default defineConfig({
     viteCompression({
       algorithm: 'gzip',
       ext: '.gz',
-      threshold: 10240, // Only compress files larger than 10kb
+      threshold: 1024, // Lower threshold to include smaller files
+      filter: /\.(js|css|html|svg|json)$/i, // Include HTML files
       deleteOriginFile: false, // Keep the original files
       compressionOptions: {
         level: 9, // Highest compression level
@@ -19,7 +20,8 @@ export default defineConfig({
     viteCompression({
       algorithm: 'brotliCompress',
       ext: '.br',
-      threshold: 10240,
+      threshold: 1024, // Lower threshold to include smaller files
+      filter: /\.(js|css|html|svg|json)$/i, // Include HTML files
       deleteOriginFile: false,
       compressionOptions: {
         level: 11, // Highest compression level for Brotli
@@ -29,6 +31,22 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),
+    },
+  },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+        },
+      },
+    },
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+        drop_debugger: true,
+      },
     },
   },
 })
