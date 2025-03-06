@@ -27,16 +27,32 @@ const PAGE_PRIORITIES: Record<string, { priority: string; changefreq: string }> 
   '/terms-of-service': { priority: '0.5', changefreq: 'monthly' },
 };
 
-// Image mapping for key pages
-const PAGE_IMAGES: Record<string, { loc: string; title: string }> = {
-  '/': { loc: '/images/hero-image.webp', title: 'MedAlly AI-Powered Healthcare Assistant' },
-  '/about': { loc: '/images/about-team.webp', title: 'MedAlly Team' },
-  '/features': { loc: '/images/features-overview.webp', title: 'MedAlly Features' },
-  '/features/documentation': { loc: '/images/documentation-feature.webp', title: 'AI-Powered Documentation' },
-  '/features/voice-recognition': { loc: '/images/voice-recognition.webp', title: 'Medical Voice Recognition' },
-  '/features/ehr-integration': { loc: '/images/ehr-integration.webp', title: 'EHR Integration' },
-  '/features/medical-coding': { loc: '/images/medical-coding.webp', title: 'Automated Medical Coding' },
-  '/features/clinical-decision-support': { loc: '/images/clinical-decision-support.webp', title: 'Clinical Decision Support' },
+// Image mapping for key pages - commenting out since these images don't exist
+// const PAGE_IMAGES: Record<string, { loc: string; title: string }> = {
+//   '/': { loc: '/images/hero-image.webp', title: 'MedAlly AI-Powered Healthcare Assistant' },
+//   '/about': { loc: '/images/about-team.webp', title: 'MedAlly Team' },
+//   '/features': { loc: '/images/features-overview.webp', title: 'MedAlly Features' },
+//   '/features/documentation': { loc: '/images/documentation-feature.webp', title: 'AI-Powered Documentation' },
+//   '/features/voice-recognition': { loc: '/images/voice-recognition.webp', title: 'Medical Voice Recognition' },
+//   '/features/ehr-integration': { loc: '/images/ehr-integration.webp', title: 'EHR Integration' },
+//   '/features/medical-coding': { loc: '/images/medical-coding.webp', title: 'Automated Medical Coding' },
+//   '/features/clinical-decision-support': { loc: '/images/clinical-decision-support.webp', title: 'Clinical Decision Support' },
+// };
+const PAGE_IMAGES: Record<string, { loc: string; title: string }> = {};
+
+// Define a mapping from file names to actual routes
+const PAGE_ROUTES: Record<string, string | null> = {
+  '/LandingPage': '/',
+  '/AboutUsPage': '/about-us',
+  '/HowItWorksPage': '/how-it-works',
+  '/FeaturesPage': '/features',
+  '/BenefitsPage': '/benefits',
+  '/ROICalculatorPage': '/roi-calculator',
+  '/FAQPage': '/faq',
+  '/PricingPage': '/pricing',
+  '/PrivacyPolicy': null,
+  '/TermsOfService': null,
+  '/Contact': null
 };
 
 /**
@@ -74,7 +90,18 @@ export async function generateSitemap() {
           return null;
         }
 
-        const path = route === '/index' ? '/' : route;
+        // Use the route mapping if available, otherwise use the default path
+        const mappedPath = PAGE_ROUTES[route];
+
+        // Skip pages that are explicitly excluded (mapped to null)
+        if (mappedPath === null) {
+          return null;
+        }
+
+        const path = route === '/index'
+          ? '/'
+          : mappedPath || route;
+
         const { priority, changefreq } = PAGE_PRIORITIES[path] || { priority: '0.5', changefreq: 'monthly' };
         const imageInfo = PAGE_IMAGES[path];
 
@@ -103,37 +130,40 @@ export async function generateSitemap() {
       .filter(Boolean);
 
     // Add specialty pages
-    const specialties = ['primary-care', 'emergency-medicine', 'internal-medicine', 'pediatrics', 'cardiology'];
-    const specialtyEntries = specialties.map(specialty => `
-  <url>
-    <loc>${DOMAIN}/specialties/${specialty}</loc>
-    <lastmod>${CURRENT_DATE}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.7</priority>
-  </url>`);
+    // Commenting out specialty pages since they don't exist yet
+    // const specialties = ['primary-care', 'emergency-medicine', 'internal-medicine', 'pediatrics', 'cardiology'];
+    // const specialtyEntries = specialties.map(specialty => `
+    //   <url>
+    //     <loc>${DOMAIN}/specialties/${specialty}</loc>
+    //     <lastmod>${CURRENT_DATE}</lastmod>
+    //     <changefreq>monthly</changefreq>
+    //     <priority>0.7</priority>
+    //   </url>`);
+    const specialtyEntries: string[] = [];
 
-    // Add app pages
-    const appEntries = [`
-  <url>
-    <loc>https://app.medally.ai/</loc>
-    <lastmod>${CURRENT_DATE}</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.9</priority>
-  </url>`,
-    `
-  <url>
-    <loc>https://app.medally.ai/login</loc>
-    <lastmod>${CURRENT_DATE}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>`,
-    `
-  <url>
-    <loc>https://app.medally.ai/signup</loc>
-    <lastmod>${CURRENT_DATE}</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>`];
+    // Add app pages - commenting out as requested
+    // const appEntries = [`
+    //   <url>
+    //     <loc>https://app.medally.ai/</loc>
+    //     <lastmod>${CURRENT_DATE}</lastmod>
+    //     <changefreq>weekly</changefreq>
+    //     <priority>0.9</priority>
+    //   </url>`,
+    // `
+    //   <url>
+    //     <loc>https://app.medally.ai/login</loc>
+    //     <lastmod>${CURRENT_DATE}</lastmod>
+    //     <changefreq>monthly</changefreq>
+    //     <priority>0.6</priority>
+    //   </url>`,
+    // `
+    //   <url>
+    //     <loc>https://app.medally.ai/signup</loc>
+    //     <lastmod>${CURRENT_DATE}</lastmod>
+    //     <changefreq>monthly</changefreq>
+    //     <priority>0.8</priority>
+    //   </url>`];
+    const appEntries: string[] = [];
 
     // Combine all entries
     const allEntries = [...pageEntries, ...specialtyEntries, ...appEntries];
