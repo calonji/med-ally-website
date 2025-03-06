@@ -17,6 +17,9 @@ import FAQPage from '@/pages/FAQPage';
 import PricingPage from '@/pages/PricingPage';
 import ScrollToTop from '@/components/ScrollToTop';
 
+// Create a Helmet context to be used by the HelmetProvider
+const helmetContext = {};
+
 const App: FC = () => {
   useEffect(() => {
     trackPerformanceMetrics();
@@ -26,7 +29,7 @@ const App: FC = () => {
     <Router>
       <ScrollToTop />
       <TrackingProvider measurementId={import.meta.env.VITE_GA_MEASUREMENT_ID}>
-        <HelmetProvider>
+        <HelmetProvider context={helmetContext}>
           <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/about-us" element={<AboutUsPage />} />
