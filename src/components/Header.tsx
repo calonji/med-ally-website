@@ -12,7 +12,6 @@ import {
   HelpCircle,
   Menu,
   MessageSquare,
-  BookOpen,
 } from 'lucide-react';
 import WaitlistDialog from './WaitlistDialog';
 
@@ -22,147 +21,62 @@ const Header: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const isLandingPage = location.pathname === '/';
 
-  // Handle initial path on page load
-  useEffect(() => {
-    if (isLandingPage) {
-      const path = location.pathname.slice(1); // Remove leading slash
-      if (path) {
-        const element = document.getElementById(path);
-        if (element) {
-          const headerOffset = 64;
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = window.scrollY + elementPosition - headerOffset;
-
-          // Add a small delay to ensure proper scrolling after page load
-          setTimeout(() => {
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth',
-            });
-          }, 100);
-        }
-      }
-    }
-  }, [location, isLandingPage]);
-
-  // Intersection Observer setup - only on landing page
-  useEffect(() => {
-    if (isLandingPage) {
-      const observer = new IntersectionObserver(
-        (entries) =>
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              // Update URL without triggering navigation
-              const newPath = entry.target.id === 'hero' ? '/' : `/${entry.target.id}`;
-              window.history.replaceState(null, '', newPath);
-            }
-          }),
-        {
-          rootMargin: '-64px 0px -90% 0px', // Adjusted rootMargin for better accuracy
-          threshold: 0.1, // Added threshold for better detection
-        }
-      );
-
-      document.querySelectorAll('section[id]').forEach((section) => observer.observe(section));
-      return () => observer.disconnect();
-    }
-  }, [isLandingPage]);
-
-  // Update navigation function to handle both scroll and regular navigation
-  const handleNavigation = useCallback(
-    (path: string) => {
-      setIsMenuOpen(false);
-
-      if (isLandingPage) {
-        // Scroll behavior on landing page
-        const element = document.getElementById(path);
-        if (element) {
-          const headerOffset = 64; // Adjusted for header height
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = window.scrollY + elementPosition - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          });
-        }
-      } else {
-        // Regular navigation on other pages
-        navigate('/');
-        // Add a longer delay to ensure the landing page loads before scrolling
-        setTimeout(() => {
-          const element = document.getElementById(path);
-          if (element) {
-            const headerOffset = 64; // Adjusted for header height
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = window.scrollY + elementPosition - headerOffset;
-
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth',
-            });
-          }
-        }, 300); // Increased delay for better reliability
-      }
-    },
-    [navigate, isLandingPage]
-  );
-
-  // Handle click outside to close mobile menu
+  // Handle click outside to close menu
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      const nav = document.getElementById('mobile-nav');
-      if (nav && !nav.contains(event.target as Node) && isMenuOpen) {
+      const target = event.target as HTMLElement;
+      if (isMenuOpen && !target.closest('.mobile-menu') && !target.closest('.menu-button')) {
         setIsMenuOpen(false);
       }
     };
 
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
   }, [isMenuOpen]);
 
-  // Close menu on scroll
+  // Handle scroll to hide menu
   useEffect(() => {
     const handleScroll = () => {
-      if (isMenuOpen) setIsMenuOpen(false);
+      if (isMenuOpen) {
+        setIsMenuOpen(false);
+      }
     };
 
     window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [isMenuOpen]);
 
-  // Navigation items - updated without # in hrefs
-  const navItems = [
-    { name: 'About Us', href: 'about-us', icon: <Info className="w-4 h-4" />, isScroll: true },
+  // Navigation links - updated to use dedicated URLs
+  const navLinks = [
+    { name: 'About Us', href: '/about-us', icon: <Info className="w-4 h-4" /> },
     {
       name: 'How It Works',
-      href: 'how-it-works',
+      href: '/how-it-works',
       icon: <Settings className="w-4 h-4" />,
-      isScroll: true,
     },
-    { name: 'Features', href: 'features', icon: <Star className="w-4 h-4" />, isScroll: true },
-    { name: 'Benefits', href: 'benefits', icon: <BarChart className="w-4 h-4" />, isScroll: true },
+    { name: 'Features', href: '/features', icon: <Star className="w-4 h-4" /> },
+    { name: 'Benefits', href: '/benefits', icon: <BarChart className="w-4 h-4" /> },
     {
       name: 'ROI Calculator',
-      href: 'roi-calculator',
+      href: '/roi-calculator',
       icon: <Calculator className="w-4 h-4" />,
-      isScroll: true,
     },
-    { name: 'FAQ', href: 'faq', icon: <HelpCircle className="w-4 h-4" />, isScroll: true },
+    { name: 'FAQ', href: '/faq', icon: <HelpCircle className="w-4 h-4" /> },
     {
       name: 'Pricing',
-      href: 'pricing',
+      href: '/pricing',
       icon: <MessageSquare className="w-4 h-4" />,
-      isScroll: true,
     },
-    { name: 'Blog', href: '/blog', icon: <BookOpen className="w-4 h-4" />, isScroll: false },
   ];
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 w-full"
+      className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 w-full shadow-sm"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
     >
@@ -170,117 +84,105 @@ const Header: FC = () => {
         className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 origin-left w-full"
         style={{ scaleX }}
       />
-
-      <div className="max-w-[1400px] mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <motion.a
-            onClick={(e) => {
-              e.preventDefault();
-              navigate('/');
-            }}
-            className="flex items-center space-x-1 cursor-pointer"
-            whileHover={{ scale: 1.02 }}
-          >
-            <Logo className="w-10 h-10" />
-            <div className="flex flex-col">
-              <span className="text-2xl font-extrabold tracking-tight text-gray-900 font-display">
-                MedAlly
-              </span>
-              <span className="text-[10px] text-gray-500 tracking-wider -mt-1">
-                AI-Powered Healthcare
-              </span>
-            </div>
-          </motion.a>
+      <div className="container mx-auto px-4 py-3">
+        <div className="flex items-center justify-between">
+          {/* Logo and Tagline */}
+          <div className="flex items-center">
+            <button
+              onClick={() => navigate('/')}
+              className="flex items-center focus:outline-none"
+              aria-label="Go to homepage"
+            >
+              <Logo className="h-10 w-auto" />
+              <div className="ml-2 flex flex-col items-start">
+                <span className="text-xl font-semibold text-gray-900">MedAlly</span>
+                <span className="text-xs text-gray-600">Simplify Workflows. Empower Care.</span>
+              </div>
+            </button>
+          </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-4">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                role="link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (item.isScroll) {
-                    handleNavigation(item.href);
-                  } else {
-                    navigate(item.href);
-                  }
-                }}
-                className="flex items-center px-2 py-1 rounded-full text-sm transition-all cursor-pointer text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                tabIndex={0}
+          <nav className="hidden md:flex items-center space-x-1">
+            {navLinks.map((link) => (
+              <Button
+                key={link.name}
+                variant="ghost"
+                size="sm"
+                className={`text-sm ${
+                  location.pathname === link.href
+                    ? 'bg-gray-100 text-gray-900'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                }`}
+                onClick={() => navigate(link.href)}
               >
-                <span className="mr-1.5">{item.icon}</span>
-                {item.name}
-              </a>
+                {link.name}
+              </Button>
             ))}
+            <a 
+              href="https://app.medally.ai/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="ml-2 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 hover:text-white rounded-md shadow-sm transition-colors duration-200"
+            >
+              Join Now
+            </a>
           </nav>
 
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <WaitlistDialog
-                trigger={
-                  <Button className="text-sm px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500">
-                    Get Early Access
-                  </Button>
-                }
-              />
-            </motion.div>
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="menu-button"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              <Menu className="h-6 w-6" />
+            </Button>
           </div>
-
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-50"
-            aria-label="Toggle Menu"
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            <Menu className="w-6 h-6 text-gray-600" />
-          </button>
         </div>
+      </div>
 
-        {/* Mobile Navigation */}
-        <motion.nav
-          id="mobile-menu"
-          aria-label="mobile-nav"
-          className={`lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg w-full ${
-            isMenuOpen ? 'block' : 'hidden'
-          }`}
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <motion.div
+          className="mobile-menu md:hidden bg-white border-t border-gray-200 shadow-md"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.2 }}
         >
-          <div className="px-4 py-3 space-y-1">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                role="link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (item.isScroll) {
-                    handleNavigation(item.href);
-                  } else {
-                    navigate(item.href);
-                  }
+          <div className="py-2 px-4">
+            {navLinks.map((link) => (
+              <Button
+                key={link.name}
+                variant="ghost"
+                className={`w-full justify-start text-left mb-1 ${
+                  location.pathname === link.href
+                    ? 'bg-gray-100 text-gray-900'
+                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                }`}
+                onClick={() => {
+                  navigate(link.href);
+                  setIsMenuOpen(false);
                 }}
-                className="flex items-center px-3 py-2 rounded-lg text-sm transition-all cursor-pointer text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                tabIndex={0}
               >
-                <span className="mr-2">{item.icon}</span>
-                {item.name}
-              </a>
+                <span className="mr-2">{link.icon}</span>
+                {link.name}
+              </Button>
             ))}
-            <div className="pt-2 pb-1">
-              <WaitlistDialog
-                trigger={
-                  <Button className="w-full text-sm py-2 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500">
-                    Get Early Access
-                  </Button>
-                }
-              />
+            <div className="mt-4">
+              <a 
+                href="https://app.medally.ai/" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 hover:text-white rounded-md shadow-sm transition-colors duration-200"
+              >
+                Join Now
+              </a>
             </div>
           </div>
-        </motion.nav>
-      </div>
+        </motion.div>
+      )}
     </motion.header>
   );
 };

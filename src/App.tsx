@@ -8,8 +8,14 @@ import { TrackingProvider } from '@/providers/TrackingProvider';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import TermsOfService from '@/pages/TermsOfService';
 import Contact from '@/pages/Contact';
-import Blog from '@/pages/Blog';
-import BlogPost from '@/pages/BlogPost';
+import AboutUsPage from '@/pages/AboutUsPage';
+import HowItWorksPage from '@/pages/HowItWorksPage';
+import FeaturesPage from '@/pages/FeaturesPage';
+import BenefitsPage from '@/pages/BenefitsPage';
+import ROICalculatorPage from '@/pages/ROICalculatorPage';
+import FAQPage from '@/pages/FAQPage';
+import PricingPage from '@/pages/PricingPage';
+import ScrollToTop from '@/components/ScrollToTop';
 
 const App: FC = () => {
   useEffect(() => {
@@ -18,19 +24,18 @@ const App: FC = () => {
 
   return (
     <Router>
+      <ScrollToTop />
       <TrackingProvider measurementId={import.meta.env.VITE_GA_MEASUREMENT_ID}>
         <HelmetProvider>
           <Routes>
             <Route path="/" element={<LandingPage />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/blog/:slug" element={<BlogPost />} />
-            <Route path="/about-us" element={<LandingPage />} />
-            <Route path="/how-it-works" element={<LandingPage />} />
-            <Route path="/features" element={<LandingPage />} />
-            <Route path="/benefits" element={<LandingPage />} />
-            <Route path="/roi-calculator" element={<LandingPage />} />
-            <Route path="/faq" element={<LandingPage />} />
-            <Route path="/pricing" element={<LandingPage />} />
+            <Route path="/about-us" element={<AboutUsPage />} />
+            <Route path="/how-it-works" element={<HowItWorksPage />} />
+            <Route path="/features" element={<FeaturesPage />} />
+            <Route path="/benefits" element={<BenefitsPage />} />
+            <Route path="/roi-calculator" element={<ROICalculatorPage />} />
+            <Route path="/faq" element={<FAQPage />} />
+            <Route path="/pricing" element={<PricingPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/contact" element={<Contact />} />

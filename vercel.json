@@ -7,28 +7,11 @@
   "public": true,
   "rewrites": [
     {
-      "source": "/blog/:path*.html",
-      "destination": "/blog/:path*.html"
-    },
-    {
-      "source": "/blog/:path*",
-      "destination": "/index.html"
-    },
-    {
       "source": "/(.*)",
       "destination": "/index.html"
     }
   ],
   "headers": [
-    {
-      "source": "/blog/(.*)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=0, must-revalidate"
-        }
-      ]
-    },
     {
       "source": "/static/(.*)",
       "headers": [

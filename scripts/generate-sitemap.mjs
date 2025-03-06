@@ -14,9 +14,6 @@ async function generateSitemap() {
       '!src/pages/404.tsx'
     ]);
 
-    // Get all blog posts
-    const blogPosts = await globby(['public/blog/**/*.md']);
-
     // Get all public images
     const images = await globby(['public/images/**/*.{jpg,jpeg,png,gif,webp}']);
 
@@ -32,20 +29,6 @@ async function generateSitemap() {
           <lastmod>${new Date().toISOString()}</lastmod>
           <changefreq>weekly</changefreq>
           <priority>0.8</priority>
-        </url>`;
-    });
-
-    // Generate sitemap entries for blog posts
-    const blogEntries = blogPosts.map(post => {
-      const path = post
-        .replace('public', '')
-        .replace('.md', '');
-      return `
-        <url>
-          <loc>${DOMAIN}${path}</loc>
-          <lastmod>${new Date().toISOString()}</lastmod>
-          <changefreq>weekly</changefreq>
-          <priority>0.7</priority>
         </url>`;
     });
 
@@ -65,7 +48,6 @@ async function generateSitemap() {
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         ${pageEntries.join('')}
-        ${blogEntries.join('')}
         ${imageEntries.join('')}
       </urlset>`;
 

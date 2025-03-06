@@ -30,13 +30,13 @@ function blogPlugin(): Plugin {
     buildEnd() {
       const blogDir = path.join(process.cwd(), 'public/blog');
       const outputDir = path.join(process.cwd(), 'public/api');
-      
+
       try {
         // Create api directory if it doesn't exist
         if (!fs.existsSync(outputDir)) {
           fs.mkdirSync(outputDir, { recursive: true });
         }
-        
+
         // Read blog files and write to json
         const files = fs.readdirSync(blogDir);
         const htmlFiles = files.filter(file => file.endsWith('.html'));
@@ -53,7 +53,7 @@ function blogPlugin(): Plugin {
 
 export default defineConfig({
   base: '/',
-  plugins: [react(), blogPlugin()],
+  plugins: [react()],
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "./src"),

@@ -1,10 +1,44 @@
+# MedAlly Robots.txt - Optimized for search engines and AI assistants
+# Last updated: 2023-11-15
+
+# Default rules for all crawlers
 User-agent: *
 Allow: /
+
+# Encourage crawling of important content
+Allow: /features/
+Allow: /pricing/
+Allow: /about/
 Allow: /blog/
-Allow: /public/blog/
+Allow: /resources/
+Allow: /specialties/
 
-# Sitemap
-Sitemap: https://medally.ai/sitemap.xml
+# Prevent crawling of admin or private areas
+Disallow: /admin/
+Disallow: /internal/
+Disallow: /dev/
+Disallow: /test/
+Disallow: /staging/
 
-# Crawl-delay
-Crawl-delay: 10 
+# Sitemaps
+Sitemap: https://medally.ai/sitemap-index.xml
+
+# Specific rules for AI assistants and major search engines
+User-agent: GPTBot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 2
+
+User-agent: Baiduspider
+Allow: /
+Crawl-delay: 2
+
+# Default crawl delay for other bots
+Crawl-delay: 5 

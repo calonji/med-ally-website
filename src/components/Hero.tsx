@@ -1,88 +1,136 @@
-import { type FC } from 'react';
+import { FC } from 'react';
 import { motion } from 'framer-motion';
-import { BackgroundEffects } from '@/components/ui/background-effects';
-import WaitlistDialog from './WaitlistDialog';
+import { Button } from '@/components/ui/button';
+import { Link } from 'react-router-dom';
+import { 
+  Stethoscope, 
+  Brain, 
+  FileText, 
+  Clock, 
+  BarChart3, 
+  Shield 
+} from 'lucide-react';
 
 const Hero: FC = () => {
+  // Animation variants for floating icons
+  const floatingIconVariants = {
+    initial: { opacity: 0, scale: 0 },
+    animate: (custom: number) => ({
+      opacity: 0.8,
+      scale: 1,
+      transition: {
+        delay: custom * 0.2,
+        duration: 0.8,
+        ease: "easeOut"
+      }
+    }),
+    float: (custom: number) => ({
+      y: [0, -15, 0],
+      rotate: [0, custom % 2 === 0 ? 10 : -10, 0],
+      transition: {
+        duration: 5 + custom,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }
+    })
+  };
+
+  // Icons with positions
+  const floatingIcons = [
+    { icon: <Stethoscope size={32} />, top: "15%", left: "10%", delay: 0 },
+    { icon: <Brain size={32} />, top: "25%", right: "15%", delay: 1 },
+    { icon: <FileText size={32} />, bottom: "30%", left: "15%", delay: 2 },
+    { icon: <Clock size={32} />, top: "60%", right: "10%", delay: 3 },
+    { icon: <BarChart3 size={32} />, bottom: "15%", left: "30%", delay: 4 },
+    { icon: <Shield size={32} />, top: "40%", left: "75%", delay: 5 }
+  ];
+
   return (
-    <section
-      id="hero"
-      role="banner"
-      aria-label="Main hero section"
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      <BackgroundEffects variant="gradient" />
-
-      {/* Floating Elements */}
-      <motion.div
-        className="absolute inset-0 pointer-events-none"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        {/* DNA Helix Animation */}
-        <div className="absolute top-1/4 -left-12 w-24 h-24 bg-blue-500/10 rounded-full blur-xl" />
-        <div className="absolute bottom-1/4 -right-12 w-24 h-24 bg-purple-500/10 rounded-full blur-xl" />
-
-        {/* Particles */}
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-2 h-2 bg-blue-500/20 rounded-full"
-            style={{
-              top: `${Math.random() * 100}%`,
-              left: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -20, 0],
-              opacity: [0.2, 1, 0.2],
-            }}
-            transition={{
-              duration: 3 + Math.random() * 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </motion.div>
-
-      <div className="container mx-auto px-4 relative z-10">
-        <div className="text-center max-w-4xl mx-auto">
-          <motion.div
+    <div className="relative overflow-hidden bg-gradient-to-br from-[#36b7b5] via-[#2a7c9e] to-[#4b2683] min-h-[90vh] flex items-center">
+      {/* Background pattern */}
+      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
+      
+      {/* Floating blobs */}
+      <div className="absolute top-0 -left-4 w-72 h-72 bg-white opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
+      <div className="absolute top-0 -right-4 w-72 h-72 bg-[#36b7b5] opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
+      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#4b2683] opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
+      
+      {/* Floating icons */}
+      {floatingIcons.map((item, index) => (
+        <motion.div
+          key={index}
+          className="absolute text-white/80 z-10"
+          style={{
+            top: item.top,
+            left: item.left,
+            right: item.right,
+            bottom: item.bottom
+          }}
+          initial="initial"
+          animate={["animate", "float"]}
+          custom={item.delay}
+          variants={floatingIconVariants}
+        >
+          {item.icon}
+        </motion.div>
+      ))}
+      
+      <div className="container mx-auto px-4 relative z-20">
+        <div className="max-w-4xl mx-auto text-center">
+          <motion.h1 
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-6">
-              Spend More Time with Patients,{' '}
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600">
-                Not Paperwork
-              </span>
-            </h1>
-          </motion.div>
-
-          <motion.p
+            Revolutionizing Healthcare with AI – Smarter, Faster, More Efficient
+          </motion.h1>
+          
+          <motion.p 
+            className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-xl text-gray-600 mb-8"
+            transition={{ duration: 0.8, delay: 0.4 }}
           >
-            MedAlly is your AI-powered clinical assistant that simplifies documentation, enhances
-            diagnostic accuracy, and supports better patient outcomes—all in one easy-to-use
-            platform.
+            16 AI-powered agents automate clinical workflows, reduce administrative burden, and enhance patient care.
           </motion.p>
-
-          <motion.div
+          
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.4 }}
-            className="flex justify-center"
+            transition={{ duration: 0.8, delay: 0.6 }}
           >
-            <WaitlistDialog className="text-lg px-8 py-4" />
+            <a href="https://app.medally.ai/" target="_blank" rel="noopener noreferrer">
+              <Button 
+                size="lg" 
+                className="bg-orange-500 hover:bg-orange-600 text-white hover:text-white transition-all duration-300 text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl"
+              >
+                Get Started for Free
+              </Button>
+            </a>
+            
+            <a href="https://www.calonji.com/contact" target="_blank" rel="noopener noreferrer">
+              <Button 
+                size="lg" 
+                className="bg-[#e41e3a] hover:bg-[#c91931] text-white transition-all duration-300 text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl"
+              >
+                Book a Demo
+              </Button>
+            </a>
+          </motion.div>
+          
+          <motion.div
+            className="mt-8 text-white/70 text-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.8, delay: 1 }}
+          >
+            HIPAA Compliant • No Credit Card Required
           </motion.div>
         </div>
       </div>
-    </section>
+    </div>
   );
 };
 

@@ -1,28 +1,23 @@
-import { useEffect, useState } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
-export const ScrollToTop = () => {
-  const [isVisible, setIsVisible] = useState(false);
+/**
+ * ScrollToTop component that scrolls the window to the top when the route changes
+ * This component should be placed inside the Router component in App.tsx
+ */
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
 
   useEffect(() => {
-    const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setIsVisible(true);
-      } else {
-        setIsVisible(false);
-      }
-    };
+    // Scroll to top when the route changes
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth' // Use smooth scrolling for better UX
+    });
+  }, [pathname]);
 
-    window.addEventListener('scroll', toggleVisibility);
-    return () => window.removeEventListener('scroll', toggleVisibility);
-  }, []);
+  return null; // This component doesn't render anything
+};
 
-  return isVisible ? (
-    <button
-      onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
-      className="fixed bottom-4 right-4 p-2 bg-blue-600 text-white rounded-full shadow-lg"
-    >
-      <ArrowUp className="w-6 h-6" />
-    </button>
-  ) : null;
-}; 
+export default ScrollToTop; 
