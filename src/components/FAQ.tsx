@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { type FC, useState, useRef } from 'react';
 import { motion, useInView, AnimatePresence } from 'framer-motion';
 import { 

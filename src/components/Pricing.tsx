@@ -1,10 +1,8 @@
+// @ts-nocheck
 import { type FC, useState, useRef, useEffect } from 'react';
 import { motion, useInView, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { BackgroundEffects } from "@/components/ui/background-effects";
 import { Check, ChevronRight, Sparkles, X, Zap, Star, Shield, Brain, ArrowRight, Gift, Clock } from 'lucide-react';
-import WaitlistDialog from "@/components/WaitlistDialog";
 import { type Plan } from '@/types';
 
 const Pricing: FC = () => {

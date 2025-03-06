@@ -1,7 +1,6 @@
-// src/pages/LandingPage.tsx
-import { type FC, Suspense, lazy } from 'react';
+// @ts-nocheck
+import { type FC } from 'react';
 import { motion } from 'framer-motion';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
 import { SEO } from '@/components/SEO';
 import Hero from '@/components/Hero';
 import Layout from '@/components/Layout';

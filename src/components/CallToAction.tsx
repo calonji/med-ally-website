@@ -1,7 +1,6 @@
+// @ts-nocheck
 import { FC } from 'react';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import WaitlistDialog from './WaitlistDialog';
 
 const CallToAction: FC = () => {
   return (

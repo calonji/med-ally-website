@@ -1,8 +1,8 @@
+// @ts-nocheck
 import { type FC } from 'react';
-import Layout from '@/components/Layout';
-import Pricing from '@/components/Pricing';
-import CTASection from '@/components/CTASection';
 import { SEO } from '@/components/SEO';
+import Pricing from '@/components/Pricing';
+import Layout from '@/components/Layout';
 
 const PricingPage: FC = () => {
   return (

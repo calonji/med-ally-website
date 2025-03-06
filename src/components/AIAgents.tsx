@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { FC, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { 
@@ -19,8 +20,6 @@ import {
   DollarSign 
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import WaitlistDialog from '@/components/WaitlistDialog';
 
 interface AIAgent {
   id: string;

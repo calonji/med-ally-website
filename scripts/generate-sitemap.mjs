@@ -4,6 +4,29 @@ import prettier from 'prettier';
 
 const DOMAIN = 'https://medally.ai';
 
+/**
+ * IMPORTANT: This mapping must be kept in sync with the routes defined in src/App.tsx
+ * If you add or change routes in App.tsx, make sure to update this mapping accordingly.
+ * 
+ * The keys are the file paths in the src/pages directory.
+ * The values are the actual URL paths used in the application's routing.
+ * 
+ * Set a value to null to exclude that page from the sitemap.
+ */
+const PAGE_ROUTES = {
+  'src/pages/LandingPage.tsx': '/',
+  'src/pages/AboutUsPage.tsx': '/about-us',
+  'src/pages/HowItWorksPage.tsx': '/how-it-works',
+  'src/pages/FeaturesPage.tsx': '/features',
+  'src/pages/BenefitsPage.tsx': '/benefits',
+  'src/pages/ROICalculatorPage.tsx': '/roi-calculator',
+  'src/pages/FAQPage.tsx': '/faq',
+  'src/pages/PricingPage.tsx': '/pricing',
+  'src/pages/PrivacyPolicy.tsx': null, // Excluded - no content yet
+  'src/pages/TermsOfService.tsx': null, // Excluded - no content yet
+  'src/pages/Contact.tsx': '/contact'
+};
+
 async function generateSitemap() {
   try {
     // Get all pages except dynamic routes and API endpoints
@@ -19,10 +42,17 @@ async function generateSitemap() {
 
     // Generate sitemap entries for pages
     const pageEntries = pages.map(page => {
-      const path = page
+      // Skip pages that are explicitly excluded (mapped to null)
+      if (PAGE_ROUTES[page] === null) {
+        return '';
+      }
+
+      // Use the route mapping if available, otherwise use the default path transformation
+      const path = PAGE_ROUTES[page] || page
         .replace('src/pages', '')
         .replace('.tsx', '')
         .replace('/index', '');
+
       return `
         <url>
           <loc>${DOMAIN}${path}</loc>
@@ -30,7 +60,7 @@ async function generateSitemap() {
           <changefreq>weekly</changefreq>
           <priority>0.8</priority>
         </url>`;
-    });
+    }).filter(entry => entry !== ''); // Remove empty entries
 
     // Generate sitemap entries for images
     const imageEntries = images.map(image => {

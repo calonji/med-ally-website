@@ -1,4 +1,4 @@
-import { type FC, useEffect, useState, useCallback } from 'react';
+import { type FC, useEffect, useState } from 'react';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/Logo';
@@ -13,7 +13,6 @@ import {
   Menu,
   MessageSquare,
 } from 'lucide-react';
-import WaitlistDialog from './WaitlistDialog';
 
 const Header: FC = () => {
   const navigate = useNavigate();
