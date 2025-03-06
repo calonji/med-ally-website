@@ -9,7 +9,7 @@ const FAQPage: FC = () => {
     <Layout>
       <SEO 
         title="FAQ - MedAlly | Frequently Asked Questions"
-        description="Find answers to frequently asked questions about MedAlly's AI-powered healthcare documentation platform, features, pricing, and implementation."
+        description="Get answers to common questions about MedAlly's AI healthcare assistant. Learn about implementation, security, pricing, EHR integration, and how our platform helps physicians reduce documentation time by up to 70%."
         url="https://www.medally.ai/faq"
       />
       <main className="container mx-auto px-4 py-8 pt-24 mt-10">

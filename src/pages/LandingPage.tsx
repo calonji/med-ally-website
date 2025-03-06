@@ -148,7 +148,7 @@ const LandingPage: FC = () => {
     <Layout>
       <SEO 
         title="MedAlly - AI-Powered Healthcare Assistant for Physicians | HIPAA Compliant"
-        description="MedAlly is an AI-powered healthcare assistant that helps physicians reduce documentation time by 70% while improving diagnostic accuracy. HIPAA & SOC2 compliant with EHR integration."
+        description="MedAlly's AI healthcare assistant reduces physician documentation time by 70% while improving diagnostic accuracy. Our HIPAA & SOC2 compliant platform integrates with your EHR to transform clinical workflows and reduce burnout."
         url="https://www.medally.ai/"
       />
       

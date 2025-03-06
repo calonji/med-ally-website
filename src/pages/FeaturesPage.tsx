@@ -9,7 +9,7 @@ const FeaturesPage: FC = () => {
     <Layout>
       <SEO 
         title="Features - MedAlly | Advanced Healthcare Documentation Tools"
-        description="Explore MedAlly's comprehensive features for healthcare documentation, including AI-powered SOAP notes, lab encounters management, and clinical decision support."
+        description="Discover MedAlly's comprehensive AI features including voice-driven documentation, automated SOAP notes, medical coding, and clinical decision support. Our HIPAA-compliant platform integrates seamlessly with your EHR system."
         url="https://www.medally.ai/features"
       />
       <main className="container mx-auto px-4 py-8 pt-24 mt-10">

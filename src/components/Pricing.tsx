@@ -293,7 +293,7 @@ const Pricing: FC = () => {
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
-          className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 sm:px-6"
         >
           {plans.map((plan, index) => (
             <motion.div
@@ -324,7 +324,12 @@ const Pricing: FC = () => {
                 {/* Glow effect on hover */}
                 {hoveredPlan === index && (
                   <motion.div 
-                    className={`absolute inset-0 rounded-2xl bg-gradient-to-br from-${plan.color}-400/10 to-${plan.color}-600/5 -z-10`}
+                    className={`absolute inset-0 rounded-2xl ${
+                      plan.color === 'blue' ? 'bg-gradient-to-br from-blue-400/10 to-blue-600/5' :
+                      plan.color === 'indigo' ? 'bg-gradient-to-br from-indigo-400/10 to-indigo-600/5' :
+                      plan.color === 'purple' ? 'bg-gradient-to-br from-purple-400/10 to-purple-600/5' :
+                      'bg-gradient-to-br from-gray-400/10 to-gray-600/5'
+                    } -z-10`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     exit={{ opacity: 0 }}
@@ -333,7 +338,12 @@ const Pricing: FC = () => {
                 
                 <div className="mb-4">
                   <div className="flex items-center gap-2 mb-1">
-                    <div className={`flex items-center justify-center w-7 h-7 rounded-full bg-${plan.color}-100 text-${plan.color}-600`}>
+                    <div className={`flex items-center justify-center w-7 h-7 rounded-full ${
+                      plan.color === 'blue' ? 'bg-blue-100 text-blue-600' :
+                      plan.color === 'indigo' ? 'bg-indigo-100 text-indigo-600' :
+                      plan.color === 'purple' ? 'bg-purple-100 text-purple-600' :
+                      'bg-gray-100 text-gray-600'
+                    }`}>
                       {planIcons[plan.name as keyof typeof planIcons]}
                     </div>
                     <h3 className="text-lg font-bold text-gray-900 flex items-center">
@@ -379,7 +389,12 @@ const Pricing: FC = () => {
                     {planBenefits[plan.name as keyof typeof planBenefits].map((benefit, i) => (
                       <div 
                         key={i} 
-                        className={`flex items-center gap-1 px-2 py-1 rounded-full bg-${plan.color}-50 text-${plan.color}-700 text-xs`}
+                        className={`flex items-center gap-1 px-2 py-1 rounded-full ${
+                          plan.color === 'blue' ? 'bg-blue-50 text-blue-700' :
+                          plan.color === 'indigo' ? 'bg-indigo-50 text-indigo-700' :
+                          plan.color === 'purple' ? 'bg-purple-50 text-purple-700' :
+                          'bg-gray-50 text-gray-700'
+                        } text-xs`}
                       >
                         {benefit.icon}
                         <span>{benefit.text}</span>
@@ -400,10 +415,22 @@ const Pricing: FC = () => {
                         onMouseEnter={() => setSelectedFeature(feature)}
                         onMouseLeave={() => setSelectedFeature(null)}
                       >
-                        <span className={`shrink-0 mt-0.5 flex items-center justify-center w-3.5 h-3.5 rounded-full bg-${plan.color}-100 text-${plan.color}-600 ${selectedFeature === feature ? 'scale-125' : ''} transition-transform duration-200`}>
+                        <span className={`shrink-0 mt-0.5 flex items-center justify-center w-3.5 h-3.5 rounded-full ${
+                          plan.color === 'blue' ? 'bg-blue-100 text-blue-600' :
+                          plan.color === 'indigo' ? 'bg-indigo-100 text-indigo-600' :
+                          plan.color === 'purple' ? 'bg-purple-100 text-purple-600' :
+                          'bg-gray-100 text-gray-600'
+                        } ${selectedFeature === feature ? 'scale-125' : ''} transition-transform duration-200`}>
                           <Check className="w-2 h-2" />
                         </span>
-                        <span className={`text-xs ${selectedFeature === feature ? `text-${plan.color}-700 font-medium` : 'text-gray-600'} truncate transition-colors duration-200`}>
+                        <span className={`text-xs ${
+                          selectedFeature === feature ? (
+                            plan.color === 'blue' ? 'text-blue-700' :
+                            plan.color === 'indigo' ? 'text-indigo-700' :
+                            plan.color === 'purple' ? 'text-purple-700' :
+                            'text-gray-700'
+                          ) : 'text-gray-600'
+                        } font-medium truncate transition-colors duration-200`}>
                           {feature}
                         </span>
                       </motion.li>
@@ -416,7 +443,12 @@ const Pricing: FC = () => {
                     href={plan.name === "Enterprise" ? "https://www.calonji.com/contact" : "https://app.medally.ai/"}
                     target="_blank" 
                     rel="noopener noreferrer"
-                    className={`block w-full apple-button bg-gradient-to-r from-${plan.color}-500 to-${plan.color}-600 text-white py-2 px-3 rounded-full text-sm font-medium flex items-center justify-center gap-1.5 group hover:shadow-lg transition-all duration-300`}
+                    className={`block w-full apple-button ${
+                      plan.color === 'blue' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
+                      plan.color === 'indigo' ? 'bg-gradient-to-r from-indigo-500 to-indigo-600' :
+                      plan.color === 'purple' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
+                      'bg-gradient-to-r from-gray-500 to-gray-600'
+                    } text-white py-2 px-3 rounded-full text-sm font-medium flex items-center justify-center gap-1.5 group hover:shadow-lg transition-all duration-300`}
                   >
                     <span>{plan.button}</span>
                     <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
@@ -433,80 +465,92 @@ const Pricing: FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.3 }}
-          className="mt-20 max-w-6xl mx-auto"
+          className="mt-20 max-w-6xl mx-auto px-4 sm:px-6"
         >
           <h3 className="text-2xl font-bold text-center mb-8">Compare Plan Features</h3>
           
-          <div className="overflow-x-auto rounded-xl shadow-md">
-            <table className="w-full bg-white">
-              <thead>
-                <tr className="border-b">
-                  <th className="py-4 px-6 text-left text-gray-500 font-medium sticky left-0 bg-white">Feature</th>
-                  {plans.map(plan => (
-                    <th key={plan.name} className="py-4 px-6 text-center">
-                      <span className={`text-${plan.color}-600 font-bold`}>{plan.name}</span>
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  { name: "Encounters", values: ["10/month", "Unlimited", "Unlimited", "Unlimited"] },
-                  { name: "AI Scribe", values: ["Basic", "Advanced", "Advanced", "Advanced"] },
-                  { name: "Clinical Documentation", values: ["Basic", "Comprehensive", "Comprehensive", "Comprehensive"] },
-                  { name: "Lab Follow-Up", values: ["✓", "✓", "✓", "✓"] },
-                  { name: "Predictive Results Analysis", values: ["✓", "✓", "✓", "✓"] },
-                  { name: "Predictive Differential Diagnosis", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Clinical Ranking", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Diagnostic Tests", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Prioritized Testing", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "AI-Powered Findings", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Predictive Clinical Guidelines", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Step-by-Step Predictive Treatment Implementation", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "AI-Powered Treatment Medications", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Dosage Optimization", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Predictive Patient Monitoring", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Trend Analysis", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Contingency Plans for High-Risk Patients", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "AI-Driven Clinical Recommendations", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Implementation Details", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Evidence-Based AI Learning", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Clinical Pattern Recognition", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "Tailored to Your Specialty", values: ["✓", "✓", "✓", "✓"] },
-                  { name: "Adaptive AI Communication", values: ["✓", "✓", "✓", "✓"] },
-                  { name: "Comprehensive AI-Powered Medical Coding", values: ["✓", "✗", "✓", "✓"] },
-                  { name: "EHR Integration", values: ["✗", "✗", "✗", "✓"] },
-                  { name: "Dedicated Support", values: ["✗", "✗", "✗", "✓"] }
-                ].map((feature, i) => (
-                  <motion.tr 
-                    key={i} 
-                    className={i % 2 === 0 ? "bg-gray-50" : ""}
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.01 }}
-                  >
-                    <td className="py-3 px-6 text-gray-800 font-medium sticky left-0 bg-inherit">{feature.name}</td>
-                    {feature.values.map((value, j) => (
-                      <td key={j} className="py-3 px-6 text-center text-gray-600">
-                        {value === "✓" ? (
-                          <motion.div 
-                            whileHover={{ scale: 1.2 }}
-                            className="flex justify-center"
-                          >
-                            <Check className="w-5 h-5 text-green-500" />
-                          </motion.div>
-                        ) : value === "✗" ? (
-                          <X className="w-5 h-5 text-gray-300 mx-auto" />
-                        ) : (
-                          value
-                        )}
-                      </td>
+          <div className="overflow-x-auto rounded-xl shadow-md bg-white">
+            <div className="min-w-[800px]"> {/* Minimum width to ensure table doesn't get too compressed */}
+              <table className="w-full">
+                <thead>
+                  <tr className="border-b">
+                    <th className="py-4 px-6 text-left text-gray-500 font-medium sticky left-0 bg-white z-10">Feature</th>
+                    {plans.map(plan => (
+                      <th key={plan.name} className="py-4 px-6 text-center">
+                        <span className={`${
+                          plan.color === 'blue' ? 'text-blue-600' :
+                          plan.color === 'indigo' ? 'text-indigo-600' :
+                          plan.color === 'purple' ? 'text-purple-600' :
+                          'text-gray-600'
+                        } font-bold`}>{plan.name}</span>
+                      </th>
                     ))}
-                  </motion.tr>
-                ))}
-              </tbody>
-            </table>
+                  </tr>
+                </thead>
+                <tbody>
+                  {[
+                    { name: "Encounters", values: ["10/month", "Unlimited", "Unlimited", "Unlimited"] },
+                    { name: "AI Scribe", values: ["Basic", "Advanced", "Advanced", "Advanced"] },
+                    { name: "Clinical Documentation", values: ["Basic", "Comprehensive", "Comprehensive", "Comprehensive"] },
+                    { name: "Lab Follow-Up", values: ["✓", "✓", "✓", "✓"] },
+                    { name: "Predictive Results Analysis", values: ["✓", "✓", "✓", "✓"] },
+                    { name: "Predictive Differential Diagnosis", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Clinical Ranking", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Diagnostic Tests", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Prioritized Testing", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "AI-Powered Findings", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Predictive Clinical Guidelines", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Step-by-Step Predictive Treatment Implementation", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "AI-Powered Treatment Medications", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Dosage Optimization", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Predictive Patient Monitoring", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Trend Analysis", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Contingency Plans for High-Risk Patients", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "AI-Driven Clinical Recommendations", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Implementation Details", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Evidence-Based AI Learning", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Clinical Pattern Recognition", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "Tailored to Your Specialty", values: ["✓", "✓", "✓", "✓"] },
+                    { name: "Adaptive AI Communication", values: ["✓", "✓", "✓", "✓"] },
+                    { name: "Comprehensive AI-Powered Medical Coding", values: ["✓", "✗", "✓", "✓"] },
+                    { name: "EHR Integration", values: ["✗", "✗", "✗", "✓"] },
+                    { name: "Dedicated Support", values: ["✗", "✗", "✗", "✓"] }
+                  ].map((feature, i) => (
+                    <motion.tr 
+                      key={i} 
+                      className={i % 2 === 0 ? "bg-gray-50" : ""}
+                      initial={{ opacity: 0 }}
+                      whileInView={{ opacity: 1 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.01 }}
+                    >
+                      <td className="py-3 px-6 text-gray-800 font-medium sticky left-0 bg-inherit z-10">{feature.name}</td>
+                      {feature.values.map((value, j) => (
+                        <td key={j} className="py-3 px-6 text-center text-gray-600">
+                          {value === "✓" ? (
+                            <motion.div 
+                              whileHover={{ scale: 1.2 }}
+                              className="flex justify-center"
+                            >
+                              <Check className="w-5 h-5 text-green-500" />
+                            </motion.div>
+                          ) : value === "✗" ? (
+                            <X className="w-5 h-5 text-gray-300 mx-auto" />
+                          ) : (
+                            value
+                          )}
+                        </td>
+                      ))}
+                    </motion.tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          
+          {/* Mobile indicator for horizontal scrolling */}
+          <div className="mt-4 text-center text-sm text-gray-500 md:hidden">
+            <span>Swipe left/right to see more features</span>
           </div>
         </motion.div>
         

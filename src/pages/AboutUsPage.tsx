@@ -9,7 +9,7 @@ const AboutUsPage: FC = () => {
     <Layout>
       <SEO 
         title="About Us - MedAlly | Our Mission and Vision"
-        description="A solution designed by physicians, for physicians. Combining cutting-edge AI technology with a deep understanding of clinical workflow.."
+        description="MedAlly was founded by physicians to solve healthcare's documentation burden. Learn about our mission to transform clinical workflows with AI technology that respects the doctor-patient relationship while ensuring HIPAA compliance."
         url="https://www.medally.ai/about-us"
       />
       <main className="container mx-auto px-4 py-8 pt-24 mt-10">

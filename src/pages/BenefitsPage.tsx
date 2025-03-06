@@ -9,7 +9,7 @@ const BenefitsPage: FC = () => {
     <Layout>
       <SEO 
         title="Benefits - MedAlly | Advantages of AI-Powered Healthcare Documentation"
-        description="Discover the key benefits of MedAlly's AI-powered healthcare documentation platform, including time savings, improved accuracy, and reduced physician burnout."
+        description="Explore the key benefits of MedAlly: reduce documentation time by 70%, minimize physician burnout, improve clinical accuracy, enhance patient satisfaction, and increase practice revenue—all with our HIPAA-compliant AI assistant."
         url="https://www.medally.ai/benefits"
       />
       <main className="container mx-auto px-4 py-8 pt-24 mt-10">

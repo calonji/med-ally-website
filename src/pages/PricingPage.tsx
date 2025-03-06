@@ -10,7 +10,7 @@ const PricingPage: FC = () => {
     <Layout>
       <SEO 
         title="Pricing - MedAlly | Flexible Plans for Healthcare Providers"
-        description="Explore MedAlly's transparent pricing plans designed for healthcare providers of all sizes, from solo practitioners to large hospital systems."
+        description="View MedAlly's transparent pricing plans designed for healthcare providers of all sizes. From our free tier to enterprise solutions, find the perfect plan to reduce documentation time and improve clinical efficiency."
         url="https://www.medally.ai/pricing"
       />
       <main className="container mx-auto px-4 py-8 pt-24 mt-10">

@@ -9,7 +9,7 @@ const ROICalculatorPage: FC = () => {
     <Layout>
       <SEO 
         title="ROI Calculator - MedAlly | Calculate Your Healthcare Documentation Savings"
-        description="Use MedAlly's ROI calculator to estimate the time and cost savings your healthcare practice can achieve with our AI-powered documentation system. See how much you can save in minutes, dollars, and patient capacity."
+        description="Calculate how much time and money your healthcare practice can save with MedAlly's AI documentation system. Our ROI calculator shows potential savings in documentation time, operational costs, and increased patient capacity."
         url="https://www.medally.ai/roi-calculator"
         schema={{
           "@context": "https://schema.org",
