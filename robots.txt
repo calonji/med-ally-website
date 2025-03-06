@@ -23,7 +23,7 @@ Disallow: /test/
 Disallow: /staging/
 
 # Sitemaps
-Sitemap: https://medally.ai/sitemap.xml
+Sitemap: https://www.medally.ai/sitemap.xml
 
 # ===== AI ASSISTANT & LLM CRAWLER RULES =====
 
