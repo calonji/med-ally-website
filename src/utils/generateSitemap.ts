@@ -3,7 +3,7 @@ import path from 'path';
 import { globby } from 'globby';
 import type { Options } from 'prettier';
 
-const DOMAIN = 'https://medally.ai';
+const DOMAIN = 'https://www.medally.ai';
 
 interface SitemapEntry {
   path: string;

@@ -85,8 +85,8 @@ export const SEO = ({
   schema,
 }: SEOProps) => {
   const location = useLocation();
-  const canonicalUrl = url || `https://medally.ai${location.pathname}`;
-  const absoluteImageUrl = image.startsWith('http') ? image : `https://medally.ai${image}`;
+  const canonicalUrl = url || `https://www.medally.ai${location.pathname}`;
+  const absoluteImageUrl = image.startsWith('http') ? image : `https://www.medally.ai${image}`;
 
   // Generate medical workflow schema
   const workflowSchema = {
@@ -171,8 +171,8 @@ export const SEO = ({
     author: {
       '@type': 'Organization',
       name: 'MedAlly',
-      url: 'https://medally.ai',
-      logo: 'https://medally.ai/logo.png'
+      url: 'https://www.medally.ai',
+      logo: 'https://www.medally.ai/logo.png'
     },
     audience: {
       '@type': 'Audience',
@@ -192,8 +192,8 @@ export const SEO = ({
     '@context': 'https://schema.org',
     '@type': ['Organization', 'MedicalOrganization'],
     name: 'MedAlly',
-    url: 'https://medally.ai',
-    logo: 'https://medally.ai/logo.png',
+    url: 'https://www.medally.ai',
+    logo: 'https://www.medally.ai/logo.png',
     sameAs: [
       'https://twitter.com/medAllyAI',
       'https://www.linkedin.com/company/medally-ai',
@@ -332,22 +332,22 @@ export const SEO = ({
         '@type': 'HowToStep',
         name: 'Voice Documentation',
         text: 'Speak naturally to document patient encounters while MedAlly converts speech to structured clinical notes',
-        image: 'https://medally.ai/images/voice-documentation.jpg',
-        url: 'https://medally.ai/features#voice-documentation',
+        image: 'https://www.medally.ai/images/voice-documentation.jpg',
+        url: 'https://www.medally.ai/features#voice-documentation',
       },
       {
         '@type': 'HowToStep',
         name: 'Lab Result Management',
         text: 'Review and interpret lab results with AI-powered analysis and automated documentation',
-        image: 'https://medally.ai/images/lab-management.jpg',
-        url: 'https://medally.ai/features#lab-management',
+        image: 'https://www.medally.ai/images/lab-management.jpg',
+        url: 'https://www.medally.ai/features#lab-management',
       },
       {
         '@type': 'HowToStep',
         name: 'Treatment Planning',
         text: 'Create evidence-based treatment plans with integrated clinical guidelines and decision support',
-        image: 'https://medally.ai/images/treatment-planning.jpg',
-        url: 'https://medally.ai/features#treatment-planning',
+        image: 'https://www.medally.ai/images/treatment-planning.jpg',
+        url: 'https://www.medally.ai/features#treatment-planning',
       },
     ],
   };
@@ -487,7 +487,7 @@ export const SEO = ({
     name: 'MedAlly USA',
     description:
       'AI-powered clinical documentation and lab encounters system for US healthcare providers',
-    url: 'https://medally.ai/us',
+    url: 'https://www.medally.ai/us',
     areaServed: {
       '@type': 'Country',
       name: 'United States',
@@ -524,7 +524,7 @@ export const SEO = ({
     name: 'MedAlly India',
     description:
       'AI-powered clinical documentation and lab encounters system for Indian healthcare providers',
-    url: 'https://medally.ai/in',
+    url: 'https://www.medally.ai/in',
     areaServed: {
       '@type': 'Country',
       name: 'India',
