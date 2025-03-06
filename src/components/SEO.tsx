@@ -560,7 +560,7 @@ export const SEO = ({
   };
 
   return (
-    <Helmet prioritizeSeoTags>
+    <Helmet prioritizeSeoTags={true}>
       {/* Basic */}
       <html lang="en" />
       <title>{title}</title>
