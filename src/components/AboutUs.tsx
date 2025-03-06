@@ -1,7 +1,6 @@
 // src/components/AboutUs.tsx
 import { type FC } from 'react';
 import { motion } from 'framer-motion';
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { BackgroundEffects } from "@/components/ui/background-effects";
 import { Heart, Brain, Shield, Award, BookOpen, Users } from 'lucide-react';
