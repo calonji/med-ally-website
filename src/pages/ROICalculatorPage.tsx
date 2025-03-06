@@ -26,6 +26,10 @@ const ROICalculatorPage: FC = () => {
         }}
       />
       <main className="container mx-auto px-4 py-8 pt-24 mt-10">
+        <h1 className="text-4xl font-bold mb-8 text-center">ROI Calculator</h1>
+        <p className="text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-center">
+          Estimate the potential time and cost savings for your healthcare practice with MedAlly's AI-powered documentation system.
+        </p>
         <Suspense fallback={<LoadingSpinner />}>
           <section id="roi-calculator">
             <ROICalculator />

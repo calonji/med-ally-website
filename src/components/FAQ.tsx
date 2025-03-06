@@ -118,15 +118,7 @@ const FAQ: FC = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-4 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 px-4 py-1.5 text-sm font-medium">
-            FAQ
-          </Badge>
-          <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
-            Frequently Asked Questions
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Find answers to common questions about MedAlly's features, security, and implementation
-          </p>
+          
         </motion.div>
 
         <div className="grid lg:grid-cols-2 gap-12 items-start max-w-6xl mx-auto">

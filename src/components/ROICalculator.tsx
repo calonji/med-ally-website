@@ -206,15 +206,7 @@ const ROICalculator: FC = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          <Badge className="mb-4 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-800 px-4 py-1.5 text-sm font-medium">
-            ROI Calculator
-          </Badge>
-          <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
-            Calculate Your Savings with MedAlly
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            See how much time and money you could save with our AI-powered solution
-          </p>
+         
         </motion.div>
 
         <div className="max-w-7xl mx-auto space-y-8">

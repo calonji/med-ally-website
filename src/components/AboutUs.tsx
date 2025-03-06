@@ -40,18 +40,7 @@ const AboutUs: FC = () => {
       <BackgroundEffects variant="mesh" />
       
       <div className="container relative z-10">
-        {/* Header Section - Reduced vertical spacing */}
-        <motion.div className="text-center mb-16">
-          <Badge className="mb-3 bg-blue-100 text-blue-800 hover:bg-blue-200">
-            About Us
-          </Badge>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 tracking-tight">
-            Our Story & Values
-          </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            A solution designed by physicians, for physicians. Combining cutting-edge AI technology with a deep understanding of clinical workflow.
-          </p>
-        </motion.div>
+     
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
           {/* Left Column - Story */}

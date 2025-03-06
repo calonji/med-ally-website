@@ -13,6 +13,10 @@ const FeaturesPage: FC = () => {
         url="https://www.medally.ai/features"
       />
       <main className="container mx-auto px-4 py-8 pt-24 mt-10">
+        <h1 className="text-4xl font-bold mb-8 text-center">MedAlly Features</h1>
+        <p className="text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-center">
+          Discover our comprehensive suite of AI-powered tools designed to streamline healthcare documentation and improve clinical workflows.
+        </p>
         <Suspense fallback={<LoadingSpinner />}>
           <section id="features">
             <Features />

@@ -1,7 +1,6 @@
 import { type FC, useState, useRef } from 'react';
 import { motion, useInView } from 'framer-motion';
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { BackgroundEffects } from "@/components/ui/background-effects";
 import { 
   Clock, 
@@ -239,16 +238,7 @@ const Benefits: FC = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <Badge className="mb-4 px-4 py-2 bg-gradient-primary text-white hover:bg-gradient-secondary">
-            Benefits
-          </Badge>
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-            Why Healthcare Providers Choose{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-primary">MedAlly</span>
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Experience the transformative power of AI-driven healthcare solutions that reduce administrative burden and improve patient outcomes
-          </p>
+         
         </motion.div>
 
         {/* Key metrics */}

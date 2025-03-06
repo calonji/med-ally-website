@@ -147,10 +147,14 @@ const LandingPage: FC = () => {
   return (
     <Layout>
       <SEO 
-        title="MedAlly | AI-Powered Healthcare Automation & Clinical Assistant"
-        description="16 AI-powered agents streamline clinical workflows, automate documentation, and enhance patient care. Discover how MedAlly transforms healthcare today."
-        url="https://www.medally.ai"
+        title="MedAlly - AI-Powered Healthcare Assistant for Physicians | HIPAA Compliant"
+        description="MedAlly is an AI-powered healthcare assistant that helps physicians reduce documentation time by 70% while improving diagnostic accuracy. HIPAA & SOC2 compliant with EHR integration."
+        url="https://www.medally.ai/"
       />
+      
+      {/* Visually hidden H1 for SEO - the visual H1 is in the Hero component */}
+      <h1 className="sr-only">MedAlly - AI-Powered Healthcare Assistant for Physicians</h1>
+      
       <main>
         <section id="hero">
           <Hero />

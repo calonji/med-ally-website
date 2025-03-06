@@ -9,10 +9,14 @@ const HowItWorksPage: FC = () => {
     <Layout>
       <SEO 
         title="How It Works - MedAlly | AI-Powered Healthcare Documentation Process"
-        description="Learn how MedAlly's AI-powered healthcare documentation system works to streamline your clinical workflow and reduce administrative burden."
+        description="Learn how MedAlly's AI-powered healthcare documentation system works to reduce physician documentation time and improve clinical accuracy."
         url="https://www.medally.ai/how-it-works"
       />
       <main className="container mx-auto px-4 py-8 pt-24 mt-10">
+        <h1 className="text-4xl font-bold mb-8 text-center">AI That Works With You, Not Against You</h1>
+        <p className="text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-center">
+        MedAlly seamlessly integrates with your existing systems, providing AI-driven medical decision-making
+        and predictive analytics in healthcare without disrupting your workflow. </p>
         <Suspense fallback={<LoadingSpinner />}>
           <section id="how-it-works">
             <HowItWorks />

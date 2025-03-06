@@ -252,12 +252,7 @@ const Pricing: FC = () => {
           className="text-center mb-16"
         >
           
-          <h2 className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600 mb-4">
-            Simple, Transparent Pricing
-          </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Choose the plan that's right for your practice.
-          </p>
+      
           
           {/* Billing toggle */}
           <div className="mt-8 flex items-center justify-center">

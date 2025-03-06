@@ -193,14 +193,7 @@ const Features: FC = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
           className="text-center mb-16"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
-            <span className="text-transparent bg-clip-text bg-gradient-primary">16 Intelligent Agents</span>{' '}
-            Working Together
-          </h2>
-          <p className="text-xl text-gray-600 dark:text-gray-300 max-w-3xl mx-auto leading-relaxed">
-            Experience the future of medical documentation and diagnostic support with our
-            AI-powered platform designed specifically for healthcare professionals.
-          </p>
+          
         </motion.div>
 
         <motion.div 

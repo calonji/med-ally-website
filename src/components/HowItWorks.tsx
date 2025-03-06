@@ -96,32 +96,7 @@ const HowItWorks: FC = () => {
   return (
     <section id="how-it-works" className=" bg-white overflow-hidden">
       <div className="container mx-auto px-4">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-          className="text-center mb-16"
-        >
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="inline-block mb-6 px-4 py-1.5 bg-gradient-to-r from-[#36b7b5] to-[#4b2683] rounded-full text-white text-sm font-medium"
-          >
-            PHYSICIAN-CENTERED AI
-          </motion.div>
-          
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-[#36b7b5] to-[#4b2683]">
-            AI That Works With You, Not Against You
-          </h2>
-          
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            MedAlly seamlessly integrates with your existing systems, providing AI-driven medical decision-making
-            and predictive analytics in healthcare without disrupting your workflow.
-          </p>
-        </motion.div>
+    
 
         {/* Comparison Table */}
         <motion.div
