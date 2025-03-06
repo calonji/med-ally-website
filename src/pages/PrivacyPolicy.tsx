@@ -9,6 +9,7 @@ const PrivacyPolicy: FC = () => {
       <SEO 
         title="Privacy Policy - MedAlly"
         description="Learn about MedAlly's privacy policy and how we protect your data."
+        url="https://www.medally.ai/privacy-policy"
       />
       <div className="container mx-auto px-4 py-16">
         <motion.div

@@ -68,7 +68,7 @@ const CTASection: FC = () => {
   ];
 
   return (
-    <section className="relative py-24 overflow-hidden">
+    <section className="relative  overflow-hidden">
       <BackgroundEffects variant="grid3d" />
 
       <div className="absolute inset-0">

@@ -21,7 +21,7 @@ async function generateSitemap() {
   let prettierConfig: Options;
   try {
     // @ts-expect-error - Dynamic import
-    prettierConfig = await import('prettier').then(prettier => 
+    prettierConfig = await import('prettier').then(prettier =>
       prettier.resolveConfig('./.prettierrc.js')
     );
   } catch (error) {
@@ -36,9 +36,6 @@ async function generateSitemap() {
     '!src/pages/api',
     '!src/pages/404.tsx',
   ]);
-
-  // Get all blog posts
-  const blogPosts = await globby(['content/blog/**/*.mdx']);
 
   // Get all public images
   const images = await globby(['public/images/**/*.{png,jpg,jpeg,gif,webp}']);
@@ -56,19 +53,6 @@ async function generateSitemap() {
       lastmod: currentDate,
       changefreq: 'weekly',
       priority: 0.8
-    };
-  });
-
-  // Generate sitemap entries for blog posts
-  const blogEntries = blogPosts.map((post: string): SitemapEntry => {
-    const slug = post
-      .replace('content/blog', '/blog')
-      .replace('.mdx', '');
-    return {
-      path: slug,
-      lastmod: currentDate,
-      changefreq: 'monthly',
-      priority: 0.6
     };
   });
 
@@ -99,14 +83,6 @@ async function generateSitemap() {
         `).join('')}
       </url>
       ${pageEntries.map((entry: SitemapEntry) => `
-        <url>
-          <loc>${DOMAIN}${entry.path}</loc>
-          <lastmod>${entry.lastmod}</lastmod>
-          <changefreq>${entry.changefreq}</changefreq>
-          <priority>${entry.priority}</priority>
-        </url>
-      `).join('')}
-      ${blogEntries.map((entry: SitemapEntry) => `
         <url>
           <loc>${DOMAIN}${entry.path}</loc>
           <lastmod>${entry.lastmod}</lastmod>
@@ -155,43 +131,6 @@ async function generateSitemap() {
   }
 
   fs.writeFileSync('public/sitemap-index.xml', formattedIndex);
-
-  // Generate RSS feed
-  const rss = `
-    <?xml version="1.0" encoding="UTF-8"?>
-    <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-      <channel>
-        <title>MedAlly Blog</title>
-        <link>${DOMAIN}/blog</link>
-        <description>Latest updates and insights from MedAlly</description>
-        <language>en-US</language>
-        <lastBuildDate>${currentDate}</lastBuildDate>
-        <atom:link href="${DOMAIN}/blog/feed.xml" rel="self" type="application/rss+xml"/>
-        ${blogEntries.map((entry: SitemapEntry) => `
-          <item>
-            <title>${path.basename(entry.path, '.mdx')}</title>
-            <link>${DOMAIN}${entry.path}</link>
-            <pubDate>${entry.lastmod}</pubDate>
-            <guid>${DOMAIN}${entry.path}</guid>
-          </item>
-        `).join('')}
-      </channel>
-    </rss>
-  `;
-
-  // Format RSS feed with prettier if available
-  let formattedRss = rss;
-  try {
-    const prettier = await import('prettier');
-    formattedRss = await prettier.format(rss, {
-      ...prettierConfig,
-      parser: 'html',
-    });
-  } catch (error) {
-    console.error('Error formatting RSS feed:', error);
-  }
-
-  fs.writeFileSync('public/blog/feed.xml', formattedRss);
 }
 
 export default generateSitemap; 

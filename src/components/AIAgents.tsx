@@ -366,11 +366,7 @@ const AIAgents: FC = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
+        <div 
           className="text-center mb-16"
         >
           <Badge className="mb-4 bg-gradient-to-r from-[#36b7b5] to-[#4b2683] text-white px-4 py-1.5 text-sm font-medium">
@@ -389,14 +385,10 @@ const AIAgents: FC = () => {
               and empowers physicians to deliver superior patient care.
             </p>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.div 
+        <div 
           className="mb-16 bg-white rounded-xl p-6 shadow-md"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
         >
           <h3 className="text-2xl font-bold text-center mb-6">
             What makes it revolutionary?
@@ -415,30 +407,22 @@ const AIAgents: FC = () => {
               <p className="text-gray-700">AI agents work in-sync, not in silos, creating unparalleled efficiency.</p>
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <motion.h3 
+        <h3 
           className="text-2xl font-bold text-center mb-8"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
         >
           Explore our comprehensive suite of AI agents:
-        </motion.h3>
+        </h3>
 
         {/* AI Agents Grid */}
-        <motion.div 
+        <div 
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
         >
           {agents.map((agent) => (
-            <motion.div
+            <div
               key={agent.id}
-              variants={itemVariants}
               className={`rounded-xl overflow-hidden transition-all duration-300 hover:shadow-xl group border border-gray-100`}
-              whileHover={{ y: -5, scale: 1.02 }}
             >
               <div className={`h-1.5 w-full ${getColorClass(agent.color, 'bg')}`}></div>
               <div className="p-5 bg-white h-full flex flex-col">
@@ -461,8 +445,7 @@ const AIAgents: FC = () => {
                     {agent.benefits.map((benefit, index) => (
                       <li 
                         key={index}
-                        className="flex items-start gap-1.5 text-xs group-hover:transform group-hover:translate-x-1 transition-transform duration-300 ease-in-out"
-                        style={{ transitionDelay: `${index * 50}ms` }}
+                        className="flex items-start gap-1.5 text-xs transition-transform duration-300 ease-in-out"
                       >
                         <span className={`${getColorClass(agent.color, 'text')} mt-0.5 flex-shrink-0`}>✓</span>
                         <span className="text-gray-700">{benefit}</span>
@@ -476,16 +459,12 @@ const AIAgents: FC = () => {
                   
                 </div>
               </div>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
 
-        <motion.div 
+        <div 
           className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.2 }}
         >
           <p className="text-xl mb-8 max-w-3xl mx-auto font-medium">
             MedAlly's 16 AI agents work in perfect harmony, automating, optimizing, and accelerating clinical workflows like never before.
@@ -511,7 +490,7 @@ const AIAgents: FC = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
             </svg>
           </a>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

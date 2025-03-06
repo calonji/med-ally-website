@@ -9,6 +9,7 @@ const TermsOfService: FC = () => {
       <SEO 
         title="Terms of Service - MedAlly"
         description="Read MedAlly's terms of service and usage guidelines."
+        url="https://www.medally.ai/terms-of-service"
       />
       <div className="container mx-auto px-4 py-16">
         <motion.div

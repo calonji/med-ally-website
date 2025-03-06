@@ -187,7 +187,7 @@ const ROICalculator: FC = () => {
   return (
     <section 
       data-testid="roi-calculator" 
-      className="relative py-20 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50"
+      className="relative  overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50"
       ref={calculatorRef}
     >
       <BackgroundEffects variant="grid3d" />

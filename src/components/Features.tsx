@@ -148,7 +148,7 @@ const Features: FC = () => {
   };
 
   return (
-    <section id="features" className="relative py-24 overflow-hidden">
+    <section id="features" className="relative  overflow-hidden">
       {/* Primary Background */}
       <BackgroundEffects variant="dots" />
 

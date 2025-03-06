@@ -99,7 +99,7 @@ const FAQ: FC = () => {
 
   return (
     <section 
-      className="relative py-24 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50"
+      className="relative  overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50"
       ref={faqRef}
     >
       <BackgroundEffects variant="grid3d" />

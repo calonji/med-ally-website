@@ -11,7 +11,6 @@ const PAGE_PRIORITIES = {
     '/pricing': { priority: '0.9', changefreq: 'monthly' },
     '/about': { priority: '0.8', changefreq: 'monthly' },
     '/contact': { priority: '0.8', changefreq: 'monthly' },
-    '/blog': { priority: '0.8', changefreq: 'weekly' },
     '/resources': { priority: '0.8', changefreq: 'weekly' },
     '/support': { priority: '0.7', changefreq: 'weekly' },
     '/faq': { priority: '0.7', changefreq: 'weekly' },

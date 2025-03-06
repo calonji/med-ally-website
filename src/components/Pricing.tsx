@@ -203,7 +203,7 @@ const Pricing: FC = () => {
 
   return (
     <section 
-      className="relative py-24 overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50"
+      className="relative  overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50"
       ref={pricingRef}
       id="pricing"
     >

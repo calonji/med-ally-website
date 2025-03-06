@@ -10,6 +10,7 @@ const Contact: FC = () => {
       <SEO 
         title="Contact Us - MedAlly"
         description="Get in touch with MedAlly for support or inquiries."
+        url="https://www.medally.ai/contact"
       />
       <div className="container mx-auto px-4 py-16">
         <motion.div

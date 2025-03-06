@@ -36,7 +36,7 @@ const AboutUs: FC = () => {
   ];
 
   return (
-    <section className="relative py-20 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <section className="relative  overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <BackgroundEffects variant="mesh" />
       
       <div className="container relative z-10">

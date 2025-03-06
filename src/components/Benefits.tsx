@@ -170,7 +170,7 @@ const Benefits: FC = () => {
   };
 
   return (
-    <section id="benefits" className="relative py-24 overflow-hidden">
+    <section id="benefits" className="relative  overflow-hidden">
       <BackgroundEffects variant="mesh" />
       
       <motion.div 

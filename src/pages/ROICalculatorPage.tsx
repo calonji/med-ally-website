@@ -9,10 +9,23 @@ const ROICalculatorPage: FC = () => {
     <Layout>
       <SEO 
         title="ROI Calculator - MedAlly | Calculate Your Healthcare Documentation Savings"
-        description="Use MedAlly's ROI calculator to estimate the time and cost savings your healthcare practice can achieve with our AI-powered documentation system."
-        url="https://medally.ai/roi-calculator"
+        description="Use MedAlly's ROI calculator to estimate the time and cost savings your healthcare practice can achieve with our AI-powered documentation system. See how much you can save in minutes, dollars, and patient capacity."
+        url="https://www.medally.ai/roi-calculator"
+        schema={{
+          "@context": "https://schema.org",
+          "@type": "WebApplication",
+          "name": "MedAlly ROI Calculator",
+          "applicationCategory": "HealthcareApplication",
+          "operatingSystem": "Web",
+          "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+          },
+          "description": "Calculate potential time and cost savings for your healthcare practice with MedAlly's AI-powered documentation system."
+        }}
       />
-      <main>
+      <main className="container mx-auto px-4 py-8 pt-24 mt-10">
         <Suspense fallback={<LoadingSpinner />}>
           <section id="roi-calculator">
             <ROICalculator />

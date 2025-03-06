@@ -77,14 +77,14 @@ const Hero: FC = () => {
       
       <div className="container mx-auto px-4 relative z-20">
         <div className="max-w-4xl mx-auto text-center">
-          <motion.h1 
+          <motion.h2 
             className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-6 leading-tight"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
             Revolutionizing Healthcare with AI – Smarter, Faster, More Efficient
-          </motion.h1>
+          </motion.h2>
           
           <motion.p 
             className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto"

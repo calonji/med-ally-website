@@ -149,7 +149,7 @@ const LandingPage: FC = () => {
       <SEO 
         title="MedAlly | AI-Powered Healthcare Automation & Clinical Assistant"
         description="16 AI-powered agents streamline clinical workflows, automate documentation, and enhance patient care. Discover how MedAlly transforms healthcare today."
-        url="https://medally.ai"
+        url="https://www.medally.ai"
       />
       <main>
         <section id="hero">
