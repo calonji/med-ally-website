@@ -2,12 +2,10 @@ import fs from 'fs';
 import path from 'path';
 import { globby } from 'globby';
 import prettier from 'prettier';
-
 const DOMAIN = 'https://www.medally.ai';
 const CURRENT_DATE = new Date().toISOString().split('T')[0];
-
 // Image metadata mapping
-const IMAGE_METADATA: Record<string, { title: string; caption: string; license?: string }> = {
+const IMAGE_METADATA = {
     // Hero and main images
     '/images/hero-image.webp': {
         title: 'MedAlly AI-Powered Healthcare Assistant',
@@ -21,7 +19,6 @@ const IMAGE_METADATA: Record<string, { title: string; caption: string; license?:
         title: 'MedAlly Features Overview',
         caption: 'Comprehensive view of MedAlly\'s AI-powered features'
     },
-
     // Feature-specific images
     '/images/documentation-feature.webp': {
         title: 'AI-Powered Documentation',
@@ -43,7 +40,6 @@ const IMAGE_METADATA: Record<string, { title: string; caption: string; license?:
         title: 'Clinical Decision Support',
         caption: 'Evidence-based clinical suggestions to improve patient care'
     },
-
     // Specialty images
     '/images/primary-care.webp': {
         title: 'Primary Care Solutions',
@@ -57,7 +53,6 @@ const IMAGE_METADATA: Record<string, { title: string; caption: string; license?:
         title: 'Internal Medicine Solutions',
         caption: 'Comprehensive documentation for internal medicine'
     },
-
     // UI screenshots
     '/images/dashboard-screenshot.webp': {
         title: 'MedAlly Dashboard',
@@ -71,7 +66,6 @@ const IMAGE_METADATA: Record<string, { title: string; caption: string; license?:
         title: 'Mobile Interface',
         caption: 'MedAlly on mobile devices for documentation on the go'
     },
-
     // Logos and branding
     '/logo.png': {
         title: 'MedAlly Logo',
@@ -86,39 +80,33 @@ const IMAGE_METADATA: Record<string, { title: string; caption: string; license?:
         caption: 'Image used for social media sharing'
     }
 };
-
 /**
  * Generates a dedicated sitemap for images to improve image SEO
  */
 export async function generateImageSitemap() {
     try {
         console.log('Generating image sitemap...');
-
         // Get all public images
         const images = await globby(['public/images/**/*.{png,jpg,jpeg,webp,svg}', 'public/*.{png,jpg,jpeg,webp,svg}']);
-
         // Create sitemap entries for images
         const imageEntries = images
             .map((image) => {
-                // Convert file path to URL path
-                const imagePath = image.replace('public', '');
-
-                // Get metadata for this image or use defaults
-                const metadata = IMAGE_METADATA[imagePath] || {
-                    title: `MedAlly - ${path.basename(imagePath)}`,
-                    caption: 'MedAlly healthcare AI assistant image'
-                };
-
-                // Create XML entry
-                return `
+            // Convert file path to URL path
+            const imagePath = image.replace('public', '');
+            // Get metadata for this image or use defaults
+            const metadata = IMAGE_METADATA[imagePath] || {
+                title: `MedAlly - ${path.basename(imagePath)}`,
+                caption: 'MedAlly healthcare AI assistant image'
+            };
+            // Create XML entry
+            return `
   <image:image>
     <image:loc>${DOMAIN}${imagePath}</image:loc>
     <image:title>${metadata.title}</image:title>
     <image:caption>${metadata.caption}</image:caption>
     ${metadata.license ? `<image:license>${metadata.license}</image:license>` : ''}
   </image:image>`;
-            });
-
+        });
         // Create URL entries that contain the images
         const urlEntries = [
             // Homepage with multiple images
@@ -147,39 +135,33 @@ export async function generateImageSitemap() {
   <url>
     <loc>${DOMAIN}/specialties</loc>
     <lastmod>${CURRENT_DATE}</lastmod>
-    ${imageEntries.filter(entry =>
-                entry.includes('primary-care') ||
+    ${imageEntries.filter(entry => entry.includes('primary-care') ||
                 entry.includes('emergency-medicine') ||
-                entry.includes('internal-medicine')
-            ).join('')}
+                entry.includes('internal-medicine')).join('')}
   </url>`
         ];
-
         // Create sitemap XML
         const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
         xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
 ${urlEntries.join('')}
 </urlset>`;
-
         // Format XML with prettier
         const formattedSitemap = await prettier.format(sitemap, {
             parser: 'html',
             printWidth: 120,
         });
-
         // Write sitemap to file
         fs.writeFileSync(path.join(process.cwd(), 'public/sitemap-images.xml'), formattedSitemap);
-
         console.log('Image sitemap generated successfully!');
-    } catch (error) {
+    }
+    catch (error) {
         console.error('Error generating image sitemap:', error);
     }
 }
-
 // Execute the function if this script is run directly
 // In ESM, we can check if the current file is the main module by comparing import.meta.url
 // against the URL of the current module
 if (import.meta.url === import.meta.resolve('./generate-image-sitemap.js')) {
     generateImageSitemap();
-} 
+}

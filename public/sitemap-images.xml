@@ -1,14 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  
+<urlset
+  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+>
   <url>
-    <loc>https://medally.ai/</loc>
-    
+    <loc>https://www.medally.ai/</loc>
+    <lastmod>2025-03-06</lastmod>
+
     <image:image>
-      <image:loc>https://medally.ai/images/hero-image.jpg</image:loc>
-      <image:title>MedAlly AI Healthcare Documentation</image:title>
-      <image:caption>Transform your medical practice with AI-powered documentation</image:caption>
+      <image:loc>https://www.medally.ai/favicon.svg</image:loc>
+      <image:title>MedAlly - favicon.svg</image:title>
+      <image:caption>MedAlly healthcare AI assistant image</image:caption>
     </image:image>
+    <image:image>
+      <image:loc>https://www.medally.ai/grid.svg</image:loc>
+      <image:title>MedAlly - grid.svg</image:title>
+      <image:caption>MedAlly healthcare AI assistant image</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.medally.ai/logo.svg</image:loc>
+      <image:title>MedAlly - logo.svg</image:title>
+      <image:caption>MedAlly healthcare AI assistant image</image:caption>
+    </image:image>
+    <image:image>
+      <image:loc>https://www.medally.ai/vite.svg</image:loc>
+      <image:title>MedAlly - vite.svg</image:title>
+      <image:caption>MedAlly healthcare AI assistant image</image:caption>
+    </image:image>
+  </url>
+  <url>
+    <loc>https://www.medally.ai/features</loc>
+    <lastmod>2025-03-06</lastmod>
+  </url>
+  <url>
+    <loc>https://www.medally.ai/about</loc>
+    <lastmod>2025-03-06</lastmod>
+  </url>
+  <url>
+    <loc>https://www.medally.ai/specialties</loc>
+    <lastmod>2025-03-06</lastmod>
   </url>
 </urlset>

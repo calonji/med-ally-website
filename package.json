@@ -5,12 +5,14 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npm run generate-sitemap",
+    "build": "tsc && vite build && npm run update-sitemaps-js",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "generate-sitemap": "node scripts/generate-sitemap.mjs",
     "generate-image-sitemap": "ts-node scripts/generate-image-sitemap.ts",
     "update-sitemaps": "ts-node scripts/update-sitemaps.ts",
+    "compile-scripts": "tsc -p tsconfig.scripts.json",
+    "update-sitemaps-js": "npm run compile-scripts && node dist-scripts/update-sitemaps.js",
     "test": "echo 'No tests specified' && exit 0"
   },
   "dependencies": {

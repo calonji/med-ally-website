@@ -5,74 +5,74 @@
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <!-- Main pages -->
   <url>
-    <loc>https://medally.ai/</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://medally.ai/about-us</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/about-us</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://medally.ai/how-it-works</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/how-it-works</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://medally.ai/features</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/features</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://medally.ai/benefits</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/benefits</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://medally.ai/case-studies</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/case-studies</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://medally.ai/roi-calculator</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/roi-calculator</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://medally.ai/faq</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/faq</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://medally.ai/pricing</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/pricing</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://medally.ai/privacy-policy</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/privacy-policy</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://medally.ai/terms-of-service</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/terms-of-service</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://medally.ai/contact</loc>
-    <lastmod>2025-01-13</lastmod>
+    <loc>https://www.medally.ai/contact</loc>
+    <lastmod>2025-03-06</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
   </url>

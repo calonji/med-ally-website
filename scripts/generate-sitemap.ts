@@ -3,7 +3,7 @@ import path from 'path';
 import { globby } from 'globby';
 import prettier from 'prettier';
 
-const DOMAIN = 'https://medally.ai';
+const DOMAIN = 'https://www.medally.ai';
 const CURRENT_DATE = new Date().toISOString().split('T')[0];
 
 // Page priority mapping
@@ -161,6 +161,8 @@ ${allEntries.join('')}
 }
 
 // Execute the function if this script is run directly
-if (require.main === module) {
+// In ESM, we can check if the current file is the main module by comparing import.meta.url
+// against the URL of the current module
+if (import.meta.url === import.meta.resolve('./generate-sitemap.js')) {
   generateSitemap();
 } 

@@ -2,7 +2,7 @@ import fs from 'fs';
 import { globby } from 'globby';
 import prettier from 'prettier';
 
-const DOMAIN = 'https://medally.ai';
+const DOMAIN = 'https://www.medally.ai';
 
 /**
  * IMPORTANT: This mapping must be kept in sync with the routes defined in src/App.tsx
