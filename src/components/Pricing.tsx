@@ -74,7 +74,7 @@ const Pricing: FC = () => {
   const plans: Plan[] = [
     {
       name: "Forever Free",
-      description: "Perfect for individual practitioners",
+      description: "Explore the platform",
       price: "$0",
       priceDetail: "Free forever",
       features: [
@@ -91,7 +91,7 @@ const Pricing: FC = () => {
     },
     {
       name: "Professional",
-      description: "For growing medical practices",
+      description: "For documnentation",
       price: isAnnual ? calculateMonthlyEquivalent(annualPrices["Professional"]) : monthlyPrices["Professional"],
       priceDetail: isAnnual ? "/month, billed annually" : "/month",
       features: [
@@ -111,7 +111,7 @@ const Pricing: FC = () => {
     },
     {
       name: "Ultimate",
-      description: "Complete solution for clinics",
+      description: "Complete solution for physicians",
       price: isAnnual ? calculateMonthlyEquivalent(annualPrices["Ultimate"]) : monthlyPrices["Ultimate"],
       priceDetail: isAnnual ? "/month, billed annually" : "/month",
       features: [
@@ -131,7 +131,7 @@ const Pricing: FC = () => {
     },
     {
       name: "Enterprise",
-      description: "Custom solutions for hospitals",
+      description: "Custom solutions for teams",
       price: "Custom",
       priceDetail: "",
       features: [
@@ -152,7 +152,7 @@ const Pricing: FC = () => {
 
   // Animation variants
   const containerVariants = {
-    hidden: { opacity: 0 },
+    hidden: { opacity: 1 },
     visible: {
       opacity: 1,
       transition: {
@@ -162,14 +162,14 @@ const Pricing: FC = () => {
   };
 
   const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
+    hidden: { opacity: 0, y: 10 },
     visible: { 
       opacity: 1, 
       y: 0,
       transition: {
         type: "spring",
-        stiffness: 100,
-        damping: 15
+        duration: 0.5,
+        bounce: 0.3
       }
     }
   };
@@ -243,7 +243,7 @@ const Pricing: FC = () => {
         )}
       </AnimatePresence>
       
-      <div className="container relative z-10">
+      <div className=" relative z-10">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -270,7 +270,7 @@ const Pricing: FC = () => {
               >
                 Annual
                 {isAnnual && (
-                  <span className="ml-2 text-xs bg-white/20 text-white px-2 py-0.5 rounded-full">
+                  <span className="ml-2 text-sm bg-white/20 text-white px-2 py-0.5 rounded-full">
                     Save 20%
                   </span>
                 )}
@@ -292,35 +292,41 @@ const Pricing: FC = () => {
         <motion.div
           variants={containerVariants}
           initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto px-4 sm:px-6"
+          whileInView="visible"
+          viewport={{ once: true, margin: "-50px" }}
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full px-4 sm:px-6"
         >
           {plans.map((plan, index) => (
             <motion.div
               key={plan.name}
               variants={itemVariants}
-              className={`relative ${plan.popular ? "md:-mt-4 md:mb-4 z-10" : ""}`}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              custom={index}
+              className={`relative ${plan.popular ? "z-10" : ""} w-full`}
               onMouseEnter={() => setHoveredPlan(index)}
               onMouseLeave={() => setHoveredPlan(null)}
             >
-              {plan.popular && (
-                <div className="absolute -top-5 inset-x-0 flex justify-center">
-                  <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">
-                    Most Popular
-                  </span>
-                </div>
-              )}
-              
               <motion.div 
-                className={`apple-card h-full p-5 rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-300 border border-gray-100 ${
-                  plan.popular ? "ring-2 ring-indigo-500/20" : ""
-                } relative pb-16`}
+                className={`apple-card h-full p-8 rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-300 border ${
+                  plan.popular ? "border-indigo-200 bg-gradient-to-b from-white via-indigo-50/20 to-indigo-100/30 shadow-indigo-200/50" : "border-gray-100"
+                } relative pb-24 min-h-[600px]`}
                 whileHover={{ 
                   y: -5,
-                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)"
+                  boxShadow: plan.popular ? "0 20px 30px -5px rgba(79, 70, 229, 0.15)" : "0 20px 25px -5px rgba(0, 0, 0, 0.1)"
                 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
+                {plan.popular && (
+                  <div className="absolute -top-1 -right-1 -left-1">
+                    <div className="bg-gradient-to-r from-indigo-600 to-purple-600 text-white px-4 py-1 rounded-t-xl text-center text-sm font-semibold shadow-lg flex items-center justify-center gap-1.5">
+                      <Sparkles className="w-4 h-4" />
+                      Most Popular Choice
+                    </div>
+                  </div>
+                )}
+                
                 {/* Glow effect on hover */}
                 {hoveredPlan === index && (
                   <motion.div 
@@ -346,20 +352,11 @@ const Pricing: FC = () => {
                     }`}>
                       {planIcons[plan.name as keyof typeof planIcons]}
                     </div>
-                    <h3 className="text-lg font-bold text-gray-900 flex items-center">
-                      {plan.name}
-                      {hoveredPlan === index && (
-                        <motion.span 
-                          initial={{ opacity: 0, scale: 0 }}
-                          animate={{ opacity: 1, scale: 1 }}
-                          className="ml-2 text-blue-500"
-                        >
-                          <Sparkles className="w-4 h-4" />
-                        </motion.span>
-                      )}
-                    </h3>
+                    <div className="flex flex-col items-start">
+                      <h3 className="text-lg font-bold text-gray-900">{plan.name}</h3>
+                      <p className="text-sm text-gray-500">{plan.description}</p>
+                    </div>
                   </div>
-                  <p className="text-xs text-gray-500">{plan.description}</p>
                 </div>
                 
                 <div className="mb-4">
@@ -367,16 +364,16 @@ const Pricing: FC = () => {
                     <span className="text-2xl font-bold text-gray-900">
                       {plan.price}
                     </span>
-                    <span className="ml-1 text-xs text-gray-500">
+                    <span className="ml-1 text-sm text-gray-500">
                       {plan.priceDetail}
                     </span>
                   </div>
                   {isAnnual && plan.name !== "Forever Free" && plan.name !== "Enterprise" && (
-                    <div className="mt-1 text-xs text-gray-500">
+                    <div className="mt-1 text-sm text-gray-500">
                       <span className="font-medium text-indigo-600">
                         {annualPrices[plan.name as keyof typeof annualPrices]}
                       </span> billed annually
-                      <span className="ml-1 text-xs text-green-600 font-medium">
+                      <span className="ml-1 text-sm text-green-600 font-medium">
                         ({calculateSavings(monthlyPrices[plan.name as keyof typeof monthlyPrices], annualPrices[plan.name as keyof typeof annualPrices])})
                       </span>
                     </div>
@@ -394,7 +391,7 @@ const Pricing: FC = () => {
                           plan.color === 'indigo' ? 'bg-indigo-50 text-indigo-700' :
                           plan.color === 'purple' ? 'bg-purple-50 text-purple-700' :
                           'bg-gray-50 text-gray-700'
-                        } text-xs`}
+                        } text-sm`}
                       >
                         {benefit.icon}
                         <span>{benefit.text}</span>
@@ -423,7 +420,7 @@ const Pricing: FC = () => {
                         } ${selectedFeature === feature ? 'scale-125' : ''} transition-transform duration-200`}>
                           <Check className="w-2 h-2" />
                         </span>
-                        <span className={`text-xs ${
+                        <span className={`text-sm ${
                           selectedFeature === feature ? (
                             plan.color === 'blue' ? 'text-blue-700' :
                             plan.color === 'indigo' ? 'text-indigo-700' :
@@ -463,14 +460,14 @@ const Pricing: FC = () => {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
+          viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-20 max-w-6xl mx-auto px-4 sm:px-6"
         >
           <h3 className="text-2xl font-bold text-center mb-8">Compare Plan Features</h3>
           
           <div className="overflow-x-auto rounded-xl shadow-md bg-white">
-            <div className="min-w-[800px]"> {/* Minimum width to ensure table doesn't get too compressed */}
+            <div className="min-w-[800px]">
               <table className="w-full">
                 <thead>
                   <tr className="border-b">
@@ -519,10 +516,10 @@ const Pricing: FC = () => {
                     <motion.tr 
                       key={i} 
                       className={i % 2 === 0 ? "bg-gray-50" : ""}
-                      initial={{ opacity: 0 }}
-                      whileInView={{ opacity: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ delay: i * 0.01 }}
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-50px" }}
+                      transition={{ duration: 0.3, delay: i * 0.03 }}
                     >
                       <td className="py-3 px-6 text-gray-800 font-medium sticky left-0 bg-inherit z-10">{feature.name}</td>
                       {feature.values.map((value, j) => (
@@ -531,6 +528,10 @@ const Pricing: FC = () => {
                             <motion.div 
                               whileHover={{ scale: 1.2 }}
                               className="flex justify-center"
+                              initial={{ opacity: 0, scale: 0.8 }}
+                              whileInView={{ opacity: 1, scale: 1 }}
+                              viewport={{ once: true }}
+                              transition={{ duration: 0.2, delay: (i * 0.03) + (j * 0.02) }}
                             >
                               <Check className="w-5 h-5 text-green-500" />
                             </motion.div>
