@@ -94,8 +94,8 @@ const Header: FC = () => {
             >
               <Logo className="h-10 w-auto" />
               <div className="ml-2 flex flex-col items-start">
-                <span className="text-xl font-semibold text-gray-900">MedAlly</span>
-                <span className="text-xs text-gray-600">Simplify Workflows. Empower Care.</span>
+                {/*  <span className="text-xl font-semibold text-gray-900">MedAlly</span>
+                <span className="text-xs text-gray-600">Simplify Workflows. Empower Care.</span>*/}
               </div>
             </button>
           </div>
@@ -117,9 +117,9 @@ const Header: FC = () => {
                 {link.name}
               </Button>
             ))}
-            <a 
-              href="https://app.medally.ai/" 
-              target="_blank" 
+            <a
+              href="https://app.medally.ai/"
+              target="_blank"
               rel="noopener noreferrer"
               className="ml-2 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 hover:text-white rounded-md shadow-sm transition-colors duration-200"
             >
@@ -170,9 +170,9 @@ const Header: FC = () => {
               </Button>
             ))}
             <div className="mt-4">
-              <a 
-                href="https://app.medally.ai/" 
-                target="_blank" 
+              <a
+                href="https://app.medally.ai/"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 hover:text-white rounded-md shadow-sm transition-colors duration-200"
               >
