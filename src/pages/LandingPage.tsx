@@ -264,8 +264,6 @@ const LandingPage: FC = () => {
         ]}
       />
 
-      <h1 className="sr-only">MedAlly clinical AI platform for physicians</h1>
-
       <main className="bg-black text-white">
         <section id="hero">
           <Hero />

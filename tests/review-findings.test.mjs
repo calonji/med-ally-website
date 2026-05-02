@@ -36,10 +36,36 @@ test('lint script and flat-config dependencies are wired', () => {
   }
 });
 
-test('helmet owns page descriptions without duplicate static fallback', () => {
+test('base HTML leaves route metadata to static prerender and Helmet', () => {
   const indexHtml = read('index.html');
 
   assert.ok(!indexHtml.includes('<meta name="description"'));
+});
+
+test('static SEO prerender covers Ahrefs crawler issue categories', () => {
+  const prerender = read('scripts/prerender-static-seo.mjs');
+  const landing = read('src/pages/LandingPage.tsx');
+  const hero = read('src/components/Hero.tsx');
+  const vercel = read('vercel.json');
+
+  for (const route of ['/', '/features', '/how-it-works', '/benefits', '/roi-calculator', '/faq', '/pricing']) {
+    assert.ok(prerender.includes(`path: '${route}'`), `${route} should have prerendered SEO HTML`);
+  }
+
+  for (const required of [
+    '<meta name="description"',
+    'property="og:title"',
+    'name="twitter:card"',
+    'application/ld+json',
+    '<h1>',
+    '<a href="${href}">',
+  ]) {
+    assert.ok(prerender.includes(required), `static prerender should include ${required}`);
+  }
+
+  assert.ok(!landing.includes('<h1 className="sr-only">MedAlly clinical AI platform for physicians</h1>'));
+  assert.ok(hero.includes('<span className="sr-only">MedAlly clinical AI platform for physicians</span>'));
+  assert.ok(vercel.includes('"destination": "/features/index.html"'));
 });
 
 test('sitemap generation covers public routes and writes generated files to build output', () => {

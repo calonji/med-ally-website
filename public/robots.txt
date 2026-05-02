@@ -1,5 +1,5 @@
 # MedAlly Robots.txt - Optimized for search engines and AI assistants
-# Last updated: 2025-03-06
+# Last updated: 2026-05-02
 
 # Default rules for all crawlers
 User-agent: *
@@ -100,4 +100,4 @@ Allow: /
 Crawl-delay: 2
 
 # Default crawl delay for other bots
-Crawl-delay: 5 
+Crawl-delay: 5

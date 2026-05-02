@@ -64,10 +64,11 @@ const Hero: FC = () => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.7, delay: 0.18, ease: 'easeOut' }}
               >
+                <span className="sr-only">MedAlly clinical AI platform for physicians</span>
                 <span className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-2xl shadow-black/30 ring-1 ring-white/25 sm:h-24 sm:w-24">
                   <Logo className="h-16 w-16 sm:h-20 sm:w-20" />
                 </span>
-                <span className="bg-gradient-to-r from-white via-teal-50 to-teal-100 bg-clip-text text-transparent">
+                <span aria-hidden="true" className="bg-gradient-to-r from-white via-teal-50 to-teal-100 bg-clip-text text-transparent">
                   MedAlly
                 </span>
               </motion.h1>

@@ -76,7 +76,7 @@ export const PageHero: FC<PageHeroProps> = ({
             href={ctaHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-9 inline-flex min-h-12 items-center justify-center rounded-full bg-[#f8fafc] px-6 text-sm font-extrabold text-slate-950 shadow-xl shadow-black/30 transition hover:-translate-y-0.5 hover:bg-[#ccfbf1] hover:text-slate-950"
+            className="medally-hero-cta mt-9 inline-flex min-h-12 items-center justify-center rounded-full border px-6 text-sm font-extrabold shadow-2xl shadow-black/40 ring-2 transition hover:-translate-y-0.5 focus-visible:outline-none focus-visible:ring-4"
           >
             {ctaLabel}
             <ArrowRight className="ml-2 h-4 w-4" />
