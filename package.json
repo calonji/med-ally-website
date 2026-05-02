@@ -13,7 +13,9 @@
     "update-sitemaps": "ts-node scripts/update-sitemaps.ts",
     "compile-scripts": "tsc -p tsconfig.scripts.json",
     "update-sitemaps-js": "npm run compile-scripts && node dist-scripts/update-sitemaps.js",
-    "test": "node --test tests/review-findings.test.mjs"
+    "test": "node --test tests/review-findings.test.mjs",
+    "audit": "npm audit --audit-level=moderate",
+    "audit:prod": "npm audit --omit=dev --audit-level=moderate"
   },
   "dependencies": {
     "@radix-ui/react-accordion": "1.2.2",
