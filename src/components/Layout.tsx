@@ -9,7 +9,7 @@ interface LayoutProps {
 
 const Layout: FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="flex flex-col min-h-screen bg-background">
+    <div className="dark flex min-h-screen flex-col bg-black text-white">
       <Header />
       {children}
       <Footer />

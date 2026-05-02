@@ -11,9 +11,24 @@ export default {
         {
             pattern: /^(bg|text|border|from|to|ring)-(emerald|blue|purple|indigo|red|green|cyan|amber|orange|rose|pink|violet|yellow|teal|sky|lime)-(50|100|200|400|500|600|700)/,
         },
-        {
-            pattern: /^hover:bg-(emerald|blue|purple|indigo|red|green|cyan|amber|orange|rose|pink|violet|yellow|teal|sky|lime)-(200|600|700)/,
-        }
+        ...[
+            'emerald',
+            'blue',
+            'purple',
+            'indigo',
+            'red',
+            'green',
+            'cyan',
+            'amber',
+            'orange',
+            'rose',
+            'pink',
+            'violet',
+            'yellow',
+            'teal',
+            'sky',
+            'lime',
+        ].flatMap((color) => [200, 600, 700].map((shade) => `hover:bg-${color}-${shade}`)),
     ],
     theme: {
         container: {

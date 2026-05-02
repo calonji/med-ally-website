@@ -1,139 +1,134 @@
 // @ts-nocheck
-import { FC } from 'react';
-import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Stethoscope, Brain, FileText, Clock, BarChart3, Shield } from 'lucide-react';
+import { FC, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
+import { ArrowRight, ShieldCheck } from 'lucide-react';
+import { Logo } from '@/components/ui/Logo';
+import ClinicalCommandLayer from '@/components/ClinicalCommandLayer';
 
 const Hero: FC = () => {
-  // Animation variants for floating icons
-  const floatingIconVariants = {
-    initial: { opacity: 0, scale: 0 },
-    animate: (custom: number) => ({
-      opacity: 0.8,
-      scale: 1,
-      transition: {
-        delay: custom * 0.2,
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    }),
-    float: (custom: number) => ({
-      y: [0, -15, 0],
-      rotate: [0, custom % 2 === 0 ? 10 : -10, 0],
-      transition: {
-        duration: 5 + custom,
-        repeat: Infinity,
-        ease: 'easeInOut',
-      },
-    }),
-  };
-
-  // Icons with positions
-  const floatingIcons = [
-    { icon: <Stethoscope size={32} />, top: '15%', left: '10%', delay: 0 },
-    { icon: <Brain size={32} />, top: '25%', right: '15%', delay: 1 },
-    { icon: <FileText size={32} />, bottom: '30%', left: '15%', delay: 2 },
-    { icon: <Clock size={32} />, top: '60%', right: '10%', delay: 3 },
-    { icon: <BarChart3 size={32} />, bottom: '15%', left: '30%', delay: 4 },
-    { icon: <Shield size={32} />, top: '40%', left: '75%', delay: 5 },
-  ];
+  const heroRef = useRef<HTMLElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: heroRef,
+    offset: ['start start', 'end start'],
+  });
+  const imageY = useTransform(scrollYProgress, [0, 1], ['0%', '16%']);
+  const imageScale = useTransform(scrollYProgress, [0, 1], [1.04, 1.14]);
+  const contentY = useTransform(scrollYProgress, [0, 1], ['0%', '-16%']);
+  const contentOpacity = useTransform(scrollYProgress, [0, 0.72], [1, 0]);
+  const veilOpacity = useTransform(scrollYProgress, [0, 1], [0.82, 0.96]);
 
   return (
-    <div className="relative overflow-hidden bg-gradient-to-br from-[#36b7b5] via-[#2a7c9e] to-[#4b2683] min-h-[90vh] flex items-center">
-      {/* Background pattern */}
-      <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center opacity-10"></div>
-
-      {/* Floating blobs */}
-      <div className="absolute top-0 -left-4 w-72 h-72 bg-white opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-blob"></div>
-      <div className="absolute top-0 -right-4 w-72 h-72 bg-[#36b7b5] opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-2000"></div>
-      <div className="absolute -bottom-8 left-20 w-72 h-72 bg-[#4b2683] opacity-10 rounded-full mix-blend-multiply filter blur-xl animate-blob animation-delay-4000"></div>
-
-      {/* Floating icons */}
-      {floatingIcons.map((item, index) => (
-        <motion.div
-          key={index}
-          className="absolute text-white/80 z-10"
-          style={{
-            top: item.top,
-            left: item.left,
-            right: item.right,
-            bottom: item.bottom,
-          }}
-          initial="initial"
-          animate={['animate', 'float']}
-          custom={item.delay}
-          variants={floatingIconVariants}
-        >
-          {item.icon}
-        </motion.div>
-      ))}
-
-      <div className="container mx-auto px-4 relative z-20">
-        <div className="max-w-4xl mx-auto text-center">
-          <motion.h1
-            className="text-4xl md:text-5xl lg:text-6xl font-extrabold text-white mb-24 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            MedAlly – Simplify Workflows. Empower Care.
-          </motion.h1>
-
-          <motion.h2
-            className="text-3xl md:text-4xl lg:text-5xl font-extrabold text-white mb-12 leading-tight"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-          >
-            Revolutionizing Healthcare with AI – Smarter, Faster, More Efficient
-          </motion.h2>
-
-          <motion.p
-            className="text-xl md:text-2xl text-white/90 mb-10 max-w-3xl mx-auto"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-          >
-            16 AI-powered agents automate clinical workflows, reduce administrative burden, and
-            enhance patient care.
-          </motion.p>
-
-          <motion.div
-            className="flex flex-col sm:flex-row gap-4 justify-center"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.6 }}
-          >
-            <a href="https://app.medally.ai/" target="_blank" rel="noopener noreferrer">
-              <Button
-                size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-white hover:text-white transition-all duration-300 text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl"
+    <section
+      ref={heroRef}
+      className="relative isolate min-h-[100svh] overflow-hidden bg-slate-950 text-white"
+    >
+      <motion.img
+        src="/images/medally/clinical-hero.webp"
+        alt="Physician reviewing AI-assisted clinical documentation in a modern exam room"
+        className="absolute inset-0 h-full w-full object-cover"
+        fetchPriority="high"
+        style={{ y: imageY, scale: imageScale }}
+      />
+      <motion.div
+        className="absolute inset-0 bg-gradient-to-r from-black via-slate-950/86 to-slate-950/20"
+        style={{ opacity: veilOpacity }}
+      />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_30%,rgba(54,183,181,0.18),transparent_28%),radial-gradient(circle_at_54%_70%,rgba(75,38,131,0.22),transparent_34%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.035)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.035)_1px,transparent_1px)] bg-[size:84px_84px] opacity-25" />
+      <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-slate-950 to-transparent" />
+      <motion.div
+        className="relative z-10 flex min-h-[100svh] items-center pt-20"
+        style={{ y: contentY, opacity: contentOpacity }}
+      >
+        <div className="mx-auto w-full max-w-7xl px-5 sm:px-8 lg:px-10">
+          <div className="grid items-center gap-10 lg:grid-cols-[0.95fr_1.05fr]">
+            <motion.div
+              className="max-w-2xl rounded-lg border border-white/10 bg-black/28 p-6 shadow-2xl shadow-black/30 backdrop-blur-xl sm:p-8"
+              initial={{ opacity: 0, y: 24 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.7, ease: 'easeOut' }}
+            >
+              <motion.p
+                className="mb-5 inline-flex items-center gap-2 text-sm font-semibold uppercase tracking-[0.22em] text-teal-100/90"
+                initial={{ opacity: 0, y: 12 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
               >
-                Get Started for Free
-              </Button>
-            </a>
+                <ShieldCheck className="h-4 w-4" />
+                HIPAA-aware clinical AI
+              </motion.p>
 
-            <a href="https://www.calonji.com/contact" target="_blank" rel="noopener noreferrer">
-              <Button
-                size="lg"
-                className="bg-[#e41e3a] hover:bg-[#c91931] text-white transition-all duration-300 text-lg px-8 py-6 rounded-full shadow-lg hover:shadow-xl"
+              <motion.h1
+                className="flex items-center gap-5 text-6xl font-extrabold leading-[0.92] tracking-tight sm:text-7xl lg:text-8xl"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.18, ease: 'easeOut' }}
               >
-                Book a Demo
-              </Button>
-            </a>
-          </motion.div>
+                <span className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-2xl bg-white shadow-2xl shadow-black/30 ring-1 ring-white/25 sm:h-24 sm:w-24">
+                  <Logo className="h-16 w-16 sm:h-20 sm:w-20" />
+                </span>
+                <span className="bg-gradient-to-r from-white via-teal-50 to-teal-100 bg-clip-text text-transparent">
+                  MedAlly
+                </span>
+              </motion.h1>
 
-          <motion.div
-            className="mt-8 text-white/70 text-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 1 }}
-          >
-            HIPAA Compliant • No Credit Card Required
-          </motion.div>
+              <motion.h2
+                className="mt-7 max-w-2xl text-3xl font-semibold leading-tight text-white sm:text-5xl"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.28, ease: 'easeOut' }}
+              >
+                The clinical command layer for every encounter.
+              </motion.h2>
+
+              <motion.p
+                className="mt-6 max-w-xl text-lg leading-8 text-white/82 sm:text-xl"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.38, ease: 'easeOut' }}
+              >
+                MedAlly listens, structures, checks, codes, and routes clinical work while the
+                physician stays in control of every decision.
+              </motion.p>
+
+              <motion.div
+                className="mt-9 flex flex-col gap-3 sm:flex-row"
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.7, delay: 0.48, ease: 'easeOut' }}
+              >
+                <a
+                  href="https://app.medally.ai/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full bg-white px-6 text-sm font-bold text-slate-950 shadow-xl shadow-teal-950/30 transition hover:-translate-y-0.5 hover:bg-teal-50 hover:text-slate-950"
+                >
+                  Start free
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </a>
+                <a
+                  href="https://www.calonji.com/contact"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/25 bg-white/5 px-6 text-sm font-bold text-white backdrop-blur transition hover:-translate-y-0.5 hover:border-white/60 hover:bg-white/10 hover:text-white"
+                >
+                  Book a demo
+                </a>
+              </motion.div>
+            </motion.div>
+
+            <motion.div
+              className="hidden lg:block"
+              initial={{ opacity: 0, y: 12 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.42, ease: 'easeOut' }}
+            >
+              <ClinicalCommandLayer />
+            </motion.div>
+          </div>
         </div>
-      </div>
-    </div>
+      </motion.div>
+    </section>
   );
 };
 

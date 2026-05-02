@@ -2,7 +2,18 @@
  * Utility function to check meta tags on the current page
  * This can be called from the browser console
  */
-export function checkMetaTags() {
+export interface MetaTagsSummary {
+    title: string;
+    description: string;
+    canonical: string;
+    ogTitle: string;
+    ogDescription: string;
+    ogUrl: string;
+    twitterTitle: string;
+    twitterDescription: string;
+}
+
+export function checkMetaTags(): MetaTagsSummary {
     const title = document.title;
     const description = document.querySelector('meta[name="description"]')?.getAttribute('content') || 'Not found';
     const canonical = document.querySelector('link[rel="canonical"]')?.getAttribute('href') || 'Not found';
@@ -35,7 +46,13 @@ export function checkMetaTags() {
     };
 }
 
+declare global {
+    interface Window {
+        checkMetaTags: typeof checkMetaTags;
+    }
+}
+
 // Export a global function that can be called from the browser console
 if (typeof window !== 'undefined') {
-    (window as any).checkMetaTags = checkMetaTags;
-} 
+    window.checkMetaTags = checkMetaTags;
+}

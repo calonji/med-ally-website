@@ -1,4 +1,5 @@
 import fs from 'fs';
+import path from 'path';
 import { globby } from 'globby';
 import prettier from 'prettier';
 
@@ -7,10 +8,10 @@ const DOMAIN = 'https://www.medally.ai';
 /**
  * IMPORTANT: This mapping must be kept in sync with the routes defined in src/App.tsx
  * If you add or change routes in App.tsx, make sure to update this mapping accordingly.
- * 
+ *
  * The keys are the file paths in the src/pages directory.
  * The values are the actual URL paths used in the application's routing.
- * 
+ *
  * Set a value to null to exclude that page from the sitemap.
  */
 const PAGE_ROUTES = {
@@ -22,10 +23,20 @@ const PAGE_ROUTES = {
   'src/pages/ROICalculatorPage.tsx': '/roi-calculator',
   'src/pages/FAQPage.tsx': '/faq',
   'src/pages/PricingPage.tsx': '/pricing',
-  'src/pages/PrivacyPolicy.tsx': null, // Excluded - no content yet
-  'src/pages/TermsOfService.tsx': null, // Excluded - no content yet
+  'src/pages/PrivacyPolicy.tsx': '/privacy-policy',
+  'src/pages/TermsOfService.tsx': '/terms-of-service',
   'src/pages/Contact.tsx': '/contact'
 };
+
+function getSitemapOutputDir() {
+  const configuredOutputDir = process.env.SITEMAP_OUTPUT_DIR;
+  if (configuredOutputDir) {
+    return path.resolve(process.cwd(), configuredOutputDir);
+  }
+
+  const buildOutputDir = path.join(process.cwd(), 'dist');
+  return fs.existsSync(buildOutputDir) ? buildOutputDir : path.join(process.cwd(), 'public');
+}
 
 async function generateSitemap() {
   try {
@@ -94,7 +105,9 @@ async function generateSitemap() {
     const formattedSitemap = await prettier.format(sitemap, prettierConfig);
 
     // Write the sitemap
-    fs.writeFileSync('public/sitemap.xml', formattedSitemap);
+    const outputDir = getSitemapOutputDir();
+    fs.mkdirSync(outputDir, { recursive: true });
+    fs.writeFileSync(path.join(outputDir, 'sitemap.xml'), formattedSitemap);
 
     console.log('Sitemap generated successfully!');
   } catch (error) {
@@ -103,4 +116,4 @@ async function generateSitemap() {
   }
 }
 
-generateSitemap(); 
+generateSitemap();

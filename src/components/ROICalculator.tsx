@@ -1,22 +1,21 @@
 // @ts-nocheck
 import { type FC, useState, useEffect, useCallback, useRef } from 'react';
-import { motion, useInView, useMotionValue, useTransform } from 'framer-motion';
+import { motion, useInView, useMotionValue } from 'framer-motion';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { BackgroundEffects } from "@/components/ui/background-effects";
-import { 
-  Clock, Users, DollarSign, TrendingUp, 
-  PieChart as PieChartIcon, 
-  LineChart as LineChartIcon, 
-  BarChart as BarChartIcon, 
+import {
+  Clock, Users, DollarSign, TrendingUp,
+  PieChart as PieChartIcon,
+  LineChart as LineChartIcon,
+  BarChart as BarChartIcon,
   ArrowUpDown,
   Sparkles
 } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line, PieChart, Pie, Cell, Legend } from 'recharts';
 import { type ROIFormData, type ROIMetrics } from '@/types';
-import { 
+import {
   formatCurrency, formatTime, formatPatients,
   tooltipStyle, chartTextStyle, ROI_CONSTANTS, calculateROI
 } from '@/lib/roi-calculator';
@@ -29,7 +28,7 @@ const ROICalculator: FC = () => {
   const isInView = useInView(calculatorRef, { once: false, amount: 0.2 });
   const [activeMetric, setActiveMetric] = useState<number | null>(null);
   const [hoveredChart, setHoveredChart] = useState<string | null>(null);
-  
+
   const [formData, setFormData] = useState<ROIFormData>(ROI_CONSTANTS.DEFAULT_VALUES);
 
   const [metrics, setMetrics] = useState<ROIMetrics>({
@@ -55,12 +54,12 @@ const ROICalculator: FC = () => {
   useEffect(() => {
     // Only animate if moneySaved is greater than 0 (initial load completed)
     if (metrics.moneySaved <= 0) return;
-    
+
     countAnimation.set(0);
     const controls = {
       stop: () => {}
     };
-    
+
     // Only run the animation once when the component first loads
     const hasAnimated = sessionStorage.getItem('roi_animation_played');
     if (!hasAnimated) {
@@ -69,37 +68,37 @@ const ROICalculator: FC = () => {
         const duration = 1500;
         const startValue = 0;
         const endValue = metrics.moneySaved;
-        
+
         const step = (timestamp: number) => {
           if (!startTimestamp) startTimestamp = timestamp;
           const elapsed = timestamp - startTimestamp;
           const progress = Math.min(elapsed / duration, 1);
           const easedProgress = easeOutQuad(progress);
           const currentValue = startValue + (endValue - startValue) * easedProgress;
-          
+
           countAnimation.set(currentValue);
-          
+
           if (progress < 1) {
             requestAnimationFrame(step);
           }
         };
-        
+
         const animationFrame = requestAnimationFrame(step);
         controls.stop = () => cancelAnimationFrame(animationFrame);
       };
-      
+
       animateCount();
       sessionStorage.setItem('roi_animation_played', 'true');
     } else {
       // If already animated, just set to the final value
       countAnimation.set(metrics.moneySaved);
     }
-    
+
     return () => {
       controls.stop();
     };
   }, [metrics.moneySaved, countAnimation]);
-  
+
   // Easing function
   const easeOutQuad = (x: number): number => {
     return 1 - (1 - x) * (1 - x);
@@ -133,10 +132,15 @@ const ROICalculator: FC = () => {
     { name: 'Follow-ups', before: ROI_CONSTANTS.FOLLOW_UPS.BEFORE, after: ROI_CONSTANTS.FOLLOW_UPS.AFTER }
   ];
 
-  function handleInputChange(id: string, value: string): void {
+  function handleInputChange(id: keyof ROIFormData, value: string): void {
+    const nextValue = Number(value);
+    if (!Number.isFinite(nextValue)) {
+      return;
+    }
+
     setFormData(prev => ({
       ...prev,
-      [id]: value
+      [id]: nextValue
     }));
   }
 
@@ -153,8 +157,8 @@ const ROICalculator: FC = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 20 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         type: "spring",
@@ -166,8 +170,8 @@ const ROICalculator: FC = () => {
 
   const chartContainerVariants = {
     initial: { opacity: 0, scale: 0.95 },
-    animate: { 
-      opacity: 1, 
+    animate: {
+      opacity: 1,
       scale: 1,
       transition: {
         duration: 0.5,
@@ -185,33 +189,33 @@ const ROICalculator: FC = () => {
   };
 
   return (
-    <section 
-      data-testid="roi-calculator" 
+    <section
+      data-testid="roi-calculator"
       className="relative  overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50"
       ref={calculatorRef}
     >
       <BackgroundEffects variant="grid3d" />
-      
+
       {/* Animated gradient blobs */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <div className="absolute top-[10%] left-[5%] w-[40rem] h-[40rem] bg-gradient-to-r from-blue-100/20 to-purple-100/20 rounded-full filter blur-[80px] opacity-60 animate-float"></div>
         <div className="absolute bottom-[10%] right-[5%] w-[30rem] h-[30rem] bg-gradient-to-r from-green-100/20 to-blue-100/20 rounded-full filter blur-[60px] opacity-50 animate-float-delayed"></div>
       </div>
-      
+
       <div className="container relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-         
+
         </motion.div>
 
         <div className="max-w-7xl mx-auto space-y-8">
           {/* Animated Metrics Cards */}
-          <motion.div 
+          <motion.div
             variants={containerVariants}
             initial="hidden"
             animate={isInView ? "visible" : "hidden"}
@@ -221,8 +225,8 @@ const ROICalculator: FC = () => {
               <motion.div
                 key={metric.title}
                 variants={itemVariants}
-                whileHover={{ 
-                  y: -8, 
+                whileHover={{
+                  y: -8,
                   boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
                   transition: { duration: 0.2 }
                 }}
@@ -241,7 +245,7 @@ const ROICalculator: FC = () => {
                       metric.value
                     )}
                     {activeMetric === index && (
-                      <motion.span 
+                      <motion.span
                         initial={{ opacity: 0, scale: 0 }}
                         animate={{ opacity: 1, scale: 1 }}
                         className="ml-2 text-blue-500"
@@ -277,7 +281,7 @@ const ROICalculator: FC = () => {
                 </h3>
                 <div className="space-y-8">
                   {[
-                    { 
+                    {
                       id: 'patientsPerDay',
                       label: 'Patients per Day',
                       min: 1,
@@ -285,7 +289,7 @@ const ROICalculator: FC = () => {
                       step: 1,
                       format: (value: number) => `${value} patients`
                     },
-                    { 
+                    {
                       id: 'minutesPerNote',
                       label: 'Minutes per Note',
                       min: 1,
@@ -293,7 +297,7 @@ const ROICalculator: FC = () => {
                       step: 1,
                       format: (value: number) => `${value} minutes`
                     },
-                    { 
+                    {
                       id: 'daysPerWeek',
                       label: 'Days per Week',
                       min: 1,
@@ -301,7 +305,7 @@ const ROICalculator: FC = () => {
                       step: 1,
                       format: (value: number) => `${value} days`
                     },
-                    { 
+                    {
                       id: 'hourlyRate',
                       label: 'Hourly Rate ($)',
                       min: 1,
@@ -312,7 +316,7 @@ const ROICalculator: FC = () => {
                   ].map((field) => (
                     <div key={field.id} className="space-y-3">
                       <div className="flex justify-between items-baseline">
-                        <Label className="text-sm font-medium text-gray-700">
+                        <Label htmlFor={field.id} className="text-sm font-medium text-gray-700">
                           {field.label}
                         </Label>
                         <span className="text-sm font-bold text-blue-600">
@@ -321,12 +325,15 @@ const ROICalculator: FC = () => {
                       </div>
                       <div className="relative">
                         <Input
+                          id={field.id}
+                          name={field.id}
                           type="range"
                           min={field.min}
                           max={field.max}
                           step={field.step}
                           value={formData[field.id as keyof ROIFormData]}
-                          onChange={(e) => handleInputChange(field.id, e.target.value)}
+                          aria-valuetext={field.format(formData[field.id as keyof ROIFormData])}
+                          onChange={(e) => handleInputChange(field.id as keyof ROIFormData, e.target.value)}
                           className="w-full accent-blue-600"
                         />
                         <div className="absolute -bottom-5 w-full flex justify-between text-xs text-gray-400">
@@ -341,7 +348,7 @@ const ROICalculator: FC = () => {
             </motion.div>
 
             {/* Charts */}
-            <motion.div 
+            <motion.div
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
@@ -381,14 +388,14 @@ const ROICalculator: FC = () => {
                               <Cell key={index} fill={APPLE_COLORS[index + 1]} />
                             ))}
                           </Pie>
-                          <Tooltip 
+                          <Tooltip
                             formatter={(value: string | number | Array<string | number>) => formatTime(Number(value))}
                             contentStyle={tooltipStyle}
                             labelStyle={{ fontSize: '10px', fontWeight: 600 }}
                           />
-                          <Legend 
-                            verticalAlign="bottom" 
-                            height={36} 
+                          <Legend
+                            verticalAlign="bottom"
+                            height={36}
                             iconType="circle"
                             iconSize={8}
                             formatter={(value) => <span className="text-xs font-medium">{value}</span>}
@@ -418,28 +425,28 @@ const ROICalculator: FC = () => {
                     <div className="h-[220px]">
                       <ResponsiveContainer>
                         <LineChart data={yearlyMetrics}>
-                          <XAxis 
-                            dataKey="year" 
-                            tick={{ ...chartTextStyle }} 
+                          <XAxis
+                            dataKey="year"
+                            tick={{ ...chartTextStyle }}
                             axisLine={{ stroke: '#E5E7EB' }}
                             tickLine={{ stroke: '#E5E7EB' }}
                           />
-                          <YAxis 
+                          <YAxis
                             tick={{ ...chartTextStyle }}
                             tickFormatter={(value: number) => `$${(value/1000)}k`}
                             axisLine={{ stroke: '#E5E7EB' }}
                             tickLine={{ stroke: '#E5E7EB' }}
                             width={45}
                           />
-                          <Tooltip 
+                          <Tooltip
                             formatter={(value: string | number | Array<string | number>) => formatCurrency(Number(value))}
                             contentStyle={tooltipStyle}
                             labelStyle={{ fontSize: '10px', fontWeight: 600 }}
                           />
-                          <Line 
-                            type="monotone" 
-                            dataKey="savings" 
-                            stroke="#007AFF" 
+                          <Line
+                            type="monotone"
+                            dataKey="savings"
+                            stroke="#007AFF"
                             strokeWidth={3}
                             dot={{ fill: '#007AFF', r: 4 }}
                             activeDot={{ r: 6, fill: '#007AFF', stroke: 'white', strokeWidth: 2 }}
@@ -471,26 +478,26 @@ const ROICalculator: FC = () => {
                     <div className="h-[220px]">
                       <ResponsiveContainer>
                         <BarChart data={patientGrowthData} barSize={hoveredChart === 'patients' ? 16 : 12}>
-                          <XAxis 
-                            dataKey="month" 
+                          <XAxis
+                            dataKey="month"
                             tick={{ ...chartTextStyle }}
                             axisLine={{ stroke: '#E5E7EB' }}
                             tickLine={{ stroke: '#E5E7EB' }}
                           />
-                          <YAxis 
+                          <YAxis
                             tick={{ ...chartTextStyle }}
                             axisLine={{ stroke: '#E5E7EB' }}
                             tickLine={{ stroke: '#E5E7EB' }}
                             width={35}
                           />
-                          <Tooltip 
+                          <Tooltip
                             formatter={(value: string | number | Array<string | number>) => formatPatients(Number(value))}
                             contentStyle={tooltipStyle}
                             labelStyle={{ fontSize: '10px', fontWeight: 600 }}
                           />
-                          <Bar 
-                            dataKey="patients" 
-                            fill="#5E5CE6" 
+                          <Bar
+                            dataKey="patients"
+                            fill="#5E5CE6"
                             radius={[4, 4, 0, 0]}
                             animationDuration={1200}
                             animationBegin={400}
@@ -520,30 +527,30 @@ const ROICalculator: FC = () => {
                     <div className="h-[220px]">
                       <ResponsiveContainer>
                         <BarChart data={efficiencyData} layout="vertical" barSize={hoveredChart === 'efficiency' ? 20 : 16}>
-                          <XAxis 
-                            type="number" 
+                          <XAxis
+                            type="number"
                             tick={{ ...chartTextStyle }}
                             axisLine={{ stroke: '#E5E7EB' }}
                             tickLine={{ stroke: '#E5E7EB' }}
                           />
-                          <YAxis 
-                            dataKey="name" 
-                            type="category" 
+                          <YAxis
+                            dataKey="name"
+                            type="category"
                             tick={{ ...chartTextStyle }}
                             axisLine={{ stroke: '#E5E7EB' }}
                             tickLine={{ stroke: '#E5E7EB' }}
                             width={80}
                           />
-                          <Tooltip 
+                          <Tooltip
                             formatter={(value: string | number | Array<string | number>) => formatTime(Number(value))}
                             contentStyle={tooltipStyle}
                             labelStyle={{ fontSize: '10px', fontWeight: 600 }}
                           />
                           <Bar dataKey="before" name="Before" fill="#94A3B8" stackId="a" animationDuration={1000} animationBegin={500} />
                           <Bar dataKey="after" name="After" fill="#34C759" stackId="a" animationDuration={1000} animationBegin={800} />
-                          <Legend 
-                            verticalAlign="bottom" 
-                            height={36} 
+                          <Legend
+                            verticalAlign="bottom"
+                            height={36}
                             iconType="circle"
                             iconSize={8}
                             formatter={(value) => <span className="text-xs font-medium">{value}</span>}
@@ -565,4 +572,4 @@ const ROICalculator: FC = () => {
   );
 };
 
-export default ROICalculator; 
+export default ROICalculator;

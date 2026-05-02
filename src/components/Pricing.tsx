@@ -1,13 +1,12 @@
 // @ts-nocheck
 import { type FC, useState, useRef, useEffect } from 'react';
-import { motion, useInView, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
+import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { BackgroundEffects } from "@/components/ui/background-effects";
 import { Check, ChevronRight, Sparkles, X, Zap, Star, Shield, Brain, ArrowRight, Gift, Clock } from 'lucide-react';
 import { type Plan } from '@/types';
 
 const Pricing: FC = () => {
   const pricingRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(pricingRef, { once: false, amount: 0.2 });
   const [isAnnual, setIsAnnual] = useState(true);
   const [hoveredPlan, setHoveredPlan] = useState<number | null>(null);
   const [selectedFeature, setSelectedFeature] = useState<string | null>(null);
@@ -50,24 +49,24 @@ const Pricing: FC = () => {
   // Calculate monthly equivalent from annual price
   const calculateMonthlyEquivalent = (annual: string): string => {
     if (annual === "Custom" || annual === "$0") return annual;
-    
+
     const annualValue = parseFloat(annual.replace("$", ""));
     const monthlyEquivalent = annualValue / 12;
-    
+
     return `$${monthlyEquivalent.toFixed(2)}`;
   };
 
   // Savings calculation
   const calculateSavings = (monthly: string, annual: string): string => {
     if (monthly === "Custom" || annual === "Custom" || monthly === "$0") return "";
-    
+
     const monthlyValue = parseFloat(monthly.replace("$", ""));
     const annualValue = parseFloat(annual.replace("$", ""));
-    
+
     const annualCost = monthlyValue * 12;
     const savings = annualCost - annualValue;
     const savingsPercentage = (savings / annualCost) * 100;
-    
+
     return savings > 0 ? `Save ${savingsPercentage.toFixed(0)}%` : "";
   };
 
@@ -163,8 +162,8 @@ const Pricing: FC = () => {
 
   const itemVariants = {
     hidden: { opacity: 0, y: 10 },
-    visible: { 
-      opacity: 1, 
+    visible: {
+      opacity: 1,
       y: 0,
       transition: {
         type: "spring",
@@ -190,7 +189,7 @@ const Pricing: FC = () => {
     ],
     "Professional": [
       { icon: <Clock className="w-4 h-4" />, text: "Save 5+ hours/week" }
-     
+
     ],
     "Ultimate": [
       { icon: <Clock className="w-4 h-4" />, text: "Save 10+ hours/week" }
@@ -202,37 +201,37 @@ const Pricing: FC = () => {
   };
 
   return (
-    <section 
+    <section
       className="relative  overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50"
       ref={pricingRef}
       id="pricing"
     >
       <BackgroundEffects variant="grid3d" />
-      
+
       {/* Animated gradient blobs */}
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-        <motion.div 
+        <motion.div
           style={{ y: backgroundY }}
           className="absolute top-[15%] right-[10%] w-[35rem] h-[35rem] bg-gradient-to-r from-blue-100/20 to-purple-100/20 rounded-full filter blur-[80px] opacity-60 animate-float"
         ></motion.div>
-        <motion.div 
+        <motion.div
           style={{ y: backgroundY }}
           className="absolute bottom-[15%] left-[10%] w-[30rem] h-[30rem] bg-gradient-to-r from-green-100/20 to-blue-100/20 rounded-full filter blur-[60px] opacity-50 animate-float-delayed"
         ></motion.div>
       </div>
-      
+
       {/* Sticky CTA for mobile */}
       <AnimatePresence>
         {isScrolled && (
-          <motion.div 
+          <motion.div
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
             className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white border-t border-gray-200 shadow-lg md:hidden"
           >
-            <a 
-              href="https://app.medally.ai/" 
-              target="_blank" 
+            <a
+              href="https://app.medally.ai/"
+              target="_blank"
               rel="noopener noreferrer"
               className="block w-full bg-gradient-to-r from-indigo-500 to-indigo-600 text-white py-3 px-4 rounded-full text-sm font-medium flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-300"
             >
@@ -242,29 +241,29 @@ const Pricing: FC = () => {
           </motion.div>
         )}
       </AnimatePresence>
-      
+
       <div className=" relative z-10">
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-          
-      
-          
+
+
+
           {/* Billing toggle */}
           <div className="mt-8 flex items-center justify-center">
-            <motion.div 
+            <motion.div
               className="bg-white p-1.5 rounded-full shadow-md flex items-center"
               whileHover={{ boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
             >
               <button
                 onClick={() => setIsAnnual(true)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  isAnnual 
-                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md" 
+                  isAnnual
+                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md"
                     : "text-gray-600 hover:text-gray-900"
                 }`}
               >
@@ -278,8 +277,8 @@ const Pricing: FC = () => {
               <button
                 onClick={() => setIsAnnual(false)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
-                  !isAnnual 
-                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md" 
+                  !isAnnual
+                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md"
                     : "text-gray-600 hover:text-gray-900"
                 }`}
               >
@@ -308,11 +307,11 @@ const Pricing: FC = () => {
               onMouseEnter={() => setHoveredPlan(index)}
               onMouseLeave={() => setHoveredPlan(null)}
             >
-              <motion.div 
+              <motion.div
                 className={`apple-card h-full p-8 rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-300 border ${
                   plan.popular ? "border-indigo-200 bg-gradient-to-b from-white via-indigo-50/20 to-indigo-100/30 shadow-indigo-200/50" : "border-gray-100"
                 } relative pb-24 min-h-[600px]`}
-                whileHover={{ 
+                whileHover={{
                   y: -5,
                   boxShadow: plan.popular ? "0 20px 30px -5px rgba(79, 70, 229, 0.15)" : "0 20px 25px -5px rgba(0, 0, 0, 0.1)"
                 }}
@@ -326,10 +325,10 @@ const Pricing: FC = () => {
                     </div>
                   </div>
                 )}
-                
+
                 {/* Glow effect on hover */}
                 {hoveredPlan === index && (
-                  <motion.div 
+                  <motion.div
                     className={`absolute inset-0 rounded-2xl ${
                       plan.color === 'blue' ? 'bg-gradient-to-br from-blue-400/10 to-blue-600/5' :
                       plan.color === 'indigo' ? 'bg-gradient-to-br from-indigo-400/10 to-indigo-600/5' :
@@ -341,7 +340,7 @@ const Pricing: FC = () => {
                     exit={{ opacity: 0 }}
                   />
                 )}
-                
+
                 <div className="mb-4">
                   <div className="flex items-center gap-2 mb-1">
                     <div className={`flex items-center justify-center w-7 h-7 rounded-full ${
@@ -358,7 +357,7 @@ const Pricing: FC = () => {
                     </div>
                   </div>
                 </div>
-                
+
                 <div className="mb-4">
                   <div className="flex items-baseline">
                     <span className="text-2xl font-bold text-gray-900">
@@ -379,13 +378,13 @@ const Pricing: FC = () => {
                     </div>
                   )}
                 </div>
-                
+
                 {/* Plan benefits */}
                 <div className="mb-3">
                   <div className="flex flex-wrap gap-2">
                     {planBenefits[plan.name as keyof typeof planBenefits].map((benefit, i) => (
-                      <div 
-                        key={i} 
+                      <div
+                        key={i}
                         className={`flex items-center gap-1 px-2 py-1 rounded-full ${
                           plan.color === 'blue' ? 'bg-blue-50 text-blue-700' :
                           plan.color === 'indigo' ? 'bg-indigo-50 text-indigo-700' :
@@ -399,11 +398,11 @@ const Pricing: FC = () => {
                     ))}
                   </div>
                 </div>
-                
+
                 <div className="mb-5">
                   <ul className="space-y-1.5">
                     {plan.features.map((feature, i) => (
-                      <motion.li 
+                      <motion.li
                         key={i}
                         className="flex items-start gap-1.5 truncate"
                         initial={{ opacity: 0, x: -10 }}
@@ -434,11 +433,11 @@ const Pricing: FC = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="absolute bottom-0 left-0 right-0 p-5">
-                  <a 
+                  <a
                     href={plan.name === "Enterprise" ? "https://www.calonji.com/contact" : "https://app.medally.ai/"}
-                    target="_blank" 
+                    target="_blank"
                     rel="noopener noreferrer"
                     className={`block w-full apple-button ${
                       plan.color === 'blue' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
@@ -455,7 +454,7 @@ const Pricing: FC = () => {
             </motion.div>
           ))}
         </motion.div>
-        
+
         {/* Feature comparison */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -465,7 +464,7 @@ const Pricing: FC = () => {
           className="mt-20 max-w-6xl mx-auto px-4 sm:px-6"
         >
           <h3 className="text-2xl font-bold text-center mb-8">Compare Plan Features</h3>
-          
+
           <div className="overflow-x-auto rounded-xl shadow-md bg-white">
             <div className="min-w-[800px]">
               <table className="w-full">
@@ -513,8 +512,8 @@ const Pricing: FC = () => {
                     { name: "EHR Integration", values: ["✗", "✗", "✗", "✓"] },
                     { name: "Dedicated Support", values: ["✗", "✗", "✗", "✓"] }
                   ].map((feature, i) => (
-                    <motion.tr 
-                      key={i} 
+                    <motion.tr
+                      key={i}
                       className={i % 2 === 0 ? "bg-gray-50" : ""}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
@@ -525,7 +524,7 @@ const Pricing: FC = () => {
                       {feature.values.map((value, j) => (
                         <td key={j} className="py-3 px-6 text-center text-gray-600">
                           {value === "✓" ? (
-                            <motion.div 
+                            <motion.div
                               whileHover={{ scale: 1.2 }}
                               className="flex justify-center"
                               initial={{ opacity: 0, scale: 0.8 }}
@@ -548,13 +547,13 @@ const Pricing: FC = () => {
               </table>
             </div>
           </div>
-          
+
           {/* Mobile indicator for horizontal scrolling */}
           <div className="mt-4 text-center text-sm text-gray-500 md:hidden">
             <span>Swipe left/right to see more features</span>
           </div>
         </motion.div>
-        
+
         {/* FAQ Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -564,10 +563,10 @@ const Pricing: FC = () => {
           className="mt-20 max-w-3xl mx-auto"
         >
           <h3 className="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h3>
-          
+
           <div className="space-y-4">
             {[
-              
+
               {
                 question: "Can I switch plans later?",
                 answer: "Yes, you can upgrade or downgrade your plan at any time. When upgrading, you'll get immediate access to new features. When downgrading, changes take effect at the end of your billing cycle."
@@ -581,7 +580,7 @@ const Pricing: FC = () => {
                 answer: "Yes, we offer special pricing for educational and non-profit organizations. Please contact our sales team for details."
               }
             ].map((faq, i) => (
-              <motion.div 
+              <motion.div
                 key={i}
                 className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
                 initial={{ opacity: 0, y: 20 }}
@@ -594,12 +593,12 @@ const Pricing: FC = () => {
               </motion.div>
             ))}
           </div>
-          
+
           <div className="mt-10 text-center">
             <p className="text-gray-600 mb-4">Still have questions?</p>
-            <a 
-              href="https://www.calonji.com/contact" 
-              target="_blank" 
+            <a
+              href="https://www.calonji.com/contact"
+              target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 bg-white border border-gray-200 hover:border-indigo-300 text-indigo-600 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 hover:shadow-md"
             >
@@ -613,4 +612,4 @@ const Pricing: FC = () => {
   );
 };
 
-export default Pricing; 
+export default Pricing;

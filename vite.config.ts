@@ -1,6 +1,6 @@
 import path from "path"
 import react from "@vitejs/plugin-react"
-import { defineConfig, Plugin } from "vite"
+import { defineConfig } from "vite"
 import viteCompression from 'vite-plugin-compression'
 
 export default defineConfig({
@@ -37,7 +37,9 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          vendor: ['react', 'react-dom', 'react-router-dom', 'framer-motion'],
+          charts: ['recharts'],
+          motion: ['framer-motion'],
+          vendor: ['react', 'react-dom', 'react-router-dom'],
         },
       },
     },
@@ -50,7 +52,5 @@ export default defineConfig({
     },
   },
 })
-
-
 
 

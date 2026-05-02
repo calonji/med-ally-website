@@ -1,30 +1,60 @@
-import { type FC, Suspense } from 'react';
+import { type FC } from 'react';
+import { Heart, ShieldCheck, Stethoscope } from 'lucide-react';
 import Layout from '@/components/Layout';
-import AboutUs from '@/components/AboutUs';
 import { SEO } from '@/components/SEO';
-import { LoadingSpinner } from '@/components/ui/loading-spinner';
+import { AnswerBlock, DarkFeatureGrid, PageHero, ParallaxImageBand } from '@/components/PagePrimitives';
 
-const AboutUsPage: FC = () => {
-  return (
-    <Layout>
-      <SEO 
-        title="About Us - MedAlly | Our Mission and Vision"
-        description="MedAlly was founded by physicians to solve healthcare's documentation burden. Learn about our mission to transform clinical workflows with AI technology that respects the doctor-patient relationship while ensuring HIPAA compliance."
-        url="https://www.medally.ai/about-us"
+const AboutUsPage: FC = () => (
+  <Layout>
+    <SEO
+      title="About MedAlly | Physician-Centered Clinical AI Platform"
+      description="MedAlly is a clinical AI platform built to help physicians reduce documentation burden while keeping patient care, review, and accountability at the center."
+      url="https://www.medally.ai/about-us"
+      image="/images/medally/brand-hero-calm-day.png"
+      imageAlt="MedAlly physician-centered clinical AI platform"
+      keywords={['clinical AI platform', 'physician AI assistant', 'AI healthcare assistant', 'HIPAA-aware clinical AI']}
+      structuredData={{
+        '@context': 'https://schema.org',
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://www.medally.ai/' },
+          { '@type': 'ListItem', position: 2, name: 'About Us', item: 'https://www.medally.ai/about-us' },
+        ],
+      }}
+    />
+    <main className="medally-dark-page">
+      <PageHero
+        eyebrow="About MedAlly"
+        title="Built for physicians who need clinical AI to respect the visit"
+        intro="MedAlly was created around a simple belief: AI should reduce clinical administration while preserving the doctor-patient relationship and physician accountability."
+        image="/images/medally/brand-hero-calm-day.png"
+        imageAlt="Calm clinical day representing MedAlly physician AI assistant"
       />
-      <main className="container mx-auto px-4 py-8 pt-24 mt-10">
-        <h1 className="text-4xl font-bold mb-8 text-center">Our Story & Values</h1>
-        <p className="text-lg text-gray-700 mb-8 max-w-3xl mx-auto text-center">
-        A solution designed by physicians, for physicians. Combining cutting-edge AI technology with a deep understanding of clinical workflow.
-         </p>
-        <Suspense fallback={<LoadingSpinner />}>
-          <section id="about-us">
-            <AboutUs />
-          </section>
-        </Suspense>
-      </main>
-    </Layout>
-  );
-};
+      <AnswerBlock
+        question="Why was MedAlly created?"
+        answer="MedAlly was created to help clinicians spend less time on documentation, follow-up, coding cleanup, and fragmented tools so more of the day can return to patient care."
+        points={[
+          'Designed for physician review rather than hands-off automation.',
+          'Focused on the full encounter lifecycle, not only transcription.',
+          'Built around privacy-conscious, HIPAA-aware clinical workflows.',
+        ]}
+      />
+      <DarkFeatureGrid
+        items={[
+          { icon: <Heart className="h-5 w-5" />, title: 'Empathy for physicians', copy: 'The product starts from the daily pressure of charting, follow-up, coding, and administrative overload.', meta: 'Value' },
+          { icon: <Stethoscope className="h-5 w-5" />, title: 'Patient-centered workflow', copy: 'MedAlly helps clinicians stay present with patients while the record takes shape.', meta: 'Value' },
+          { icon: <ShieldCheck className="h-5 w-5" />, title: 'Security and integrity', copy: 'Clinical AI should be reviewable, accountable, and aligned with healthcare privacy expectations.', meta: 'Value' },
+        ]}
+      />
+      <ParallaxImageBand
+        eyebrow="Mission"
+        title="A trusted ally for the work that follows the visit"
+        copy="Documentation, reasoning, follow-up, and revenue context should support care instead of pulling clinicians away from it."
+        image="/images/medally/clinical-workflow-real.png"
+        imageAlt="MedAlly clinical workflow real-world physician support"
+      />
+    </main>
+  </Layout>
+);
 
-export default AboutUsPage; 
+export default AboutUsPage;

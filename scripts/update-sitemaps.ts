@@ -3,6 +3,16 @@ import path from 'path';
 import { generateSitemap } from './generate-sitemap.js';
 import { generateImageSitemap } from './generate-image-sitemap.js';
 
+function getSitemapOutputDir(): string {
+    const configuredOutputDir = process.env.SITEMAP_OUTPUT_DIR;
+    if (configuredOutputDir) {
+        return path.resolve(process.cwd(), configuredOutputDir);
+    }
+
+    const buildOutputDir = path.join(process.cwd(), 'dist');
+    return fs.existsSync(buildOutputDir) ? buildOutputDir : path.join(process.cwd(), 'public');
+}
+
 /**
  * Updates the sitemap index file with the current date
  */
@@ -24,7 +34,9 @@ async function updateSitemapIndex() {
   </sitemap>
 </sitemapindex>`;
 
-        fs.writeFileSync(path.join(process.cwd(), 'public/sitemap-index.xml'), sitemapIndex);
+        const outputDir = getSitemapOutputDir();
+        fs.mkdirSync(outputDir, { recursive: true });
+        fs.writeFileSync(path.join(outputDir, 'sitemap-index.xml'), sitemapIndex);
         console.log('Sitemap index updated successfully!');
     } catch (error) {
         console.error('Error updating sitemap index:', error);
@@ -61,4 +73,4 @@ if (import.meta.url === import.meta.resolve('./update-sitemaps.js')) {
     updateAllSitemaps();
 }
 
-export { updateAllSitemaps }; 
+export { updateAllSitemaps };

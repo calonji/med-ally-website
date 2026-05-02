@@ -1,23 +1,22 @@
 // @ts-nocheck
 import { FC, useRef } from 'react';
-import { motion, useInView } from 'framer-motion';
-import { 
-  FileText, 
-  Clipboard, 
-  Beaker, 
-  Activity, 
-  Stethoscope, 
-  BarChart2, 
-  BookOpen, 
-  Briefcase, 
-  Pill, 
-  Heart, 
-  Shield, 
-  Brain, 
-  Zap, 
-  Users, 
-  MessageCircle, 
-  DollarSign 
+import {
+  FileText,
+  Clipboard,
+  Beaker,
+  Activity,
+  Stethoscope,
+  BarChart2,
+  BookOpen,
+  Briefcase,
+  Pill,
+  Heart,
+  Shield,
+  Brain,
+  Zap,
+  Users,
+  MessageCircle,
+  DollarSign
 } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 
@@ -36,7 +35,6 @@ interface AIAgent {
 
 const AIAgents: FC = () => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: false, amount: 0.1 });
 
   const agents: AIAgent[] = [
     {
@@ -281,29 +279,6 @@ const AIAgents: FC = () => {
     }
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.05
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        stiffness: 100,
-        damping: 15
-      }
-    }
-  };
-
   // Color mapping for Tailwind classes
   const getColorClass = (color: string, type: 'bg' | 'text' | 'border' | 'from' | 'to' | 'ring') => {
     return `${type}-${color}-${type === 'text' ? '600' : type === 'bg' ? '100' : type === 'from' ? '500' : type === 'to' ? '600' : '400'}`;
@@ -345,7 +320,7 @@ const AIAgents: FC = () => {
         </div>
       );
     }
-    
+
     return (
       <span className={`text-xs ${getColorClass(agent.color, 'text')} font-medium`}>
         HIPAA Compliant
@@ -366,7 +341,7 @@ const AIAgents: FC = () => {
       </div>
 
       <div className="container mx-auto px-4 relative z-10">
-        <div 
+        <div
           className="text-center mb-16"
         >
           <Badge className="mb-4 bg-gradient-to-r from-[#36b7b5] to-[#4b2683] text-white px-4 py-1.5 text-sm font-medium">
@@ -380,14 +355,14 @@ const AIAgents: FC = () => {
           </p>
           <div className="max-w-3xl mx-auto">
             <p className="text-gray-600">
-              Unlike traditional healthcare tools that tackle isolated problems, MedAlly seamlessly integrates 16 AI-driven agents, 
-              offering an all-in-one AI-powered clinical assistant that eliminates inefficiencies, slashes administrative burdens, 
+              Unlike traditional healthcare tools that tackle isolated problems, MedAlly seamlessly integrates 16 AI-driven agents,
+              offering an all-in-one AI-powered clinical assistant that eliminates inefficiencies, slashes administrative burdens,
               and empowers physicians to deliver superior patient care.
             </p>
           </div>
         </div>
 
-        <div 
+        <div
           className="mb-16 bg-white rounded-xl p-6 shadow-md"
         >
           <h3 className="text-2xl font-bold text-center mb-6">
@@ -409,14 +384,14 @@ const AIAgents: FC = () => {
           </div>
         </div>
 
-        <h3 
+        <h3
           className="text-2xl font-bold text-center mb-8"
         >
           Explore our comprehensive suite of AI agents:
         </h3>
 
         {/* AI Agents Grid */}
-        <div 
+        <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16"
         >
           {agents.map((agent) => (
@@ -435,15 +410,15 @@ const AIAgents: FC = () => {
                     <p className="text-xs text-gray-600">{agent.description}</p>
                   </div>
                 </div>
-                
+
                 <div className={`text-sm text-gray-700 mb-3 p-2.5 rounded-md ${getColorClass(agent.color, 'bg')} bg-opacity-20`}>
                   {agent.sizzle}
                 </div>
-                
+
                 <div className="mt-auto">
                   <ul className="space-y-1.5">
                     {agent.benefits.map((benefit, index) => (
-                      <li 
+                      <li
                         key={index}
                         className="flex items-start gap-1.5 text-xs transition-transform duration-300 ease-in-out"
                       >
@@ -453,23 +428,23 @@ const AIAgents: FC = () => {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="mt-3 pt-3 border-t border-gray-100 flex justify-between items-center">
                   {renderFooterContent(agent)}
-                  
+
                 </div>
               </div>
             </div>
           ))}
         </div>
 
-        <div 
+        <div
           className="text-center"
         >
           <p className="text-xl mb-8 max-w-3xl mx-auto font-medium">
             MedAlly's 16 AI agents work in perfect harmony, automating, optimizing, and accelerating clinical workflows like never before.
           </p>
-          
+
           <div className="bg-gradient-to-r from-[#36b7b5] to-[#4b2683] text-white p-8 rounded-xl max-w-3xl mx-auto mb-10 shadow-lg">
             <p className="text-2xl font-bold flex items-center justify-center mb-2">
               Physicians are overburdened. MedAlly is the game-changer they've been waiting for.
@@ -478,11 +453,11 @@ const AIAgents: FC = () => {
               Reduce documentation time by 70% and focus on what matters most - your patients.
             </p>
           </div>
-          
-          <a 
-            href="https://app.medally.ai/" 
-            target="_blank" 
-            rel="noopener noreferrer" 
+
+          <a
+            href="https://app.medally.ai/"
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center justify-center px-8 py-3 text-lg font-medium text-white bg-orange-500 hover:bg-orange-600 hover:text-white rounded-lg shadow-lg transition-all duration-300 transform hover:scale-105"
           >
             Experience the AI Revolution
@@ -496,4 +471,4 @@ const AIAgents: FC = () => {
   );
 };
 
-export default AIAgents; 
+export default AIAgents;

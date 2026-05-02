@@ -1,6 +1,6 @@
 import { type FC } from 'react';
 import { motion } from 'framer-motion';
-import { Linkedin, Twitter, Facebook, Youtube, Instagram, ArrowRight, ExternalLink } from 'lucide-react';
+import { Linkedin, Twitter, Facebook, Youtube, Instagram, ArrowRight, ExternalLink, ShieldCheck } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const Footer: FC = () => {
@@ -10,9 +10,8 @@ const Footer: FC = () => {
     transition: { duration: 0.5 },
   };
 
-  // Enhanced quicklinks with all header links and additional URLs
+  // Site navigation plus parent-company policy/contact resources.
   const quickLinks = [
-    // Internal links (from header)
     { name: 'About Us', path: '/about-us', isExternal: false },
     { name: 'How It Works', path: '/how-it-works', isExternal: false },
     { name: 'Features', path: '/features', isExternal: false },
@@ -20,11 +19,9 @@ const Footer: FC = () => {
     { name: 'ROI Calculator', path: '/roi-calculator', isExternal: false },
     { name: 'FAQ', path: '/faq', isExternal: false },
     { name: 'Pricing', path: '/pricing', isExternal: false },
-    
-    // External links (additional URLs)
     { name: 'Calonji Website', path: 'https://www.calonji.com/', isExternal: true },
-    { name: 'MedAlly App', path: 'https://app.medally.ai/', isExternal: true },
     { name: 'Blog', path: 'https://www.calonji.com/blog', isExternal: true },
+    { name: 'MedAlly App', path: 'https://app.medally.ai/', isExternal: true },
     { name: 'Contact Us', path: 'https://www.calonji.com/contact', isExternal: true },
     { name: 'Privacy Policy', path: 'https://www.calonji.com/privacy-policy', isExternal: true },
     { name: 'Terms of Service', path: 'https://www.calonji.com/terms-of-service', isExternal: true },
@@ -43,18 +40,23 @@ const Footer: FC = () => {
   ];
 
   return (
-    <footer className="bg-gray-900 pt-16 pb-8 text-gray-300">
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+    <footer className="relative overflow-hidden border-t border-white/10 bg-black pb-8 pt-16 text-slate-300">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_0%,rgba(54,183,181,0.16),transparent_34rem),radial-gradient(circle_at_82%_20%,rgba(166,244,225,0.08),transparent_30rem)]" />
+      <div className="absolute inset-0 opacity-20 [background-image:linear-gradient(rgba(255,255,255,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.05)_1px,transparent_1px)] [background-size:72px_72px]" />
+      <div className="relative mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
+        <div className="mb-12 grid grid-cols-1 gap-8 md:grid-cols-[1.15fr_1.1fr_0.9fr]">
           {/* About MedAlly */}
           <motion.div {...fadeInUp} className="space-y-4">
-            <h3 className="text-lg font-semibold text-white">About MedAlly</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
-              MedAlly is an AI-powered healthcare management platform designed to streamline
-              workflows, reduce administrative burdens, and empower healthcare providers to focus on
-              patient care. From voice-driven documentation to AI-powered diagnostic insights, we're
-              building tools that transform how healthcare professionals work.
+            <p className="text-xs font-bold uppercase tracking-[0.22em] text-teal-100/65">Clinical AI platform</p>
+            <h3 className="text-2xl font-bold text-white">MedAlly</h3>
+            <p className="max-w-md text-sm leading-7 text-slate-400">
+              MedAlly helps physicians and practice leaders connect AI clinical documentation,
+              decision support, follow-up, and medical coding context in one reviewable workflow.
             </p>
+            <div className="inline-flex items-center gap-2 rounded-full border border-teal-100/20 bg-teal-200/10 px-4 py-2 text-xs font-semibold text-teal-100">
+              <ShieldCheck className="h-4 w-4" />
+              HIPAA-aware physician review workflows
+            </div>
           </motion.div>
 
           {/* Quick Links - Enhanced with all navigation links */}
@@ -68,7 +70,7 @@ const Footer: FC = () => {
                       href={link.path}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-400 hover:text-blue-400 text-sm transition-colors flex items-center"
+                      className="flex items-center text-sm text-slate-400 transition-colors hover:text-teal-100"
                     >
                       {link.name}
                       <ExternalLink className="ml-1 w-3 h-3" />
@@ -76,7 +78,7 @@ const Footer: FC = () => {
                   ) : (
                     <Link
                       to={link.path}
-                      className="text-gray-400 hover:text-blue-400 text-sm transition-colors"
+                      className="text-sm text-slate-400 transition-colors hover:text-teal-100"
                     >
                       {link.name}
                     </Link>
@@ -89,7 +91,7 @@ const Footer: FC = () => {
           {/* Parent Company */}
           <motion.div {...fadeInUp} className="space-y-4">
             <h3 className="text-lg font-semibold text-white">Parent Company – Calonji</h3>
-            <p className="text-gray-400 text-sm leading-relaxed">
+            <p className="text-sm leading-7 text-slate-400">
               MedAlly is a product of Calonji, Inc. a company committed to building innovative,
               human-centered solutions that leverage AI and technology to solve real-world
               challenges in healthcare and beyond.
@@ -98,12 +100,12 @@ const Footer: FC = () => {
         </div>
 
         {/* Full-width Waitlist Button */}
-        <motion.div {...fadeInUp} className="py-8 border-t border-gray-800">
+        <motion.div {...fadeInUp} className="border-t border-white/10 py-8">
           <a 
             href="https://app.medally.ai/" 
             target="_blank" 
             rel="noopener noreferrer"
-            className="block w-full bg-orange-500 hover:bg-orange-600 hover:text-white text-white py-6 text-lg font-semibold rounded-lg shadow-lg group transition-all duration-300"
+            className="group block w-full rounded-lg border border-teal-100/20 bg-white/[0.06] py-6 text-lg font-semibold text-white shadow-2xl shadow-black/30 backdrop-blur-xl transition-all duration-300 hover:-translate-y-0.5 hover:border-teal-100/50 hover:bg-teal-200/10 hover:text-white"
           >
             <span className="flex items-center justify-center">
               Join the Future of Healthcare
@@ -115,7 +117,7 @@ const Footer: FC = () => {
         {/* Social Media Links */}
         <motion.div
           {...fadeInUp}
-          className="flex justify-center space-x-6 py-8 border-t border-gray-800"
+          className="flex justify-center space-x-6 border-t border-white/10 py-8"
         >
           {socialLinks.map(({ Icon, href, label }) => (
             <a
@@ -124,7 +126,7 @@ const Footer: FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="text-gray-400 hover:text-blue-400 transition-colors"
+              className="text-slate-500 transition-colors hover:text-teal-100"
             >
               <Icon className="w-5 h-5" />
             </a>
@@ -134,7 +136,7 @@ const Footer: FC = () => {
         {/* Copyright */}
         <motion.div
           {...fadeInUp}
-          className="text-center text-sm text-gray-500 pt-4 border-t border-gray-800"
+          className="border-t border-white/10 pt-4 text-center text-sm text-slate-500"
         >
           © {new Date().getFullYear()} MedAlly. All Rights Reserved. A Calonji Company.
         </motion.div>

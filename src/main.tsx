@@ -6,7 +6,7 @@ import { checkMetaTags } from './utils/checkMetaTags'
 
 // Make the utility available globally
 if (typeof window !== 'undefined') {
-  (window as any).checkMetaTags = checkMetaTags;
+  window.checkMetaTags = checkMetaTags;
 }
 
 ReactDOM.createRoot(document.getElementById('root')!).render(

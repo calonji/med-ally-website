@@ -9,32 +9,28 @@ const PAGE_PRIORITIES = {
     '/': { priority: '1.0', changefreq: 'weekly' },
     '/features': { priority: '0.9', changefreq: 'monthly' },
     '/pricing': { priority: '0.9', changefreq: 'monthly' },
-    '/about': { priority: '0.8', changefreq: 'monthly' },
+    '/about-us': { priority: '0.8', changefreq: 'monthly' },
+    '/how-it-works': { priority: '0.8', changefreq: 'monthly' },
+    '/benefits': { priority: '0.8', changefreq: 'monthly' },
+    '/roi-calculator': { priority: '0.8', changefreq: 'monthly' },
     '/contact': { priority: '0.8', changefreq: 'monthly' },
-    '/resources': { priority: '0.8', changefreq: 'weekly' },
-    '/support': { priority: '0.7', changefreq: 'weekly' },
     '/faq': { priority: '0.7', changefreq: 'weekly' },
-    '/documentation': { priority: '0.7', changefreq: 'weekly' },
-    '/case-studies': { priority: '0.7', changefreq: 'monthly' },
-    '/webinars': { priority: '0.7', changefreq: 'monthly' },
-    '/white-papers': { priority: '0.7', changefreq: 'monthly' },
-    '/hipaa-compliance': { priority: '0.6', changefreq: 'monthly' },
-    '/security': { priority: '0.6', changefreq: 'monthly' },
     '/privacy-policy': { priority: '0.5', changefreq: 'monthly' },
     '/terms-of-service': { priority: '0.5', changefreq: 'monthly' },
 };
-// Image mapping for key pages - commenting out since these images don't exist
-// const PAGE_IMAGES: Record<string, { loc: string; title: string }> = {
-//   '/': { loc: '/images/hero-image.webp', title: 'MedAlly AI-Powered Healthcare Assistant' },
-//   '/about': { loc: '/images/about-team.webp', title: 'MedAlly Team' },
-//   '/features': { loc: '/images/features-overview.webp', title: 'MedAlly Features' },
-//   '/features/documentation': { loc: '/images/documentation-feature.webp', title: 'AI-Powered Documentation' },
-//   '/features/voice-recognition': { loc: '/images/voice-recognition.webp', title: 'Medical Voice Recognition' },
-//   '/features/ehr-integration': { loc: '/images/ehr-integration.webp', title: 'EHR Integration' },
-//   '/features/medical-coding': { loc: '/images/medical-coding.webp', title: 'Automated Medical Coding' },
-//   '/features/clinical-decision-support': { loc: '/images/clinical-decision-support.webp', title: 'Clinical Decision Support' },
-// };
-const PAGE_IMAGES = {};
+const PAGE_IMAGES = {
+    '/': { loc: '/images/medally/clinical-hero.webp', title: 'MedAlly clinical AI platform' },
+    '/about-us': { loc: '/images/medally/brand-hero-calm-day.png', title: 'MedAlly physician-centered clinical AI' },
+    '/how-it-works': { loc: '/images/medally/brand-two-screens-one-truth.png', title: 'MedAlly clinical workflow' },
+    '/features': { loc: '/images/medally/features-gpt/features-hero-physician.png', title: 'MedAlly clinical AI platform features' },
+    '/benefits': { loc: '/images/medally/workflow-room.png', title: 'MedAlly clinical workflow benefits' },
+    '/roi-calculator': { loc: '/images/medally/product-billing-card.png', title: 'MedAlly ROI and coding workflow' },
+    '/faq': { loc: '/images/medally/clinical-workflow-real.png', title: 'MedAlly clinical AI FAQ' },
+    '/pricing': { loc: '/images/medally/workflow-room.png', title: 'MedAlly pricing and workflow' },
+    '/contact': { loc: '/images/medally/clinical-workflow-real.png', title: 'Contact MedAlly clinical AI team' },
+    '/privacy-policy': { loc: '/images/medally/clinical-workflow-real.png', title: 'MedAlly privacy-conscious clinical AI workflow' },
+    '/terms-of-service': { loc: '/images/medally/workflow-room.png', title: 'MedAlly clinical AI platform terms' },
+};
 // Define a mapping from file names to actual routes
 const PAGE_ROUTES = {
     '/LandingPage': '/',
@@ -45,10 +41,18 @@ const PAGE_ROUTES = {
     '/ROICalculatorPage': '/roi-calculator',
     '/FAQPage': '/faq',
     '/PricingPage': '/pricing',
-    '/PrivacyPolicy': null,
-    '/TermsOfService': null,
-    '/Contact': null
+    '/PrivacyPolicy': '/privacy-policy',
+    '/TermsOfService': '/terms-of-service',
+    '/Contact': '/contact'
 };
+function getSitemapOutputDir() {
+    const configuredOutputDir = process.env.SITEMAP_OUTPUT_DIR;
+    if (configuredOutputDir) {
+        return path.resolve(process.cwd(), configuredOutputDir);
+    }
+    const buildOutputDir = path.join(process.cwd(), 'dist');
+    return fs.existsSync(buildOutputDir) ? buildOutputDir : path.join(process.cwd(), 'public');
+}
 /**
  * Generates a sitemap for the website including pages and images
  */
@@ -65,8 +69,6 @@ export async function generateSitemap() {
             '!src/pages/404.tsx',
             '!src/pages/500.tsx',
         ]);
-        // Get all public images
-        const images = await globby(['public/images/**/*.{png,jpg,jpeg,webp,svg}']);
         // Create sitemap entries for pages
         const pageEntries = pages
             .map((page) => {
@@ -158,7 +160,9 @@ ${allEntries.join('')}
             printWidth: 120,
         });
         // Write sitemap to file
-        fs.writeFileSync(path.join(process.cwd(), 'public/sitemap.xml'), formattedSitemap);
+        const outputDir = getSitemapOutputDir();
+        fs.mkdirSync(outputDir, { recursive: true });
+        fs.writeFileSync(path.join(outputDir, 'sitemap.xml'), formattedSitemap);
         console.log('Sitemap generated successfully!');
     }
     catch (error) {

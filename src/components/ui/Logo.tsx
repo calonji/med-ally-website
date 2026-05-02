@@ -11,7 +11,7 @@ export const Logo: FC<LogoProps> = ({ className }) => (
       alt="MedAlly Logo" 
       width="40" 
       height="40"
-      className="w-auto h-10"
+      className="h-full w-auto"
     />
   </div>
-); 
+);

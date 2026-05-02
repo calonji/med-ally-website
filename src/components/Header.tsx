@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/Logo';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
+  ArrowRight,
   Info,
   Settings,
   Star,
@@ -20,6 +21,7 @@ const Header: FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const isHome = true;
 
   // Handle click outside to close menu
   useEffect(() => {
@@ -75,68 +77,121 @@ const Header: FC = () => {
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-200 w-full shadow-sm"
+      className={`fixed top-0 left-0 right-0 z-50 w-full border-b backdrop-blur-xl transition-colors duration-300 ${
+        isHome
+          ? 'border-white/10 bg-black/45 shadow-none'
+          : 'border-gray-200 bg-white shadow-sm'
+      }`}
       initial={{ y: -100 }}
       animate={{ y: 0 }}
     >
       <motion.div
-        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 origin-left w-full"
+        className={`absolute bottom-0 left-0 right-0 h-0.5 origin-left w-full ${
+          isHome
+            ? 'bg-gradient-to-r from-teal-300 via-white/70 to-violet-300'
+            : 'bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600'
+        }`}
         style={{ scaleX }}
       />
-      <div className="container mx-auto px-4 py-3">
+      <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
-          {/* Logo and Tagline */}
           <div className="flex items-center">
             <button
               onClick={() => navigate('/')}
-              className="flex items-center focus:outline-none"
+              className={`group flex items-center gap-3 rounded-full border py-1 pl-1 pr-4 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-200/70 ${
+                isHome
+                  ? 'border-white/10 bg-white/[0.06] text-white backdrop-blur-xl'
+                  : 'border-slate-200 bg-white text-slate-950'
+              }`}
               aria-label="Go to homepage"
             >
-              <Logo className="h-10 w-auto" />
-              <div className="ml-2 flex flex-col items-start">
-                {/*  <span className="text-xl font-semibold text-gray-900">MedAlly</span>
-                <span className="text-xs text-gray-600">Simplify Workflows. Empower Care.</span>*/}
+              <span
+                className={`flex h-11 w-11 items-center justify-center overflow-hidden rounded-full ring-1 transition ${
+                  isHome
+                    ? 'bg-white ring-white/20 group-hover:ring-teal-200/60'
+                    : 'bg-white ring-slate-200 group-hover:ring-teal-300'
+                }`}
+              >
+                <Logo className="h-8 w-8" />
+              </span>
+              <div className="flex flex-col items-start leading-none">
+                <span className="text-lg font-extrabold tracking-tight">MedAlly</span>
+                <span
+                  className={`mt-1 hidden text-[10px] font-semibold uppercase tracking-[0.18em] lg:block ${
+                    isHome ? 'text-teal-100/70' : 'text-slate-500'
+                  }`}
+                >
+                  Clinical AI
+                </span>
               </div>
             </button>
           </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center space-x-1">
+          <nav
+            className={`hidden items-center gap-1 rounded-full border px-2 py-2 shadow-2xl xl:flex ${
+              isHome
+                ? 'border-white/10 bg-white/[0.06] shadow-black/25'
+                : 'border-slate-200 bg-white shadow-slate-200/60'
+            }`}
+          >
             {navLinks.map((link) => (
               <Button
                 key={link.name}
                 variant="ghost"
                 size="sm"
-                className={`text-sm ${
+                className={`rounded-full px-4 text-sm font-semibold transition ${
                   location.pathname === link.href
-                    ? 'bg-gray-100 text-gray-900'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    ? isHome
+                      ? 'bg-white/10 text-white'
+                      : 'bg-gray-100 text-gray-900'
+                    : isHome
+                      ? 'text-white/72 hover:bg-white/10 hover:text-white'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
                 onClick={() => navigate(link.href)}
               >
                 {link.name}
               </Button>
             ))}
+          </nav>
+
+          <div className="hidden items-center gap-3 xl:flex">
+            <a
+              href="https://www.calonji.com/contact"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={`inline-flex min-h-11 items-center justify-center rounded-full border px-5 text-sm font-bold transition hover:-translate-y-0.5 ${
+                isHome
+                  ? 'border-white/15 bg-white/[0.04] text-white hover:border-white/40 hover:bg-white/10'
+                  : 'border-slate-200 bg-white text-slate-950 hover:border-slate-300'
+              }`}
+            >
+              Book demo
+            </a>
             <a
               href="https://app.medally.ai/"
               target="_blank"
               rel="noopener noreferrer"
-              className="ml-2 inline-flex items-center justify-center px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 hover:text-white rounded-md shadow-sm transition-colors duration-200"
+              className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-5 text-sm font-extrabold text-slate-950 shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-teal-50 hover:text-slate-950"
             >
-              Join Now
+              Join now
+              <ArrowRight className="ml-2 h-4 w-4" />
             </a>
-          </nav>
+          </div>
 
-          {/* Mobile Menu Button */}
-          <div className="md:hidden">
+          <div className="xl:hidden">
             <Button
               variant="ghost"
-              size="icon"
-              className="menu-button"
+              className={`menu-button rounded-full px-4 ${
+                isHome
+                  ? 'border border-white/10 bg-white/[0.06] text-white hover:bg-white/10 hover:text-white'
+                  : 'border border-slate-200 bg-white text-slate-950 hover:bg-slate-50'
+              }`}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
-              <Menu className="h-6 w-6" />
+              <Menu className="mr-2 h-5 w-5" />
+              Menu
             </Button>
           </div>
         </div>
@@ -145,20 +200,26 @@ const Header: FC = () => {
       {/* Mobile Navigation */}
       {isMenuOpen && (
         <motion.div
-          className="mobile-menu md:hidden bg-white border-t border-gray-200 shadow-md"
+          className={`mobile-menu xl:hidden border-t shadow-2xl ${
+            isHome ? 'border-white/10 bg-black/95 text-white' : 'border-gray-200 bg-white'
+          }`}
           initial={{ opacity: 0, y: -10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2 }}
         >
-          <div className="py-2 px-4">
+          <div className="grid gap-1 px-4 py-4">
             {navLinks.map((link) => (
               <Button
                 key={link.name}
                 variant="ghost"
-                className={`w-full justify-start text-left mb-1 ${
+                className={`mb-1 w-full justify-start rounded-full text-left ${
                   location.pathname === link.href
-                    ? 'bg-gray-100 text-gray-900'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
+                    ? isHome
+                      ? 'bg-white/10 text-white'
+                      : 'bg-gray-100 text-gray-900'
+                    : isHome
+                      ? 'text-white/72 hover:bg-white/10 hover:text-white'
+                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
                 }`}
                 onClick={() => {
                   navigate(link.href);
@@ -174,9 +235,9 @@ const Header: FC = () => {
                 href="https://app.medally.ai/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center w-full px-4 py-2 text-sm font-medium text-white bg-orange-500 hover:bg-orange-600 hover:text-white rounded-md shadow-sm transition-colors duration-200"
+                className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-white px-4 text-sm font-extrabold text-slate-950 shadow-sm transition hover:bg-teal-50 hover:text-slate-950"
               >
-                Join Now
+                Join now
               </a>
             </div>
           </div>
