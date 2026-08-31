@@ -5,6 +5,7 @@ import { type FC } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import LandingPage from '@/pages/LandingPage';
 import { TrackingProvider } from '@/providers/TrackingProvider';
+import { ThemeProvider } from '@/providers/ThemeProvider';
 import PrivacyPolicy from '@/pages/PrivacyPolicy';
 import TermsOfService from '@/pages/TermsOfService';
 import Contact from '@/pages/Contact';
@@ -29,8 +30,9 @@ const App: FC = () => {
     <Router>
       <ScrollToTop />
       <TrackingProvider measurementId={import.meta.env.VITE_GA_MEASUREMENT_ID}>
-        <HelmetProvider context={helmetContext}>
-          <Routes>
+        <ThemeProvider>
+          <HelmetProvider context={helmetContext}>
+            <Routes>
             <Route path="/" element={<LandingPage />} />
             <Route path="/about-us" element={<AboutUsPage />} />
             <Route path="/how-it-works" element={<HowItWorksPage />} />
@@ -45,9 +47,10 @@ const App: FC = () => {
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
         </HelmetProvider>
-      </TrackingProvider>
-    </Router>
-  );
+      </ThemeProvider>
+    </TrackingProvider>
+  </Router>
+);
 };
 
 export default App;

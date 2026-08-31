@@ -1,5 +1,5 @@
 import { type FC, useEffect, useState } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/Logo';
 import { useNavigate, useLocation } from 'react-router-dom';
@@ -13,48 +13,29 @@ import {
   HelpCircle,
   Menu,
   MessageSquare,
+  Sun,
+  Moon
 } from 'lucide-react';
+import { useTheme } from '@/providers/ThemeProvider';
 
 const Header: FC = () => {
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const isHome = true;
 
-  // Handle click outside to close menu
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const target = event.target as HTMLElement;
-      if (isMenuOpen && !target.closest('.mobile-menu') && !target.closest('.menu-button')) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-    };
-  }, [isMenuOpen]);
-
-  // Handle scroll to hide menu
   useEffect(() => {
     const handleScroll = () => {
-      if (isMenuOpen) {
-        setIsMenuOpen(false);
-      }
+      setScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
-    return () => {
-      window.removeEventListener('scroll', handleScroll);
-    };
-  }, [isMenuOpen]);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Navigation links - updated to use dedicated URLs
   const navLinks = [
-    { name: 'About Us', href: '/about-us', icon: <Info className="w-4 h-4" /> },
+    { name: 'About', href: '/about-us', icon: <Info className="w-4 h-4" /> },
     {
       name: 'How It Works',
       href: '/how-it-works',
@@ -63,7 +44,7 @@ const Header: FC = () => {
     { name: 'Features', href: '/features', icon: <Star className="w-4 h-4" /> },
     { name: 'Benefits', href: '/benefits', icon: <BarChart className="w-4 h-4" /> },
     {
-      name: 'ROI Calculator',
+      name: 'ROI',
       href: '/roi-calculator',
       icon: <Calculator className="w-4 h-4" />,
     },
@@ -75,52 +56,44 @@ const Header: FC = () => {
     },
   ];
 
+  const isHome = location.pathname === '/';
+
   return (
     <motion.header
-      className={`fixed top-0 left-0 right-0 z-50 w-full border-b backdrop-blur-xl transition-colors duration-300 ${
-        isHome
-          ? 'border-white/10 bg-black/45 shadow-none'
-          : 'border-gray-200 bg-white shadow-sm'
-      }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-    >
-      <motion.div
-        className={`absolute bottom-0 left-0 right-0 h-0.5 origin-left w-full ${
-          isHome
-            ? 'bg-gradient-to-r from-teal-300 via-white/70 to-violet-300'
-            : 'bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600'
+      className={`fixed top-0 left-0 right-0 z-50 w-full flex justify-center transition-all duration-300 ${scrolled ? 'pt-3 sm:pt-5' : 'pt-0'
         }`}
-        style={{ scaleX }}
-      />
-      <div className="mx-auto w-full max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+      initial={isHome ? { y: -100, opacity: 0 } : { y: -12, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={
+        isHome
+          ? { type: 'spring', stiffness: 75, damping: 22 }
+          : { duration: 0.25, ease: [0.16, 1, 0.3, 1] }
+      }
+    >
+      <div
+        className={`relative w-full max-w-7xl mx-auto px-4 transition-all duration-300 flex justify-center ${scrolled ? 'px-6' : 'px-4'
+          }`}
+      >
+        <div
+          className={`flex w-full items-center justify-between gap-4 md:gap-8 transition-all duration-300 border ${scrolled
+            ? 'rounded-full border-border glass-medally px-6 py-2.5 max-w-6xl'
+            : 'rounded-none border-transparent bg-transparent border-b-border/30 px-4 py-5'
+            }`}
+        >
           <div className="flex items-center">
             <button
               onClick={() => navigate('/')}
-              className={`group flex items-center gap-3 rounded-full border py-1 pl-1 pr-4 transition focus:outline-none focus-visible:ring-2 focus-visible:ring-teal-200/70 ${
-                isHome
-                  ? 'border-white/10 bg-white/[0.06] text-white backdrop-blur-xl'
-                  : 'border-slate-200 bg-white text-slate-950'
-              }`}
+              className="group flex items-center gap-3 rounded-full transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
               aria-label="Go to homepage"
             >
               <span
-                className={`flex h-11 w-11 items-center justify-center overflow-hidden rounded-full ring-1 transition ${
-                  isHome
-                    ? 'bg-white ring-white/20 group-hover:ring-teal-200/60'
-                    : 'bg-white ring-slate-200 group-hover:ring-teal-300'
-                }`}
+                className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full ring-1 ring-border bg-muted/50 transition duration-300 group-hover:scale-105"
               >
-                <Logo className="h-8 w-8" />
+                <Logo className="h-7 w-7 transition duration-300 group-hover:rotate-12" />
               </span>
               <div className="flex flex-col items-start leading-none">
-                <span className="text-lg font-extrabold tracking-tight">MedAlly</span>
-                <span
-                  className={`mt-1 hidden text-[10px] font-semibold uppercase tracking-[0.18em] lg:block ${
-                    isHome ? 'text-teal-100/70' : 'text-slate-500'
-                  }`}
-                >
+                <span className="text-lg font-bold tracking-tight text-foreground">MedAlly</span>
+                <span className="mt-0.5 hidden text-[9px] font-bold uppercase tracking-[0.22em] text-primary lg:block">
                   Clinical AI
                 </span>
               </div>
@@ -128,26 +101,17 @@ const Header: FC = () => {
           </div>
 
           <nav
-            className={`hidden items-center gap-1 rounded-full border px-2 py-2 shadow-2xl xl:flex ${
-              isHome
-                ? 'border-white/10 bg-white/[0.06] shadow-black/25'
-                : 'border-slate-200 bg-white shadow-slate-200/60'
-            }`}
+            className="hidden items-center gap-1 rounded-full border border-border/60 bg-muted/30 px-1.5 py-1.5 xl:flex backdrop-blur-md"
           >
             {navLinks.map((link) => (
               <Button
                 key={link.name}
                 variant="ghost"
                 size="sm"
-                className={`rounded-full px-4 text-sm font-semibold transition ${
-                  location.pathname === link.href
-                    ? isHome
-                      ? 'bg-white/10 text-white'
-                      : 'bg-gray-100 text-gray-900'
-                    : isHome
-                      ? 'text-white/72 hover:bg-white/10 hover:text-white'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                }`}
+                className={`rounded-full px-4 text-sm font-medium transition-all duration-300 ${location.pathname === link.href
+                  ? 'bg-foreground/10 text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  }`}
                 onClick={() => navigate(link.href)}
               >
                 {link.name}
@@ -156,41 +120,59 @@ const Header: FC = () => {
           </nav>
 
           <div className="hidden items-center gap-3 xl:flex">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              className="h-10 w-10 rounded-full border border-border bg-muted/40 text-foreground hover:bg-muted transition-all duration-300 flex items-center justify-center p-0"
+              aria-label="Toggle light and dark theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-[1.1rem] w-[1.1rem] text-yellow-400 animate-spin-slow shrink-0" />
+              ) : (
+                <Moon className="h-[1.1rem] w-[1.1rem] text-slate-600 dark:text-slate-400 shrink-0" />
+              )}
+            </Button>
             <a
               href="https://www.calonji.com/contact"
               target="_blank"
               rel="noopener noreferrer"
-              className={`inline-flex min-h-11 items-center justify-center rounded-full border px-5 text-sm font-bold transition hover:-translate-y-0.5 ${
-                isHome
-                  ? 'border-white/15 bg-white/[0.04] text-white hover:border-white/40 hover:bg-white/10'
-                  : 'border-slate-200 bg-white text-slate-950 hover:border-slate-300'
-              }`}
+              className="inline-flex h-10 items-center justify-center rounded-full border border-border bg-muted/40 px-5 text-sm font-semibold text-foreground transition hover:bg-muted hover:scale-[1.02] active:scale-95"
             >
-              Book demo
+              Demo
             </a>
             <a
               href="https://app.medally.ai/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex min-h-11 items-center justify-center rounded-full bg-white px-5 text-sm font-extrabold text-slate-950 shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:bg-teal-50 hover:text-slate-950"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] px-5 text-sm font-bold text-slate-950 dark:text-white shadow-md shadow-teal-500/10 hover:shadow-teal-500/25 transition hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
             >
               Join now
               <ArrowRight className="ml-2 h-4 w-4" />
             </a>
           </div>
 
-          <div className="xl:hidden">
+          <div className="xl:hidden flex items-center gap-2">
             <Button
               variant="ghost"
-              className={`menu-button rounded-full px-4 ${
-                isHome
-                  ? 'border border-white/10 bg-white/[0.06] text-white hover:bg-white/10 hover:text-white'
-                  : 'border border-slate-200 bg-white text-slate-950 hover:bg-slate-50'
-              }`}
+              size="icon"
+              onClick={toggleTheme}
+              className="h-10 w-10 rounded-full border border-border bg-muted/40 text-foreground hover:bg-muted transition-all duration-300 flex items-center justify-center p-0"
+              aria-label="Toggle light and dark theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-[1.1rem] w-[1.1rem] text-yellow-400 shrink-0" />
+              ) : (
+                <Moon className="h-[1.1rem] w-[1.1rem] text-slate-600 dark:text-slate-400 shrink-0" />
+              )}
+            </Button>
+            <Button
+              variant="ghost"
+              className="h-10 rounded-full px-4 border border-border bg-muted/40 text-foreground hover:bg-muted"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
-              <Menu className="mr-2 h-5 w-5" />
+              <Menu className="mr-2 h-4 w-4 text-foreground/70" />
               Menu
             </Button>
           </div>
@@ -200,42 +182,35 @@ const Header: FC = () => {
       {/* Mobile Navigation */}
       {isMenuOpen && (
         <motion.div
-          className={`mobile-menu xl:hidden border-t shadow-2xl ${
-            isHome ? 'border-white/10 bg-black/95 text-white' : 'border-gray-200 bg-white'
-          }`}
-          initial={{ opacity: 0, y: -10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.2 }}
+          className="absolute top-full left-4 right-4 mt-2 rounded-3xl border border-border glass-medally shadow-2xl shadow-foreground/5 xl:hidden overflow-hidden z-50"
+          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="grid gap-1 px-4 py-4">
+          <div className="grid gap-1 p-4">
             {navLinks.map((link) => (
               <Button
                 key={link.name}
                 variant="ghost"
-                className={`mb-1 w-full justify-start rounded-full text-left ${
-                  location.pathname === link.href
-                    ? isHome
-                      ? 'bg-white/10 text-white'
-                      : 'bg-gray-100 text-gray-900'
-                    : isHome
-                      ? 'text-white/72 hover:bg-white/10 hover:text-white'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-100'
-                }`}
+                className={`mb-1 w-full justify-start rounded-2xl text-left h-12 ${location.pathname === link.href
+                  ? 'bg-muted text-foreground'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  }`}
                 onClick={() => {
                   navigate(link.href);
                   setIsMenuOpen(false);
                 }}
               >
-                <span className="mr-2">{link.icon}</span>
+                <span className="mr-3 text-primary">{link.icon}</span>
                 {link.name}
               </Button>
             ))}
-            <div className="mt-4">
+            <div className="mt-4 flex flex-col gap-2">
               <a
                 href="https://app.medally.ai/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex min-h-11 w-full items-center justify-center rounded-full bg-white px-4 text-sm font-extrabold text-slate-950 shadow-sm transition hover:bg-teal-50 hover:text-slate-950"
+                className="inline-flex h-12 w-full items-center justify-center rounded-2xl bg-foreground text-background font-bold shadow-md hover:opacity-90 transition"
               >
                 Join now
               </a>

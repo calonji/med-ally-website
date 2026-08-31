@@ -5,11 +5,12 @@ import { Toaster } from '@/components/ui/toaster';
 
 interface LayoutProps {
   children: ReactNode;
+  className?: string;
 }
 
-const Layout: FC<LayoutProps> = ({ children }) => {
+const Layout: FC<LayoutProps> = ({ children, className = '' }) => {
   return (
-    <div className="dark flex min-h-screen flex-col bg-black text-white">
+    <div className={`flex min-h-screen flex-col bg-background text-foreground transition-colors duration-300 ${className}`}>
       <Header />
       {children}
       <Footer />

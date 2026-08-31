@@ -19,128 +19,138 @@
 }
 
 :root {
-  font-family: 'SF Pro Display', Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  --font-sans: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-serif: 'Lora', Georgia, serif;
+
   line-height: 1.5;
   font-weight: 400;
+  font-family: var(--font-sans);
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
-
+  color-scheme: light;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Theme colors from Knowlegebase.txt */
-  --teal: 178 49% 46%;
-  /* #36b7b5 */
-  --purple: 266 54% 33%;
-  /* #4b2683 */
-  --yellow: 50 97% 50%;
-  /* #fccc03 */
-  --light-gray: 0 0% 93%;
-  /* #eeeeee */
-  --red: 351 85% 51%;
-  /* #e41e3a */
+  /* Dynamic Premium Palette mapped for Surgical Ceramic LIGHT */
+  --teal-primary: 178 56% 38%;
+  /* Clinical Teal darker for contrast */
+  --teal-glow: 178 56% 42%;
+  --purple-deep: 266 40% 96%;
+  --purple-accent: 266 54% 40%;
+  --yellow-mint: 160 84% 39%;
+  /* Richer green for clear light-mode accessibility */
+  --coral-alert: 355 78% 50%;
 
-  /* Updated theme colors with Apple-style aesthetics */
-  --background: 0 0% 100%;
-  --foreground: 240 10% 3.9%;
+  /* Theme tokens for light ceramic mode */
+  --background: 210 40% 98%;
+  /* Surgical white-slate #f8fafc */
+  --foreground: 222.2 47.4% 11.2%;
+  /* Charcoal text #0f172a */
   --card: 0 0% 100%;
-  --card-foreground: 240 10% 3.9%;
+  /* Clean clinical white */
+  --card-foreground: 222.2 47.4% 11.2%;
   --popover: 0 0% 100%;
-  --popover-foreground: 240 10% 3.9%;
-  --primary: 178 49% 46%;
-  /* Teal as primary */
-  --primary-foreground: 0 0% 100%;
-  --secondary: 266 54% 33%;
-  /* Purple as secondary */
-  --secondary-foreground: 0 0% 100%;
-  --muted: 240 4.8% 95.9%;
-  --muted-foreground: 240 3.8% 46.1%;
-  --accent: 50 97% 50%;
-  /* Yellow as accent */
-  --accent-foreground: 240 5.9% 10%;
-  --destructive: 351 85% 51%;
-  /* Red as destructive */
-  --destructive-foreground: 0 0% 98%;
-  --border: 240 5.9% 90%;
-  --input: 240 5.9% 90%;
-  --ring: 178 49% 46%;
-  /* Teal as ring */
-  --chart-1: 178 49% 46%;
-  /* Teal */
-  --chart-2: 266 54% 33%;
-  /* Purple */
-  --chart-3: 50 97% 50%;
-  /* Yellow */
-  --chart-4: 0 0% 93%;
-  /* Light Gray */
-  --chart-5: 351 85% 51%;
-  /* Red */
-  --radius: 1rem;
+  --popover-foreground: 222.2 47.4% 11.2%;
+
+  --primary: 178 56% 38%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 210 40% 96.1%;
+  /* Soft cool grey */
+  --secondary-foreground: 222.2 47.4% 11.2%;
+
+  --muted: 210 40% 96.1%;
+  --muted-foreground: 215.4 16.3% 46.9%;
+  /* Slate 500-600 range */
+
+  --accent: 178 56% 96%;
+  --accent-foreground: 178 56% 38%;
+
+  --destructive: 355 78% 50%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 214.3 32% 91.4%;
+  /* Clean border #e2e8f0 */
+  --input: 214.3 32% 91.4%;
+  --ring: 178 56% 38%;
+  --radius: 1.25rem;
+
+  /* Glass & Glow Modifiers for LIGHT */
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(148, 163, 184, 0.15);
+  --glass-shadow: 0 1px 1px rgba(255, 255, 255, 0.8), 0 10px 35px rgba(15, 23, 42, 0.04);
+  --glow-intensity: 0.03;
+  --grid-opacity: 0.03;
+}
+
+.dark {
+  color-scheme: dark;
+
+  /* Premium Palette for Neon Obsidian DARK */
+  --teal-primary: 178 56% 42%;
+  /* Surgical Teal */
+  --teal-glow: 165 88% 52%;
+  /* Neon Accent */
+  --purple-deep: 262 40% 14%;
+  /* Ambient Shadow Purple */
+  --purple-accent: 266 54% 33%;
+  /* Original Purple matured */
+  --yellow-mint: 155 100% 70%;
+  /* Soft mint */
+  --coral-alert: 355 78% 56%;
+  /* Surgical Coral Alert */
+
+  --background: 224 71% 4%;
+  /* Deep midnight obsidian #030509 */
+  --foreground: 210 40% 98%;
+  --card: 224 71% 3%;
+  --card-foreground: 210 40% 98%;
+  --popover: 224 71% 2%;
+  --popover-foreground: 210 40% 98%;
+
+  --primary: 178 56% 42%;
+  --primary-foreground: 210 40% 98%;
+
+  --secondary: 266 45% 25%;
+  /* Restrained Purple */
+  --secondary-foreground: 210 40% 98%;
+
+  --muted: 217.2 32.6% 14%;
+  --muted-foreground: 215 20.2% 65.1%;
+
+  --accent: 165 88% 52%;
+  --accent-foreground: 222.2 47.4% 11.2%;
+
+  --destructive: 355 78% 56%;
+  --destructive-foreground: 210 40% 98%;
+
+  --border: 217.2 32.6% 17.5%;
+  --input: 217.2 32.6% 17.5%;
+  --ring: 178 56% 42%;
+
+  /* Glass & Glow Modifiers for DARK */
+  --glass-bg: rgba(8, 12, 22, 0.55);
+  --glass-border: rgba(255, 255, 255, 0.075);
+  --glass-shadow: inset 0 1px 1px rgba(255, 255, 255, 0.05), 0 20px 50px rgba(0, 0, 0, 0.4);
+  --glow-intensity: 0.1;
+  --grid-opacity: 0.03;
+}
+
+.font-serif {
+  font-family: var(--font-serif);
 }
 
 a {
   font-weight: 500;
   color: hsl(var(--primary));
   text-decoration: inherit;
-  transition: all 0.3s ease;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 a:hover {
-  color: hsl(var(--secondary));
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-
-  a:hover {
-    color: hsl(var(--secondary));
-  }
-}
-
-@layer base {
-  .dark {
-    --background: 240 10% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 240 10% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 240 10% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 178 49% 46%;
-    /* Teal as primary */
-    --primary-foreground: 0 0% 100%;
-    --secondary: 266 54% 33%;
-    /* Purple as secondary */
-    --secondary-foreground: 0 0% 100%;
-    --muted: 240 3.7% 15.9%;
-    --muted-foreground: 240 5% 64.9%;
-    --accent: 50 97% 50%;
-    /* Yellow as accent */
-    --accent-foreground: 0 0% 98%;
-    --destructive: 351 85% 51%;
-    /* Red as destructive */
-    --destructive-foreground: 0 0% 98%;
-    --border: 240 3.7% 15.9%;
-    --input: 240 3.7% 15.9%;
-    --ring: 178 49% 46%;
-    /* Teal as ring */
-    --chart-1: 178 49% 46%;
-    /* Teal */
-    --chart-2: 266 54% 33%;
-    /* Purple */
-    --chart-3: 50 97% 50%;
-    /* Yellow */
-    --chart-4: 0 0% 93%;
-    /* Light Gray */
-    --chart-5: 351 85% 51%;
-    /* Red */
-  }
+  color: hsl(var(--accent));
+  opacity: 0.9;
 }
 
 @layer components {
@@ -148,70 +158,130 @@ a:hover {
     position: relative;
     isolation: isolate;
     min-height: 100vh;
-    overflow: hidden;
-    background:
-      radial-gradient(circle at 18% 4%, rgba(54, 183, 181, 0.16), transparent 32rem),
-      radial-gradient(circle at 84% 18%, rgba(75, 38, 131, 0.2), transparent 34rem),
-      linear-gradient(180deg, #000 0%, #05070d 46%, #000 100%);
-    color: white;
+    overflow-x: hidden;
+    background-color: hsl(var(--background));
+    background-image:
+      radial-gradient(circle at 10% 0%, hsla(var(--teal-primary) / var(--glow-intensity)), transparent 35rem),
+      radial-gradient(circle at 90% 30%, hsla(var(--purple-accent) / var(--glow-intensity)), transparent 45rem),
+      radial-gradient(circle at 50% 80%, hsla(var(--teal-primary) / calc(var(--glow-intensity) * 0.8)), transparent 40rem);
+    color: hsl(var(--foreground));
+    transition: background-color 0.3s ease, color 0.3s ease;
   }
 
+  /* Noise texture overlay */
   .medally-dark-page::before {
     content: '';
     position: absolute;
     inset: 0;
+    z-index: -2;
+    opacity: 0.015;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
+  /* Elegant structural grids */
+  .medally-dark-page::after {
+    content: '';
+    position: absolute;
+    inset: 0;
     z-index: -1;
-    opacity: 0.24;
+    opacity: 0.2;
     background-image:
-      linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
-    background-size: 72px 72px;
+      linear-gradient(hsla(var(--foreground) / var(--grid-opacity)) 1px, transparent 1px),
+      linear-gradient(90deg, hsla(var(--foreground) / var(--grid-opacity)) 1px, transparent 1px);
+    background-size: 80px 80px;
+    mask-image: radial-gradient(circle at 50% 50%, black 30%, transparent 90%);
+    pointer-events: none;
+    transform: translateZ(0);
+    will-change: transform;
   }
 
   .medally-dark-page section {
     background-color: transparent !important;
   }
 
-  .medally-dark-page [class*='from-blue-50'],
-  .medally-dark-page [class*='from-white'],
-  .medally-dark-page [class*='to-purple-50'],
-  .medally-dark-page [class*='to-white'],
-  .medally-dark-page [class*='bg-blue-50'],
-  .medally-dark-page [class*='bg-blue-100'],
-  .medally-dark-page [class*='bg-green-50'],
-  .medally-dark-page [class*='bg-green-100'],
-  .medally-dark-page [class*='bg-indigo-50'],
-  .medally-dark-page [class*='bg-indigo-100'],
-  .medally-dark-page [class*='bg-purple-50'],
-  .medally-dark-page [class*='bg-purple-100'],
-  .medally-dark-page [class*='bg-yellow-50'],
-  .medally-dark-page [class*='bg-yellow-100'],
-  .medally-dark-page [class*='bg-red-50'],
-  .medally-dark-page [class*='bg-red-100'],
-  .medally-dark-page [class*='bg-gray-50'],
-  .medally-dark-page [class*='bg-white'] {
-    background-color: rgba(255, 255, 255, 0.055) !important;
+  /* Premium Glassmorphism Classes */
+  .glass-obsidian,
+  .glass-medally {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+    transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .glass-glow-teal {
+    box-shadow:
+      var(--glass-shadow),
+      0 0 40px hsla(var(--teal-primary) / calc(var(--glow-intensity) * 0.8));
+  }
+
+  .glass-glow-purple {
+    box-shadow:
+      var(--glass-shadow),
+      0 0 40px hsla(var(--purple-accent) / calc(var(--glow-intensity) * 1.2));
+  }
+
+  .text-editorial {
+    font-family: var(--font-serif);
+    letter-spacing: -0.02em;
+    line-height: 1.15;
+  }
+
+  .text-gradient-teal {
+    background: linear-gradient(135deg, hsl(var(--foreground)) 40%, hsla(var(--teal-primary) / 0.8) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    transition: color 0.3s ease;
+  }
+
+  /* Modern Card Overrides */
+  .medally-dark-page div[class*='from-blue-50'],
+  .medally-dark-page div[class*='from-white'],
+  .medally-dark-page div[class*='to-purple-50'],
+  .medally-dark-page div[class*='to-white'],
+  .medally-dark-page div[class*='bg-blue-50'],
+  .medally-dark-page div[class*='bg-blue-100'],
+  .medally-dark-page div[class*='bg-green-50'],
+  .medally-dark-page div[class*='bg-green-100'],
+  .medally-dark-page div[class*='bg-indigo-50'],
+  .medally-dark-page div[class*='bg-indigo-100'],
+  .medally-dark-page div[class*='bg-purple-50'],
+  .medally-dark-page div[class*='bg-purple-100'],
+  .medally-dark-page div[class*='bg-yellow-50'],
+  .medally-dark-page div[class*='bg-yellow-100'],
+  .medally-dark-page div[class*='bg-red-50'],
+  .medally-dark-page div[class*='bg-red-100'],
+  .medally-dark-page div[class*='bg-gray-50'],
+  .medally-dark-page div[class*='bg-white']:not(button):not(a),
+  .medally-dark-page section[class*='bg-white']:not(button):not(a) {
+    background-color: hsl(var(--card)) !important;
+    backdrop-filter: blur(16px);
+    border: 1px solid var(--glass-border) !important;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
   .medally-dark-page [class*='bg-gradient-to-br'],
   .medally-dark-page [class*='bg-gradient-to-r'],
   .medally-dark-page [class*='bg-gradient-to-b'] {
-    --tw-gradient-from: rgba(54, 183, 181, 0.14) var(--tw-gradient-from-position) !important;
-    --tw-gradient-via: rgba(15, 23, 42, 0.1) var(--tw-gradient-via-position) !important;
-    --tw-gradient-to: rgba(75, 38, 131, 0.12) var(--tw-gradient-to-position) !important;
+    --tw-gradient-from: hsla(var(--teal-primary) / calc(var(--glow-intensity) * 0.6)) var(--tw-gradient-from-position) !important;
+    --tw-gradient-via: hsla(var(--background) / 0.4) var(--tw-gradient-via-position) !important;
+    --tw-gradient-to: hsla(var(--purple-accent) / calc(var(--glow-intensity) * 0.8)) var(--tw-gradient-to-position) !important;
     --tw-gradient-stops: var(--tw-gradient-from), var(--tw-gradient-via), var(--tw-gradient-to) !important;
   }
 
   .medally-dark-page [class*='border-gray'],
   .medally-dark-page [class*='border-slate'] {
-    border-color: rgba(255, 255, 255, 0.1) !important;
+    border-color: var(--glass-border) !important;
   }
 
   .medally-dark-page [class*='text-gray-900'],
   .medally-dark-page [class*='text-gray-800'],
   .medally-dark-page [class*='text-slate-900'],
   .medally-dark-page [class*='text-slate-800'] {
-    color: rgba(255, 255, 255, 0.96) !important;
+    color: hsl(var(--foreground)) !important;
   }
 
   .medally-dark-page [class*='text-gray-700'],
@@ -220,7 +290,7 @@ a:hover {
   .medally-dark-page [class*='text-slate-700'],
   .medally-dark-page [class*='text-slate-600'],
   .medally-dark-page [class*='text-slate-500'] {
-    color: rgb(203 213 225) !important;
+    color: hsl(var(--muted-foreground)) !important;
   }
 
   .medally-dark-page [class*='text-blue-600'],
@@ -235,7 +305,7 @@ a:hover {
   .medally-dark-page [class*='text-red-400'],
   .medally-dark-page [class*='text-red-500'],
   .medally-dark-page [class*='text-amber-400'] {
-    color: rgb(204 251 241) !important;
+    color: hsla(var(--teal-primary) / 0.9) !important;
   }
 
   .medally-dark-page [class*='border-blue'],
@@ -244,45 +314,46 @@ a:hover {
   .medally-dark-page [class*='border-purple'],
   .medally-dark-page [class*='border-yellow'],
   .medally-dark-page [class*='border-red'] {
-    border-color: rgba(94, 234, 212, 0.28) !important;
+    border-color: hsla(var(--teal-primary) / 0.3) !important;
   }
 
   .medally-dark-page .apple-card,
-  .medally-dark-page [class*='shadow-md'],
-  .medally-dark-page [class*='shadow-lg'],
-  .medally-dark-page [class*='shadow-xl'] {
-    border-color: rgba(255, 255, 255, 0.1) !important;
-    background-color: rgba(255, 255, 255, 0.065) !important;
-    box-shadow: 0 24px 80px rgba(0, 0, 0, 0.32) !important;
-    backdrop-filter: blur(18px);
+  .medally-dark-page div[class*='shadow-md']:not(button):not(a),
+  .medally-dark-page div[class*='shadow-lg']:not(button):not(a),
+  .medally-dark-page div[class*='shadow-xl']:not(button):not(a) {
+    border: 1px solid var(--glass-border) !important;
+    background-color: var(--glass-bg) !important;
+    box-shadow: var(--glass-shadow) !important;
+    backdrop-filter: blur(24px);
   }
 
   .medally-dark-page input,
   .medally-dark-page textarea,
   .medally-dark-page select {
-    border-color: rgba(255, 255, 255, 0.14) !important;
-    background-color: rgba(255, 255, 255, 0.08) !important;
-    color: white !important;
+    border-color: var(--glass-border) !important;
+    background-color: hsl(var(--muted) / 0.3) !important;
+    color: hsl(var(--foreground)) !important;
+    backdrop-filter: blur(8px);
   }
 
   .medally-dark-page input::placeholder,
   .medally-dark-page textarea::placeholder {
-    color: rgb(148 163 184) !important;
+    color: hsl(var(--muted-foreground) / 0.6) !important;
   }
 
   .medally-dark-page .prose {
-    color: rgb(203 213 225);
+    color: hsl(var(--muted-foreground));
   }
 
   .medally-dark-page .prose h1,
   .medally-dark-page .prose h2,
   .medally-dark-page .prose h3,
   .medally-dark-page .prose strong {
-    color: white;
+    color: hsl(var(--foreground));
   }
 
   .medally-dark-page .prose a {
-    color: rgb(204 251 241);
+    color: hsla(var(--teal-primary) / 0.9);
   }
 }
 
@@ -450,11 +521,12 @@ a:hover {
   transform-style: preserve-3d;
 }
 
-.clinical-command-plane > * {
+.clinical-command-plane>* {
   transform: translate(-50%, -50%) rotateZ(18deg) rotateX(-58deg);
 }
 
 @media (prefers-reduced-motion: reduce) {
+
   .clinical-command-layer *,
   .clinical-command-plane * {
     animation: none !important;
@@ -552,3 +624,6 @@ section {
     padding-right: 1rem;
   }
 }
+
+
+/* Clean space at end of file */

@@ -1,9 +1,10 @@
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 
 const siteUrl = 'https://www.medally.ai';
-const distDir = new URL('../dist/', import.meta.url);
-const shell = readFileSync(new URL('index.html', distDir), 'utf8');
+const distDir = fileURLToPath(new URL('../dist/', import.meta.url));
+const shell = readFileSync(join(distDir, 'index.html'), 'utf8');
 
 const commonLinks = [
   ['Home', '/'],
@@ -268,9 +269,9 @@ function renderPage(page) {
 
 for (const page of pages) {
   const outputPath = page.path === '/' ? 'index.html' : join(page.path.slice(1), 'index.html');
-  const filePath = new URL(outputPath, distDir);
-  mkdirSync(dirname(filePath.pathname), { recursive: true });
-  writeFileSync(filePath, renderPage(page));
+  const targetFile = join(distDir, outputPath);
+  mkdirSync(dirname(targetFile), { recursive: true });
+  writeFileSync(targetFile, renderPage(page));
 }
 
 console.log(`Prerendered SEO HTML for ${pages.length} routes.`);

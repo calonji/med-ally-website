@@ -202,7 +202,7 @@ const Pricing: FC = () => {
 
   return (
     <section
-      className="relative  overflow-hidden bg-gradient-to-br from-gray-50 via-white to-blue-50"
+      className="relative overflow-hidden bg-background transition-colors duration-300"
       ref={pricingRef}
       id="pricing"
     >
@@ -212,11 +212,11 @@ const Pricing: FC = () => {
       <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
         <motion.div
           style={{ y: backgroundY }}
-          className="absolute top-[15%] right-[10%] w-[35rem] h-[35rem] bg-gradient-to-r from-blue-100/20 to-purple-100/20 rounded-full filter blur-[80px] opacity-60 animate-float"
+          className="absolute top-[15%] right-[10%] w-[35rem] h-[35rem] bg-gradient-to-r from-teal-500/10 to-purple-500/10 rounded-full filter blur-[80px] opacity-40 animate-float"
         ></motion.div>
         <motion.div
           style={{ y: backgroundY }}
-          className="absolute bottom-[15%] left-[10%] w-[30rem] h-[30rem] bg-gradient-to-r from-green-100/20 to-blue-100/20 rounded-full filter blur-[60px] opacity-50 animate-float-delayed"
+          className="absolute bottom-[15%] left-[10%] w-[30rem] h-[30rem] bg-gradient-to-r from-teal-500/10 to-indigo-500/10 rounded-full filter blur-[60px] opacity-30 animate-float-delayed"
         ></motion.div>
       </div>
 
@@ -227,13 +227,13 @@ const Pricing: FC = () => {
             initial={{ y: 100, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             exit={{ y: 100, opacity: 0 }}
-            className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-white border-t border-gray-200 shadow-lg md:hidden"
+            className="fixed bottom-0 left-0 right-0 z-50 p-4 bg-card border-t border-border shadow-2xl md:hidden transition-colors duration-300"
           >
             <a
               href="https://app.medally.ai/"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full bg-gradient-to-r from-indigo-500 to-indigo-600 text-white py-3 px-4 rounded-full text-sm font-medium flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-300"
+              className="block w-full bg-gradient-to-r from-teal-600 to-indigo-600 text-white py-3 px-4 rounded-full text-sm font-medium flex items-center justify-center gap-2 hover:shadow-lg transition-all duration-300"
             >
               <span>Get Started with MedAlly</span>
               <ArrowRight className="w-4 h-4" />
@@ -242,7 +242,7 @@ const Pricing: FC = () => {
         )}
       </AnimatePresence>
 
-      <div className=" relative z-10">
+      <div className="relative z-10 py-20 sm:py-28">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -250,21 +250,18 @@ const Pricing: FC = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-16"
         >
-
-
-
           {/* Billing toggle */}
           <div className="mt-8 flex items-center justify-center">
             <motion.div
-              className="bg-white p-1.5 rounded-full shadow-md flex items-center"
-              whileHover={{ boxShadow: "0 4px 12px rgba(0,0,0,0.1)" }}
+              className="bg-muted/30 p-1.5 rounded-full shadow-inner flex items-center border border-border backdrop-blur-sm"
+              whileHover={{ boxShadow: "var(--glass-shadow)" }}
             >
               <button
                 onClick={() => setIsAnnual(true)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   isAnnual
-                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-gradient-to-r from-teal-600 to-indigo-600 text-white shadow-md"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 Annual
@@ -278,8 +275,8 @@ const Pricing: FC = () => {
                 onClick={() => setIsAnnual(false)}
                 className={`px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
                   !isAnnual
-                    ? "bg-gradient-to-r from-blue-500 to-indigo-600 text-white shadow-md"
-                    : "text-gray-600 hover:text-gray-900"
+                    ? "bg-gradient-to-r from-teal-600 to-indigo-600 text-white shadow-md"
+                    : "text-muted-foreground hover:text-foreground"
                 }`}
               >
                 Monthly
@@ -293,7 +290,7 @@ const Pricing: FC = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, margin: "-50px" }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full px-4 sm:px-6"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 w-full px-4 sm:px-6 max-w-7xl mx-auto"
         >
           {plans.map((plan, index) => (
             <motion.div
@@ -308,12 +305,12 @@ const Pricing: FC = () => {
               onMouseLeave={() => setHoveredPlan(null)}
             >
               <motion.div
-                className={`apple-card h-full p-8 rounded-2xl bg-white shadow-md hover:shadow-xl transition-all duration-300 border ${
-                  plan.popular ? "border-indigo-200 bg-gradient-to-b from-white via-indigo-50/20 to-indigo-100/30 shadow-indigo-200/50" : "border-gray-100"
+                className={`apple-card h-full p-8 rounded-2xl bg-card/50 backdrop-blur-sm shadow-md hover:shadow-xl transition-colors duration-300 border ${
+                  plan.popular ? "border-indigo-500/40 bg-card/80 shadow-indigo-500/10" : "border-border"
                 } relative pb-24 min-h-[600px]`}
                 whileHover={{
                   y: -5,
-                  boxShadow: plan.popular ? "0 20px 30px -5px rgba(79, 70, 229, 0.15)" : "0 20px 25px -5px rgba(0, 0, 0, 0.1)"
+                  boxShadow: plan.popular ? "0 20px 30px -5px hsla(var(--indigo-primary) / 0.15)" : "var(--glass-shadow)"
                 }}
                 transition={{ type: "spring", stiffness: 400, damping: 17 }}
               >
@@ -330,10 +327,10 @@ const Pricing: FC = () => {
                 {hoveredPlan === index && (
                   <motion.div
                     className={`absolute inset-0 rounded-2xl ${
-                      plan.color === 'blue' ? 'bg-gradient-to-br from-blue-400/10 to-blue-600/5' :
-                      plan.color === 'indigo' ? 'bg-gradient-to-br from-indigo-400/10 to-indigo-600/5' :
-                      plan.color === 'purple' ? 'bg-gradient-to-br from-purple-400/10 to-purple-600/5' :
-                      'bg-gradient-to-br from-gray-400/10 to-gray-600/5'
+                      plan.color === 'blue' ? 'bg-gradient-to-br from-blue-500/5 to-blue-600/2' :
+                      plan.color === 'indigo' ? 'bg-gradient-to-br from-indigo-500/5 to-indigo-600/2' :
+                      plan.color === 'purple' ? 'bg-gradient-to-br from-purple-500/5 to-purple-600/2' :
+                      'bg-gradient-to-br from-teal-500/5 to-teal-600/2'
                     } -z-10`}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
@@ -344,35 +341,35 @@ const Pricing: FC = () => {
                 <div className="mb-4">
                   <div className="flex items-center gap-2 mb-1">
                     <div className={`flex items-center justify-center w-7 h-7 rounded-full ${
-                      plan.color === 'blue' ? 'bg-blue-100 text-blue-600' :
-                      plan.color === 'indigo' ? 'bg-indigo-100 text-indigo-600' :
-                      plan.color === 'purple' ? 'bg-purple-100 text-purple-600' :
-                      'bg-gray-100 text-gray-600'
+                      plan.color === 'blue' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400' :
+                      plan.color === 'indigo' ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400' :
+                      plan.color === 'purple' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400' :
+                      'bg-muted text-muted-foreground'
                     }`}>
                       {planIcons[plan.name as keyof typeof planIcons]}
                     </div>
                     <div className="flex flex-col items-start">
-                      <h3 className="text-lg font-bold text-gray-900">{plan.name}</h3>
-                      <p className="text-sm text-gray-500">{plan.description}</p>
+                      <h3 className="text-lg font-bold text-foreground">{plan.name}</h3>
+                      <p className="text-sm text-muted-foreground">{plan.description}</p>
                     </div>
                   </div>
                 </div>
 
                 <div className="mb-4">
                   <div className="flex items-baseline">
-                    <span className="text-2xl font-bold text-gray-900">
+                    <span className="text-2xl font-bold text-foreground">
                       {plan.price}
                     </span>
-                    <span className="ml-1 text-sm text-gray-500">
+                    <span className="ml-1 text-sm text-muted-foreground">
                       {plan.priceDetail}
                     </span>
                   </div>
                   {isAnnual && plan.name !== "Forever Free" && plan.name !== "Enterprise" && (
-                    <div className="mt-1 text-sm text-gray-500">
-                      <span className="font-medium text-indigo-600">
+                    <div className="mt-1 text-sm text-muted-foreground">
+                      <span className="font-medium text-indigo-600 dark:text-indigo-400">
                         {annualPrices[plan.name as keyof typeof annualPrices]}
                       </span> billed annually
-                      <span className="ml-1 text-sm text-green-600 font-medium">
+                      <span className="ml-1 text-sm text-teal-600 dark:text-teal-400 font-medium">
                         ({calculateSavings(monthlyPrices[plan.name as keyof typeof monthlyPrices], annualPrices[plan.name as keyof typeof annualPrices])})
                       </span>
                     </div>
@@ -386,10 +383,10 @@ const Pricing: FC = () => {
                       <div
                         key={i}
                         className={`flex items-center gap-1 px-2 py-1 rounded-full ${
-                          plan.color === 'blue' ? 'bg-blue-50 text-blue-700' :
-                          plan.color === 'indigo' ? 'bg-indigo-50 text-indigo-700' :
-                          plan.color === 'purple' ? 'bg-purple-50 text-purple-700' :
-                          'bg-gray-50 text-gray-700'
+                          plan.color === 'blue' ? 'bg-blue-500/5 text-blue-600 dark:text-blue-400 border border-blue-500/10' :
+                          plan.color === 'indigo' ? 'bg-indigo-500/5 text-indigo-600 dark:text-indigo-400 border border-indigo-500/10' :
+                          plan.color === 'purple' ? 'bg-purple-500/5 text-purple-600 dark:text-purple-400 border border-purple-500/10' :
+                          'bg-muted text-muted-foreground border border-border'
                         } text-sm`}
                       >
                         {benefit.icon}
@@ -412,20 +409,20 @@ const Pricing: FC = () => {
                         onMouseLeave={() => setSelectedFeature(null)}
                       >
                         <span className={`shrink-0 mt-0.5 flex items-center justify-center w-3.5 h-3.5 rounded-full ${
-                          plan.color === 'blue' ? 'bg-blue-100 text-blue-600' :
-                          plan.color === 'indigo' ? 'bg-indigo-100 text-indigo-600' :
-                          plan.color === 'purple' ? 'bg-purple-100 text-purple-600' :
-                          'bg-gray-100 text-gray-600'
+                          plan.color === 'blue' ? 'bg-blue-500/10 text-blue-600 dark:text-blue-400' :
+                          plan.color === 'indigo' ? 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400' :
+                          plan.color === 'purple' ? 'bg-purple-500/10 text-purple-600 dark:text-purple-400' :
+                          'bg-muted text-muted-foreground'
                         } ${selectedFeature === feature ? 'scale-125' : ''} transition-transform duration-200`}>
                           <Check className="w-2 h-2" />
                         </span>
                         <span className={`text-sm ${
                           selectedFeature === feature ? (
-                            plan.color === 'blue' ? 'text-blue-700' :
-                            plan.color === 'indigo' ? 'text-indigo-700' :
-                            plan.color === 'purple' ? 'text-purple-700' :
-                            'text-gray-700'
-                          ) : 'text-gray-600'
+                            plan.color === 'blue' ? 'text-blue-600 dark:text-blue-400' :
+                            plan.color === 'indigo' ? 'text-indigo-600 dark:text-indigo-400' :
+                            plan.color === 'purple' ? 'text-purple-600 dark:text-purple-400' :
+                            'text-foreground'
+                          ) : 'text-muted-foreground'
                         } font-medium truncate transition-colors duration-200`}>
                           {feature}
                         </span>
@@ -440,10 +437,10 @@ const Pricing: FC = () => {
                     target="_blank"
                     rel="noopener noreferrer"
                     className={`block w-full apple-button ${
-                      plan.color === 'blue' ? 'bg-gradient-to-r from-blue-500 to-blue-600' :
-                      plan.color === 'indigo' ? 'bg-gradient-to-r from-indigo-500 to-indigo-600' :
-                      plan.color === 'purple' ? 'bg-gradient-to-r from-purple-500 to-purple-600' :
-                      'bg-gradient-to-r from-gray-500 to-gray-600'
+                      plan.color === 'blue' ? 'bg-gradient-to-r from-blue-600 to-blue-700' :
+                      plan.color === 'indigo' ? 'bg-gradient-to-r from-indigo-600 to-indigo-700' :
+                      plan.color === 'purple' ? 'bg-gradient-to-r from-purple-600 to-purple-700' :
+                      'bg-gradient-to-r from-teal-600 to-teal-700'
                     } text-white py-2 px-3 rounded-full text-sm font-medium flex items-center justify-center gap-1.5 group hover:shadow-lg transition-all duration-300`}
                   >
                     <span>{plan.button}</span>
@@ -463,21 +460,21 @@ const Pricing: FC = () => {
           transition={{ duration: 0.6, delay: 0.3 }}
           className="mt-20 max-w-6xl mx-auto px-4 sm:px-6"
         >
-          <h3 className="text-2xl font-bold text-center mb-8">Compare Plan Features</h3>
+          <h3 className="text-2xl font-bold text-center text-foreground mb-8">Compare Plan Features</h3>
 
-          <div className="overflow-x-auto rounded-xl shadow-md bg-white">
+          <div className="overflow-x-auto rounded-xl shadow-md bg-card border border-border transition-colors duration-300">
             <div className="min-w-[800px]">
               <table className="w-full">
                 <thead>
-                  <tr className="border-b">
-                    <th className="py-4 px-6 text-left text-gray-500 font-medium sticky left-0 bg-white z-10">Feature</th>
+                  <tr className="border-b border-border">
+                    <th className="py-4 px-6 text-left text-muted-foreground font-medium sticky left-0 bg-card z-10 border-r border-border transition-colors">Feature</th>
                     {plans.map(plan => (
                       <th key={plan.name} className="py-4 px-6 text-center">
                         <span className={`${
-                          plan.color === 'blue' ? 'text-blue-600' :
-                          plan.color === 'indigo' ? 'text-indigo-600' :
-                          plan.color === 'purple' ? 'text-purple-600' :
-                          'text-gray-600'
+                          plan.color === 'blue' ? 'text-blue-600 dark:text-blue-400' :
+                          plan.color === 'indigo' ? 'text-indigo-600 dark:text-indigo-400' :
+                          plan.color === 'purple' ? 'text-purple-600 dark:text-purple-400' :
+                          'text-muted-foreground'
                         } font-bold`}>{plan.name}</span>
                       </th>
                     ))}
@@ -514,15 +511,15 @@ const Pricing: FC = () => {
                   ].map((feature, i) => (
                     <motion.tr
                       key={i}
-                      className={i % 2 === 0 ? "bg-gray-50" : ""}
+                      className={`border-b border-border/40 transition-colors ${i % 2 === 0 ? "bg-muted/20" : ""}`}
                       initial={{ opacity: 0, y: 10 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true, margin: "-50px" }}
                       transition={{ duration: 0.3, delay: i * 0.03 }}
                     >
-                      <td className="py-3 px-6 text-gray-800 font-medium sticky left-0 bg-inherit z-10">{feature.name}</td>
+                      <td className="py-3 px-6 text-foreground font-medium sticky left-0 bg-inherit z-10 border-r border-border/40">{feature.name}</td>
                       {feature.values.map((value, j) => (
-                        <td key={j} className="py-3 px-6 text-center text-gray-600">
+                        <td key={j} className="py-3 px-6 text-center text-muted-foreground">
                           {value === "✓" ? (
                             <motion.div
                               whileHover={{ scale: 1.2 }}
@@ -532,12 +529,12 @@ const Pricing: FC = () => {
                               viewport={{ once: true }}
                               transition={{ duration: 0.2, delay: (i * 0.03) + (j * 0.02) }}
                             >
-                              <Check className="w-5 h-5 text-green-500" />
+                              <Check className="w-5 h-5 text-teal-500 dark:text-teal-400" />
                             </motion.div>
                           ) : value === "✗" ? (
-                            <X className="w-5 h-5 text-gray-300 mx-auto" />
+                            <X className="w-5 h-5 text-muted-foreground/40 mx-auto" />
                           ) : (
-                            value
+                            <span className="font-medium text-foreground">{value}</span>
                           )}
                         </td>
                       ))}
@@ -549,7 +546,7 @@ const Pricing: FC = () => {
           </div>
 
           {/* Mobile indicator for horizontal scrolling */}
-          <div className="mt-4 text-center text-sm text-gray-500 md:hidden">
+          <div className="mt-4 text-center text-sm text-muted-foreground md:hidden">
             <span>Swipe left/right to see more features</span>
           </div>
         </motion.div>
@@ -560,13 +557,12 @@ const Pricing: FC = () => {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="mt-20 max-w-3xl mx-auto"
+          className="mt-20 max-w-3xl mx-auto px-4 sm:px-6"
         >
-          <h3 className="text-2xl font-bold text-center mb-8">Frequently Asked Questions</h3>
+          <h3 className="text-2xl font-bold text-center text-foreground mb-8">Frequently Asked Questions</h3>
 
           <div className="space-y-4">
             {[
-
               {
                 question: "Can I switch plans later?",
                 answer: "Yes, you can upgrade or downgrade your plan at any time. When upgrading, you'll get immediate access to new features. When downgrading, changes take effect at the end of your billing cycle."
@@ -582,25 +578,25 @@ const Pricing: FC = () => {
             ].map((faq, i) => (
               <motion.div
                 key={i}
-                className="bg-white rounded-xl p-6 shadow-sm hover:shadow-md transition-shadow duration-300"
+                className="bg-card/50 backdrop-blur-sm border border-border rounded-xl p-6 shadow-sm hover:shadow-md transition-all duration-300"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
               >
-                <h4 className="font-bold text-gray-900 mb-2">{faq.question}</h4>
-                <p className="text-gray-600 text-sm">{faq.answer}</p>
+                <h4 className="font-bold text-foreground mb-2">{faq.question}</h4>
+                <p className="text-muted-foreground text-sm leading-relaxed">{faq.answer}</p>
               </motion.div>
             ))}
           </div>
 
           <div className="mt-10 text-center">
-            <p className="text-gray-600 mb-4">Still have questions?</p>
+            <p className="text-muted-foreground mb-4">Still have questions?</p>
             <a
               href="https://www.calonji.com/contact"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 bg-white border border-gray-200 hover:border-indigo-300 text-indigo-600 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 hover:shadow-md"
+              className="inline-flex items-center gap-2 bg-card border border-border hover:border-teal-500/40 text-teal-600 dark:text-teal-400 px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 hover:shadow-md"
             >
               <span>Contact our team</span>
               <ArrowRight className="w-4 h-4" />

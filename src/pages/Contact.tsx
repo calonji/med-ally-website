@@ -5,7 +5,7 @@ import { SEO } from '@/components/SEO';
 import { DarkFeatureGrid, PageHero, ParallaxImageBand } from '@/components/PagePrimitives';
 
 const Contact: FC = () => (
-  <Layout>
+  <Layout className="medally-dark-page">
     <SEO
       title="Contact MedAlly | Clinical AI Platform"
       description="Contact MedAlly for clinical AI platform access, product questions, support, and demos for physician workflows."
@@ -22,7 +22,7 @@ const Contact: FC = () => (
         ],
       }}
     />
-    <main className="medally-dark-page">
+    <main className="flex-grow transition-colors duration-300">
       <PageHero
         eyebrow="Contact"
         title="Talk with MedAlly about clinical AI workflows"

@@ -6,7 +6,7 @@ import { PageHero } from '@/components/PagePrimitives';
 
 const PrivacyPolicy: FC = () => {
   return (
-    <Layout>
+    <Layout className="medally-dark-page">
       <SEO
         title="Privacy Policy - MedAlly Clinical AI Platform"
         description="Learn how MedAlly approaches privacy for clinical AI platform visitors, clinicians, care teams, and healthcare product workflows."
@@ -23,7 +23,7 @@ const PrivacyPolicy: FC = () => {
           ],
         }}
       />
-      <main className="medally-dark-page">
+      <main className="flex-grow transition-colors duration-300">
         <PageHero
           eyebrow="Privacy"
           title="Privacy for clinical AI workflows"

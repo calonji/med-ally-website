@@ -207,7 +207,7 @@ const CTASection: FC = () => {
                   initial={false}
                   animate={{ scale: [1, 1.02, 1] }}
                   transition={{ duration: 2, repeat: Infinity }}
-                  className="absolute -inset-px rounded-lg bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+                  className="absolute -inset-px rounded-lg bg-gradient-to-r from-blue-500/20 to-purple-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                 />
 
                 <div className="mb-8">

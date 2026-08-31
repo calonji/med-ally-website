@@ -6,7 +6,7 @@ import { PageHero } from '@/components/PagePrimitives';
 
 const TermsOfService: FC = () => {
   return (
-    <Layout>
+    <Layout className="medally-dark-page">
       <SEO
         title="Terms of Service - MedAlly Clinical AI Platform"
         description="Read the MedAlly terms of service for clinical AI platform website and product experiences operated by Calonji Inc."
@@ -23,7 +23,7 @@ const TermsOfService: FC = () => {
           ],
         }}
       />
-      <main className="medally-dark-page">
+      <main className="flex-grow transition-colors duration-300">
         <PageHero
           eyebrow="Terms"
           title="Terms for MedAlly product experiences"
