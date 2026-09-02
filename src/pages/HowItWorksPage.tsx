@@ -5,7 +5,7 @@ import { SEO } from '@/components/SEO';
 import { AnswerBlock, DarkFeatureGrid, PageHero, ParallaxImageBand } from '@/components/PagePrimitives';
 
 const HowItWorksPage: FC = () => (
-  <Layout>
+  <Layout className="medally-dark-page">
     <SEO
       title="How MedAlly Works | Clinical AI Workflow for Physicians"
       description="See how MedAlly fits into clinical workflows with EHR integration, AI clinical documentation, physician review, and medical coding automation."
@@ -22,7 +22,7 @@ const HowItWorksPage: FC = () => (
         ],
       }}
     />
-    <main className="medally-dark-page">
+    <main className="flex-grow transition-colors duration-300">
       <PageHero
         eyebrow="How it works"
         title="A clinical AI workflow that stays under physician control"

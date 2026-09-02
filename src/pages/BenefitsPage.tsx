@@ -5,7 +5,7 @@ import { SEO } from '@/components/SEO';
 import { AnswerBlock, DarkFeatureGrid, PageHero, ParallaxImageBand } from '@/components/PagePrimitives';
 
 const BenefitsPage: FC = () => (
-  <Layout>
+  <Layout className="medally-dark-page">
     <SEO
       title="MedAlly Benefits | Clinical AI Platform for Better Physician Workflows"
       description="Learn how MedAlly helps reduce documentation burden, improve clinical review, support coding accuracy, and give physicians more time for patient care."
@@ -22,7 +22,7 @@ const BenefitsPage: FC = () => (
         ],
       }}
     />
-    <main className="medally-dark-page">
+    <main className="flex-grow transition-colors duration-300">
       <PageHero
         eyebrow="Benefits"
         title="Clinical AI that gives the day back to physicians"

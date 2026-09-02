@@ -60,7 +60,7 @@ const FAQPage: FC = () => {
   ];
 
   return (
-    <Layout>
+    <Layout className="medally-dark-page">
       <SEO
         title="MedAlly FAQ | Clinical AI Platform Questions"
         description="Answers about MedAlly clinical AI platform workflows, AI clinical documentation, decision support, EHR integration, and HIPAA-aware physician review."
@@ -70,7 +70,7 @@ const FAQPage: FC = () => {
         keywords={['clinical AI platform FAQ', 'physician AI assistant', 'AI clinical documentation', 'EHR workflow integration']}
         structuredData={structuredData}
       />
-      <main className="medally-dark-page">
+      <main className="flex-grow transition-colors duration-300">
         <PageHero
           eyebrow="FAQ"
           title="Questions physicians ask before adopting clinical AI"
@@ -82,22 +82,28 @@ const FAQPage: FC = () => {
           question="What should teams know before evaluating MedAlly?"
           answer="MedAlly is positioned as a clinical AI platform for the whole encounter lifecycle. It is not limited to scribing, and it does not remove the physician review step."
         />
-        <section className="relative bg-black py-20 sm:py-28">
+        <section className="relative bg-background border-b border-border py-20 sm:py-28 transition-colors duration-300">
           <div className="mx-auto max-w-4xl px-5 sm:px-8">
-            <div className="divide-y divide-white/10 border-y border-white/10">
+            <div className="divide-y divide-border border-y border-border">
               {faqs.map((faq, index) => (
                 <article key={faq.question} className="py-2">
                   <button
                     type="button"
-                    className="flex w-full items-center justify-between gap-6 py-5 text-left text-white"
+                    className="flex w-full items-center justify-between gap-6 py-6 text-left text-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors group"
                     onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
                   >
-                    <span className="text-lg font-semibold">{faq.question}</span>
+                    <span className="text-lg font-semibold tracking-tight sm:text-xl">{faq.question}</span>
                     <ChevronDown
-                      className={`h-5 w-5 text-teal-100 transition ${openIndex === index ? 'rotate-180' : ''}`}
+                      className={`h-5 w-5 text-muted-foreground group-hover:text-teal-500 transition-all duration-300 ${
+                        openIndex === index ? 'rotate-180 text-teal-500' : ''
+                      }`}
                     />
                   </button>
-                  {openIndex === index && <p className="pb-6 text-base leading-7 text-slate-300">{faq.answer}</p>}
+                  {openIndex === index && (
+                    <p className="pb-6 text-base leading-relaxed text-muted-foreground max-w-3xl font-light animate-in fade-in slide-in-from-top-2 duration-300">
+                      {faq.answer}
+                    </p>
+                  )}
                 </article>
               ))}
             </div>

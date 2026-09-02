@@ -6,7 +6,7 @@ import { AnswerBlock, DarkFeatureGrid, PageHero, ParallaxImageBand } from '@/com
 import ROICalculator from '@/components/ROICalculator';
 
 const ROICalculatorPage: FC = () => (
-  <Layout>
+  <Layout className="medally-dark-page">
     <SEO
       title="MedAlly ROI Calculator | Estimate Clinical AI Documentation Savings"
       description="Estimate MedAlly ROI from reduced documentation time, additional patient capacity, and clinical workflow efficiency for physician practices."
@@ -23,7 +23,7 @@ const ROICalculatorPage: FC = () => (
         ],
       }}
     />
-    <main className="medally-dark-page">
+    <main className="flex-grow transition-colors duration-300">
       <PageHero
         eyebrow="ROI calculator"
         title="Estimate the operational impact of clinical AI"
@@ -48,7 +48,7 @@ const ROICalculatorPage: FC = () => (
           { icon: <BarChart3 className="h-5 w-5" />, title: 'Scenario planning', copy: 'Change core assumptions to understand practice-specific impact.', meta: 'Model' },
         ]}
       />
-      <section className="relative bg-black py-20 sm:py-28">
+      <section className="relative bg-background border-y border-border py-20 sm:py-28 transition-colors duration-300">
         <div className="mx-auto max-w-7xl px-5 sm:px-8 lg:px-10">
           <ROICalculator />
         </div>

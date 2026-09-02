@@ -248,25 +248,25 @@ const Benefits: FC = () => {
           transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
           className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-16 max-w-4xl mx-auto"
         >
-          <div className="glass dark:glass-dark rounded-xl p-6 text-center">
-            <BarChart4 className="w-8 h-8 text-[#36b7b5] mx-auto mb-2" />
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">70%</div>
-            <div className="text-sm text-gray-600 dark:text-gray-300">Less Documentation Time</div>
+          <div className="glass-medally rounded-xl p-6 text-center">
+            <BarChart4 className="w-8 h-8 text-teal-500 dark:text-teal-400 mx-auto mb-2" />
+            <div className="text-3xl font-bold text-foreground">70%</div>
+            <div className="text-sm text-muted-foreground">Less Documentation Time</div>
           </div>
-          <div className="glass dark:glass-dark rounded-xl p-6 text-center">
-            <Zap className="w-8 h-8 text-[#4b2683] mx-auto mb-2" />
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">93%</div>
-            <div className="text-sm text-gray-600 dark:text-gray-300">Diagnostic Accuracy</div>
+          <div className="glass-medally rounded-xl p-6 text-center">
+            <Zap className="w-8 h-8 text-purple-500 dark:text-purple-400 mx-auto mb-2" />
+            <div className="text-3xl font-bold text-foreground">93%</div>
+            <div className="text-sm text-muted-foreground">Diagnostic Accuracy</div>
           </div>
-          <div className="glass dark:glass-dark rounded-xl p-6 text-center">
-            <Users className="w-8 h-8 text-[#fccc03] mx-auto mb-2" />
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">35%</div>
-            <div className="text-sm text-gray-600 dark:text-gray-300">Revenue Increase</div>
+          <div className="glass-medally rounded-xl p-6 text-center">
+            <Users className="w-8 h-8 text-yellow-500 dark:text-yellow-400 mx-auto mb-2" />
+            <div className="text-3xl font-bold text-foreground">35%</div>
+            <div className="text-sm text-muted-foreground">Revenue Increase</div>
           </div>
-          <div className="glass dark:glass-dark rounded-xl p-6 text-center">
-            <Smile className="w-8 h-8 text-[#e41e3a] mx-auto mb-2" />
-            <div className="text-3xl font-bold text-gray-900 dark:text-white">90%</div>
-            <div className="text-sm text-gray-600 dark:text-gray-300">Physician Satisfaction</div>
+          <div className="glass-medally rounded-xl p-6 text-center">
+            <Smile className="w-8 h-8 text-red-500 dark:text-red-400 mx-auto mb-2" />
+            <div className="text-3xl font-bold text-foreground">90%</div>
+            <div className="text-sm text-muted-foreground">Physician Satisfaction</div>
           </div>
         </motion.div>
 
@@ -285,7 +285,7 @@ const Benefits: FC = () => {
               className="h-full"
             >
               <Card 
-                className={`h-full transition-all duration-500 relative overflow-hidden apple-card backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 border ${
+                className={`h-full transition-all duration-300 relative overflow-hidden glass-medally bg-card border ${
                   colorClasses[benefit.color as keyof typeof colorClasses].border
                 } ${activeIndex === index ? `shadow-xl ${colorClasses[benefit.color as keyof typeof colorClasses].shadow}` : 'shadow-md'}`}
                 style={{
@@ -298,13 +298,13 @@ const Benefits: FC = () => {
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${
                     colorClasses[benefit.color as keyof typeof colorClasses].gradient
-                  } opacity-0 ${activeIndex === index ? 'opacity-5' : ''} transition-opacity duration-500`}
+                  } opacity-0 ${activeIndex === index ? 'opacity-[0.03] dark:opacity-[0.08]' : ''} transition-opacity duration-300`}
                 />
 
                 {/* Animated Glow Effect */}
                 {activeIndex === index && (
                   <motion.div 
-                    className="absolute -inset-0.5 bg-gradient-to-r from-transparent via-white to-transparent opacity-20 blur-sm"
+                    className="absolute -inset-0.5 bg-gradient-to-r from-transparent via-teal-500/10 to-transparent opacity-20 blur-sm"
                     animate={{
                       x: ['-100%', '100%'],
                     }}
@@ -323,17 +323,17 @@ const Benefits: FC = () => {
                         colorClasses[benefit.color as keyof typeof colorClasses].bg
                       } ${
                         colorClasses[benefit.color as keyof typeof colorClasses].hover
-                      } flex items-center justify-center transition-all duration-300 glass`}
+                      } flex items-center justify-center transition-all duration-300 glass-medally`}
                     >
                       {benefit.icon}
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">
+                  <h3 className="text-xl font-bold text-foreground mb-3">
                     {benefit.title}
                   </h3>
 
-                  <p className="text-gray-600 dark:text-gray-300 mb-4">
+                  <p className="text-muted-foreground mb-4">
                     {benefit.description}
                   </p>
 
@@ -344,7 +344,7 @@ const Benefits: FC = () => {
                     <div className={`${colorClasses[benefit.color as keyof typeof colorClasses].text} font-bold text-2xl`}>
                       {benefit.stats}
                     </div>
-                    <div className="text-sm text-gray-500 dark:text-gray-400">
+                    <div className="text-sm text-muted-foreground">
                       {benefit.statsLabel}
                     </div>
                   </div>

@@ -148,14 +148,14 @@ const Features: FC = () => {
   };
 
   return (
-    <section id="features" className="relative  overflow-hidden">
+    <section id="features" className="relative overflow-hidden bg-background transition-colors duration-300">
       {/* Primary Background */}
       <BackgroundEffects variant="dots" />
 
       {/* Additional Background Elements */}
       <div className="absolute inset-0">
         {/* Gradient Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-[#36b7b5]/5 via-white to-[#4b2683]/5" />
+        <div className="absolute inset-0 bg-gradient-to-br from-[#36b7b5]/5 via-transparent to-[#4b2683]/5 opacity-40" />
 
         {/* Animated Gradient Orbs */}
         <motion.div
@@ -211,7 +211,7 @@ const Features: FC = () => {
               className="h-full"
             >
               <Card
-                className={`h-full transition-all duration-500 relative overflow-hidden apple-card backdrop-blur-sm bg-white/80 dark:bg-gray-900/80 border ${
+                className={`h-full transition-all duration-300 relative overflow-hidden apple-card backdrop-blur-sm bg-card/80 border ${
                   colorClasses[feature.color].border
                 } ${hoveredCard === index ? `shadow-xl ${colorClasses[feature.color].shadow}` : 'shadow-md'}`}
                 style={{
@@ -224,7 +224,7 @@ const Features: FC = () => {
                 <div
                   className={`absolute inset-0 bg-gradient-to-br ${
                     colorClasses[feature.color].gradient
-                  } opacity-0 ${hoveredCard === index ? 'opacity-5' : ''} transition-opacity duration-500`}
+                  } opacity-0 ${hoveredCard === index ? 'opacity-5' : ''} transition-opacity duration-300`}
                 />
 
                 {/* Animated Glow Effect */}
@@ -254,15 +254,15 @@ const Features: FC = () => {
                         colorClasses[feature.color].bg
                       } ${
                         colorClasses[feature.color].hover
-                      } flex items-center justify-center transition-colors duration-300 glass`}
+                      } flex items-center justify-center transition-colors duration-300 glass-medally`}
                     >
                       {feature.icon}
                     </div>
                   </div>
 
-                  <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-3">{feature.title}</h3>
+                  <h3 className="text-xl font-bold text-foreground mb-3">{feature.title}</h3>
 
-                  <p className="text-gray-600 dark:text-gray-300 mb-6 leading-relaxed">{feature.description}</p>
+                  <p className="text-muted-foreground mb-6 leading-relaxed">{feature.description}</p>
 
                   <div className="flex items-center space-x-2 text-sm">
                     <span className={`${colorClasses[feature.color].text} font-semibold`}>
