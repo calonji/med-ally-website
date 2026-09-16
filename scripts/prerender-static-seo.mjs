@@ -8,6 +8,7 @@ const shell = readFileSync(join(distDir, 'index.html'), 'utf8');
 
 const commonLinks = [
   ['Home', '/'],
+  ['AI Medical Scribe', '/ai-medical-scribe'],
   ['Features', '/features'],
   ['How It Works', '/how-it-works'],
   ['Benefits', '/benefits'],
@@ -21,11 +22,18 @@ const commonLinks = [
 const commonSchema = [
   {
     '@context': 'https://schema.org',
-    '@type': ['Organization', 'MedicalOrganization'],
+    '@type': 'Organization',
     '@id': `${siteUrl}/#organization`,
     name: 'MedAlly',
     url: `${siteUrl}/`,
     logo: `${siteUrl}/logo.svg`,
+    sameAs: [
+      'https://twitter.com/medAllyAI',
+      'https://www.linkedin.com/company/medally-ai',
+      'https://www.facebook.com/profile.php?id=491843437354106',
+      'https://www.instagram.com/medally_saas',
+      'https://www.youtube.com/@Med-Ally',
+    ],
     description:
       'MedAlly is a clinical AI platform and physician AI assistant for documentation, clinical decision support, coding, and workflow automation.',
   },
@@ -55,6 +63,41 @@ const commonSchema = [
   },
 ];
 
+const scribeFaqs = [
+  {
+    q: 'What documentation format can MedAlly produce?',
+    a: "MedAlly's current product experience includes structured SOAP-style clinical documentation prepared from encounter context for physician review.",
+  },
+  {
+    q: 'How does a physician review the MedAlly note?',
+    a: 'The physician reviews the generated draft, makes any needed edits, validates the content, and approves what moves forward in the workflow.',
+  },
+  {
+    q: 'How does the approved note reach the clinical record?',
+    a: 'MedAlly is designed to move physician-approved work into the practice workflow, including the EHR workflow where supported by the specific deployment. Exact integration depth can vary, so practices and health systems should confirm support for their environment during evaluation.',
+  },
+  {
+    q: 'What is included in the Forever Free plan?',
+    a: 'The Forever Free plan includes 10 free encounters per month. View Pricing for current plan details and included capabilities.',
+  },
+  {
+    q: 'What happens after I use the 10 free encounters?',
+    a: 'The free allowance is 10 encounters per month. View Pricing for the current options available after the monthly allowance is used.',
+  },
+  {
+    q: 'Is MedAlly only an AI medical scribe?',
+    a: 'No. AI-assisted documentation is one part of MedAlly. The broader platform also organizes encounter context, surfaces reviewable decision-support information, prepares coding context, and supports workflow handoffs.',
+  },
+  {
+    q: 'Does MedAlly replace physician review?',
+    a: 'No. Physicians remain responsible for reviewing, editing, validating, approving, and making final clinical decisions.',
+  },
+  {
+    q: 'What should I verify about privacy and security?',
+    a: "Before deployment, healthcare organizations should review MedAlly's current privacy and security documentation and confirm the requirements relevant to their organization, including any needed contractual, data-handling, retention, encryption, and governance details.",
+  },
+];
+
 const pages = [
   {
     path: '/',
@@ -66,6 +109,66 @@ const pages = [
     answer:
       'MedAlly assists physicians across the clinical workday by drafting documentation, organizing encounter context, surfacing reviewable decision-support information, and preparing coding context while the physician stays in control.',
     bullets: ['AI clinical documentation', 'Physician review workflows', 'Clinical decision support', 'Medical coding automation'],
+    sections: [
+      {
+        heading: 'Clinical Workflow Intelligence',
+        content:
+          'MedAlly connects documentation directly with encounter context, reviewable clinical insights, coding context, and care team handoffs—ensuring physicians remain in full control of every clinical note.',
+      },
+      {
+        heading: 'Interactive Encounter Simulation',
+        content:
+          'Experience how ambient clinical dialogue is captured, structured into subjective, objective, assessment, and plan (SOAP) drafts, and aligned with recommended ICD-10 and CPT codes for physician validation.',
+      },
+      {
+        heading: 'Forever Free Plan',
+        content:
+          'Start with 10 free encounters per month with ambient AI documentation, structured SOAP note generation, and clinician review gates.',
+      },
+    ],
+  },
+  {
+    path: '/ai-medical-scribe',
+    title: 'AI Medical Scribe for Physicians | MedAlly',
+    description:
+      'MedAlly helps physicians turn patient encounters into structured, reviewable clinical notes, then move approved work into the clinical workflow.',
+    h1: 'AI Medical Scribe for Physicians — From Encounter to Reviewable Note',
+    image: '/images/medally/clinical-hero.webp',
+    answer:
+      'An AI medical scribe uses artificial intelligence to help turn a clinician-patient encounter into draft clinical documentation. An ambient AI scribe captures clinical conversations to build reviewable notes while connecting to broader clinical workflow intelligence.',
+    bullets: [
+      'Ambient encounter capture',
+      'Structured SOAP draft preparation',
+      'Physician review and validation gate',
+      'Downstream workflow and coding context',
+    ],
+    sections: [
+      {
+        heading: 'Step-by-Step Scribing Workflow',
+        content:
+          '1. MedAlly listens to the encounter. 2. MedAlly prepares the structured SOAP draft. 3. The physician reviews and edits the draft. 4. Physician-approved work moves forward into practice workflows.',
+      },
+      {
+        heading: 'Illustrative Demonstration Review Workspace',
+        content:
+          'Inspect structured SOAP output (Subjective, Objective, Assessment, Plan), test inline clinician edits, and explore the clinician verification and approval controls.',
+      },
+      {
+        heading: 'Forever Free Plan — 10 Free Encounters Per Month',
+        content:
+          'The Forever Free plan includes 10 free encounters per month, giving physicians a practical way to evaluate ambient AI scribing before expanding practice deployment.',
+      },
+    ],
+    faqs: scribeFaqs,
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: scribeFaqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.q,
+        acceptedAnswer: { '@type': 'Answer', text: faq.a },
+      })),
+    },
   },
   {
     path: '/features',
@@ -140,6 +243,36 @@ const pages = [
     answer:
       'The right MedAlly plan depends on practice size, documentation volume, clinical workflow needs, EHR integration depth, and how quickly the team wants to scale AI support.',
     bullets: ['Solo and small practice evaluation', 'Practice-team deployment', 'Enterprise workflow support', 'Demo and implementation planning'],
+    schema: {
+      '@context': 'https://schema.org',
+      '@type': 'SoftwareApplication',
+      name: 'MedAlly',
+      applicationCategory: 'HealthcareApplication',
+      operatingSystem: 'Web',
+      offers: [
+        {
+          '@type': 'Offer',
+          name: 'Forever Free',
+          price: '0',
+          priceCurrency: 'USD',
+          description: '10 clinical encounters per month',
+        },
+        {
+          '@type': 'Offer',
+          name: 'Professional',
+          price: '49',
+          priceCurrency: 'USD',
+          description: 'Unlimited encounters, advanced scribe, coding maps',
+        },
+        {
+          '@type': 'Offer',
+          name: 'Ultimate',
+          price: '99',
+          priceCurrency: 'USD',
+          description: 'Predictive clinical support, guideline scans',
+        },
+      ],
+    },
   },
   {
     path: '/about-us',
@@ -196,7 +329,7 @@ const escapeHtml = (value) =>
     .replaceAll("'", '&#39;');
 
 const absoluteUrl = (path) => `${siteUrl}${path}`;
-const canonicalFor = (path) => (path === '/' ? `${siteUrl}/` : `${siteUrl}${path}`);
+const canonicalFor = (path) => (path === '/' ? `${siteUrl}/` : `${siteUrl}${path.replace(/\/+$/, '')}`);
 
 function renderHead(page) {
   const canonical = canonicalFor(page.path);
@@ -251,12 +384,44 @@ function renderHead(page) {
 }
 
 function renderBody(page) {
+  const sectionsHtml = page.sections
+    ? page.sections
+        .map(
+          (sec) => `
+      <section>
+        <h2>${escapeHtml(sec.heading)}</h2>
+        <p>${escapeHtml(sec.content)}</p>
+      </section>`
+        )
+        .join('')
+    : '';
+
+  const faqsHtml = page.faqs
+    ? `
+      <section aria-label="Frequently Asked Questions">
+        <h2>Frequently Asked Questions</h2>
+        <dl>
+          ${page.faqs
+            .map(
+              (faq) => `
+            <dt><strong>${escapeHtml(faq.q)}</strong></dt>
+            <dd>${escapeHtml(faq.a)}</dd>`
+            )
+            .join('')}
+        </dl>
+      </section>`
+    : '';
+
   return `<div id="root"><main data-static-seo="true">
     <nav aria-label="Primary">${commonLinks.map(([label, href]) => `<a href="${href}">${escapeHtml(label)}</a>`).join(' ')}</nav>
-    <h1>${escapeHtml(page.h1)}</h1>
-    <p>${escapeHtml(page.answer)}</p>
-    <ul>${page.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join('')}</ul>
-    <p><a href="https://app.medally.ai/">Start free</a> <a href="https://www.calonji.com/contact">Book a demo</a></p>
+    <article>
+      <h1>${escapeHtml(page.h1)}</h1>
+      <p>${escapeHtml(page.answer)}</p>
+      <ul>${page.bullets.map((bullet) => `<li>${escapeHtml(bullet)}</li>`).join('')}</ul>
+      ${sectionsHtml}
+      ${faqsHtml}
+      <p><a href="https://app.medally.ai/">Start free</a> <a href="https://www.calonji.com/contact">Book a demo</a></p>
+    </article>
   </main></div>`;
 }
 
@@ -268,10 +433,16 @@ function renderPage(page) {
 }
 
 for (const page of pages) {
-  const outputPath = page.path === '/' ? 'index.html' : join(page.path.slice(1), 'index.html');
-  const targetFile = join(distDir, outputPath);
-  mkdirSync(dirname(targetFile), { recursive: true });
-  writeFileSync(targetFile, renderPage(page));
+  const renderedHtml = renderPage(page);
+  if (page.path === '/') {
+    writeFileSync(join(distDir, 'index.html'), renderedHtml);
+  } else {
+    const dirPath = page.path.replace(/^\//, '');
+    const targetDir = join(distDir, dirPath);
+    mkdirSync(targetDir, { recursive: true });
+    writeFileSync(join(targetDir, 'index.html'), renderedHtml);
+    writeFileSync(join(distDir, `${dirPath}.html`), renderedHtml);
+  }
 }
 
 console.log(`Prerendered SEO HTML for ${pages.length} routes.`);

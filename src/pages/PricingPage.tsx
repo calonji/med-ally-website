@@ -43,6 +43,37 @@ const plans = [
   },
 ];
 
+const pricingSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'SoftwareApplication',
+  name: 'MedAlly',
+  applicationCategory: 'HealthcareApplication',
+  operatingSystem: 'Web',
+  offers: [
+    {
+      '@type': 'Offer',
+      name: 'Forever Free',
+      price: '0',
+      priceCurrency: 'USD',
+      description: '10 clinical encounters per month',
+    },
+    {
+      '@type': 'Offer',
+      name: 'Professional',
+      price: '49',
+      priceCurrency: 'USD',
+      description: 'Unlimited encounters, advanced scribe, coding maps',
+    },
+    {
+      '@type': 'Offer',
+      name: 'Ultimate',
+      price: '99',
+      priceCurrency: 'USD',
+      description: 'Predictive clinical support, guideline scans',
+    },
+  ],
+};
+
 const PricingPage: FC = () => (
   <Layout className="medally-dark-page">
     <SEO
@@ -52,6 +83,7 @@ const PricingPage: FC = () => (
       image="/images/medally/workflow-room.png"
       imageAlt="MedAlly Platform Pricing"
       keywords={['clinical AI pricing', 'medical AI cost', 'Awwwards healthcare pricing']}
+      structuredData={pricingSchema}
     />
     
     <main className="flex-grow transition-colors duration-300">
@@ -70,6 +102,20 @@ const PricingPage: FC = () => (
             </h1>
             <p className="text-lg sm:text-xl text-muted-foreground font-light max-w-2xl mx-auto leading-relaxed">
               Choose the command infrastructure that maps directly to your current patient volume. Flexible monthly agreements, cancel anytime.
+            </p>
+          </MotionReveal>
+        </div>
+      </section>
+
+      {/* Direct AEO/GEO Answer Section */}
+      <section className="py-16 border-y border-border bg-muted/10 mb-16">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <MotionReveal>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-editorial mb-4">
+              Which MedAlly plan fits a practice?
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed">
+              The right MedAlly clinical AI platform plan depends on practice size, documentation volume, EHR integration depth, and whether a team is starting with the Forever Free plan (10 encounters per month) or scaling with unlimited documentation and predictive clinical support.
             </p>
           </MotionReveal>
         </div>

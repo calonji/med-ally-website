@@ -134,8 +134,22 @@ const FeaturesPage: FC = () => (
         </div>
       </section>
 
+      {/* Direct AEO/GEO Answer Section */}
+      <section className="py-16 border-y border-border bg-muted/10">
+        <div className="max-w-4xl mx-auto px-6 text-center">
+          <MotionReveal>
+            <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-editorial mb-4">
+              What does MedAlly automate?
+            </h2>
+            <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed">
+              MedAlly is a clinical AI platform that automates clinical documentation, differential review, lab synthesis, treatment planning support, billing context, follow-up tasks, and workflow handoffs from the same encounter context.
+            </p>
+          </MotionReveal>
+        </div>
+      </section>
+
       {/* Feature Sections Loop with Split Alternating Layouts */}
-      <div id="features-grid" className="space-y-32 lg:space-y-48 pb-40">
+      <div id="features-grid" className="space-y-32 lg:space-y-48 pb-40 pt-16">
         {sections.map((section, index) => (
           <section key={section.eyebrow} className="relative overflow-hidden">
             <div className="max-w-7xl mx-auto px-6 lg:px-8">

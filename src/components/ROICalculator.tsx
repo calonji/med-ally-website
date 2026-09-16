@@ -218,6 +218,8 @@ const ROICalculator: FC = () => {
                       </div>
                       <input
                         id={field.id}
+                        name={field.id}
+                        aria-valuetext={field.format(formData[field.id])}
                         type="range"
                         min={field.min}
                         max={field.max}

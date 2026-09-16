@@ -7,22 +7,22 @@ const securityPillars = [
   {
     icon: <EyeOff className="w-6 h-6" />,
     title: 'Zero Voice Retention',
-    copy: 'Raw clinical room audio undergoes volatile in-memory transcription and is instantly destroyed. No persistent voice assets ever touch disk storage.',
-    stat: '0ms Storage Window',
+    copy: 'Raw clinical encounter audio undergoes volatile in-memory transcription and is immediately discarded once note drafting is completed. No audio recordings are permanently stored on disk.',
+    stat: 'Ephemeral Audio Stream',
     color: 'teal'
   },
   {
     icon: <Lock className="w-6 h-6" />,
     title: 'Enterprise Encryption',
-    copy: 'Leveraging AES-256 at rest and TLS 1.3 in transit. Hosted in SOC2 Type II certified, HIPAA-sovereign clinical cloud clusters with automatic BAA signature on sign-up.',
-    stat: 'AES-256 / TLS 1.3',
+    copy: 'Encrypted using AES-256 at rest and TLS 1.3 in transit. Designed for HIPAA compliance with Business Associate Agreements (BAA) available upon signup.',
+    stat: 'AES-256 & TLS 1.3',
     color: 'purple'
   },
   {
     icon: <UserCheck className="w-6 h-6" />,
     title: 'Physician Sovereignty',
-    copy: 'MedAlly is an assistant, not an actor. Clinical data NEVER commits to your EHR without deliberate clinician review, adjustment, and formal sign-off.',
-    stat: '100% Human-In-The-Loop',
+    copy: 'MedAlly is an assistant, not an autonomous actor. Clinical documentation never commits to your EHR without deliberate clinician review, editing, and formal approval.',
+    stat: '100% Clinician Oversight',
     color: 'coral'
   }
 ];
@@ -48,7 +48,7 @@ export const SecurityVault: FC = () => {
                 Clinical Integrity, <span className="text-gradient-teal font-light italic">Non-Negotiable.</span>
               </h2>
               <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-xl">
-                Healthcare requires trust, not trust-me. MedAlly aligns with hospital compliance protocols from day one, ensuring patient confidentiality and physician peace of mind.
+                Healthcare requires trust, not trust-me. MedAlly aligns with healthcare security protocols from day one, supporting patient confidentiality and physician peace of mind.
               </p>
             </MotionReveal>
           </div>
@@ -56,10 +56,10 @@ export const SecurityVault: FC = () => {
           <div className="lg:col-span-6 flex flex-wrap gap-4 justify-start lg:justify-end">
             {/* Glowing Visual Badges */}
             {[
-              { icon: <Lock className="w-5 h-5" />, label: 'HIPAA Compliant' },
-              { icon: <FileCheck className="w-5 h-5" />, label: 'Instant BAA' },
-              { icon: <Server className="w-5 h-5" />, label: 'SOC2 Type II Ready' },
-              { icon: <Cpu className="w-5 h-5" />, label: 'Zero-Training Architecture' },
+              { icon: <Lock className="w-5 h-5" />, label: 'HIPAA-Ready Architecture' },
+              { icon: <FileCheck className="w-5 h-5" />, label: 'BAA on Sign-up' },
+              { icon: <Server className="w-5 h-5" />, label: 'SOC2 Security Alignment' },
+              { icon: <Cpu className="w-5 h-5" />, label: 'Zero-Training on Patient Data' },
             ].map((badge, idx) => (
               <motion.div
                 key={badge.label}

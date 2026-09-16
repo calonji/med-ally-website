@@ -4,7 +4,7 @@ import { useLocation } from 'react-router-dom';
 const commonStructuredData = [
   {
     '@context': 'https://schema.org',
-    '@type': ['Organization', 'MedicalOrganization'],
+    '@type': 'Organization',
     '@id': 'https://www.medally.ai/#organization',
     name: 'MedAlly',
     url: 'https://www.medally.ai/',
@@ -58,8 +58,8 @@ interface SEOProps {
 }
 
 export const SEO = ({
-  title = 'MedAlly - AI Healthcare Assistant | HIPAA Compliant',
-  description = 'MedAlly helps physicians reduce documentation time by 70% with AI-powered assistance. HIPAA & SOC2 compliant with EHR integration.',
+  title = 'Clinical AI Platform for Physicians | MedAlly',
+  description = 'MedAlly helps physicians draft clinical notes, organize encounter context, review decision-support information, and prepare coding context in one workflow.',
   image = '/images/medally/clinical-hero.webp',
   imageAlt = 'MedAlly clinical AI platform for physician workflows',
   url,
@@ -69,7 +69,11 @@ export const SEO = ({
   structuredData,
 }: SEOProps) => {
   const location = useLocation();
-  const canonicalUrl = url || `https://www.medally.ai${location.pathname}`;
+  const cleanPath = location.pathname === '/' ? '/' : location.pathname.replace(/\/+$/, '');
+  const canonicalUrl = url
+    ? (url === 'https://www.medally.ai/' ? url : url.replace(/\/+$/, ''))
+    : `https://www.medally.ai${cleanPath}`;
+
   const absoluteImageUrl = image.startsWith('http') ? image : `https://www.medally.ai${image}`;
   const pageSpecificSchema = Array.isArray(structuredData) ? structuredData : structuredData ? [structuredData] : [];
   const hasWebPageSchema = pageSpecificSchema.some((entry) => {

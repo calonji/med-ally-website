@@ -16,6 +16,7 @@ import BenefitsPage from '@/pages/BenefitsPage';
 import ROICalculatorPage from '@/pages/ROICalculatorPage';
 import FAQPage from '@/pages/FAQPage';
 import PricingPage from '@/pages/PricingPage';
+import AIMedicalScribePage from '@/pages/AIMedicalScribePage';
 import ScrollToTop from '@/components/ScrollToTop';
 
 // Create a Helmet context to be used by the HelmetProvider
@@ -41,6 +42,12 @@ const App: FC = () => {
             <Route path="/roi-calculator" element={<ROICalculatorPage />} />
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/clinical-documentation-ai" element={<FeaturesPage />} />
+            <Route path="/ai-medical-scribe" element={<AIMedicalScribePage />} />
+            <Route path="/clinical-workflow-software" element={<FeaturesPage />} />
+            <Route path="/clinical-workflow-intelligence" element={<HowItWorksPage />} />
+            <Route path="/clinical-decision-support-ai" element={<FeaturesPage />} />
+            <Route path="/ai-medical-coding" element={<FeaturesPage />} />
             <Route path="/privacy-policy" element={<PrivacyPolicy />} />
             <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="/contact" element={<Contact />} />

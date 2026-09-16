@@ -46,7 +46,7 @@ const script: Step[] = [
   {
     time: '0:44',
     speaker: 'Doctor',
-    text: "I am also going to prescribe a short course of Meloxicam 15mg once daily to help manage the inflammation, assuming your labs are clear.",
+    text: "I am also going to prescribe a 14-day course of Meloxicam 15mg once daily to help manage the inflammation, assuming your labs are clear.",
     activeAgents: ['RxGen', 'Codex', 'Follow-up'],
     soapUpdate: { field: 'plan', content: '1. Lumbar Spine MRI without contrast.\n2. Physical Therapy 2x/week.\n3. Meloxicam 15mg daily x14 days.' }
   },
@@ -137,13 +137,13 @@ const LiveEncounterDemo: FC = () => {
               <Sparkles className="w-3.5 h-3.5" /> Direct Product Simulation
             </div>
             <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground text-editorial leading-tight">
-              Witness the <br />
-              <span className="text-gradient-teal">Autonomous Flow.</span>
+              Experience the <br />
+              <span className="text-gradient-teal">Clinical AI Flow.</span>
             </h2>
           </MotionReveal>
           <MotionReveal delay={0.1}>
             <p className="text-lg text-muted-foreground font-light leading-relaxed max-w-lg">
-              Unlike basic text prompts that just transcribe words, MedAlly runs an active orchestration of 16 specialized agents that analyze, safe-guard, code, and map the visit structure synchronously.
+              See how MedAlly captures ambient clinical conversation, drafts structured SOAP documentation, organizes clinical context, and prepares draft coding recommendations for physician review.
             </p>
             <div className="mt-8 flex items-center gap-4">
               {!isPlaying && currentStepIndex < script.length - 1 ? (
