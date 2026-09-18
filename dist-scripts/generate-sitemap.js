@@ -7,6 +7,7 @@ const CURRENT_DATE = new Date().toISOString().split('T')[0];
 // Page priority mapping
 const PAGE_PRIORITIES = {
     '/': { priority: '1.0', changefreq: 'weekly' },
+    '/clinical-documentation-ai': { priority: '0.9', changefreq: 'weekly' },
     '/ai-medical-scribe': { priority: '0.9', changefreq: 'weekly' },
     '/features': { priority: '0.9', changefreq: 'monthly' },
     '/pricing': { priority: '0.9', changefreq: 'monthly' },
@@ -21,6 +22,7 @@ const PAGE_PRIORITIES = {
 };
 const PAGE_IMAGES = {
     '/': { loc: '/images/medally/clinical-hero.webp', title: 'MedAlly clinical AI platform' },
+    '/clinical-documentation-ai': { loc: '/images/medally/clinical-hero.webp', title: 'MedAlly AI clinical documentation for physicians' },
     '/ai-medical-scribe': { loc: '/images/medally/clinical-hero.webp', title: 'MedAlly AI medical scribe for physicians' },
     '/about-us': { loc: '/images/medally/brand-hero-calm-day.png', title: 'MedAlly physician-centered clinical AI' },
     '/how-it-works': { loc: '/images/medally/brand-two-screens-one-truth.png', title: 'MedAlly clinical workflow' },
@@ -36,6 +38,7 @@ const PAGE_IMAGES = {
 // Define a mapping from file names to actual routes
 const PAGE_ROUTES = {
     '/LandingPage': '/',
+    '/ClinicalDocumentationAIPage': '/clinical-documentation-ai',
     '/AIMedicalScribePage': '/ai-medical-scribe',
     '/AboutUsPage': '/about-us',
     '/HowItWorksPage': '/how-it-works',

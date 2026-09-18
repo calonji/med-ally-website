@@ -84,28 +84,38 @@ const FAQPage: FC = () => {
         />
         <section className="relative bg-background border-b border-border py-20 sm:py-28 transition-colors duration-300">
           <div className="mx-auto max-w-4xl px-5 sm:px-8">
-            <div className="divide-y divide-border border-y border-border">
-              {faqs.map((faq, index) => (
-                <article key={faq.question} className="py-2">
-                  <button
-                    type="button"
-                    className="flex w-full items-center justify-between gap-6 py-6 text-left text-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors group"
-                    onClick={() => setOpenIndex(openIndex === index ? -1 : index)}
-                  >
-                    <span className="text-lg font-semibold tracking-tight sm:text-xl">{faq.question}</span>
-                    <ChevronDown
-                      className={`h-5 w-5 text-muted-foreground group-hover:text-teal-500 transition-all duration-300 ${
-                        openIndex === index ? 'rotate-180 text-teal-500' : ''
+            <div className="space-y-4">
+              {faqs.map((faq, index) => {
+                const isOpen = openIndex === index;
+                return (
+                  <div key={faq.question} className="rounded-2xl border border-border bg-background/80 overflow-hidden transition-all duration-300">
+                    <button
+                      type="button"
+                      className="w-full py-5 px-6 text-left flex items-center justify-between gap-4 font-semibold text-foreground text-base sm:text-lg hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+                      onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                      aria-expanded={isOpen}
+                    >
+                      <span className="font-editorial">{faq.question}</span>
+                      <ChevronDown
+                        className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${
+                          isOpen ? 'rotate-180 text-teal-500' : ''
+                        }`}
+                      />
+                    </button>
+                    <div
+                      className={`transition-all duration-300 ease-in-out px-6 ${
+                        isOpen ? 'max-h-96 pb-6 opacity-100' : 'max-h-0 pb-0 opacity-0 overflow-hidden'
                       }`}
-                    />
-                  </button>
-                  {openIndex === index && (
-                    <p className="pb-6 text-base leading-relaxed text-muted-foreground max-w-3xl font-light animate-in fade-in slide-in-from-top-2 duration-300">
-                      {faq.answer}
-                    </p>
-                  )}
-                </article>
-              ))}
+                    >
+                      <div className="border-t border-border/50 pt-4">
+                        <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
+                          {faq.answer}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         </section>

@@ -1,5 +1,4 @@
 import { type FC, useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import {
   Mic,
@@ -171,7 +170,7 @@ const AIMedicalScribePage: FC = () => {
                         href="https://app.medally.ai/"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 dark:text-white font-bold text-base shadow-xl shadow-teal-500/20 hover:scale-[1.02] hover:shadow-teal-500/30 transition-all duration-300 group"
+                        className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 hover:text-slate-950 dark:text-white dark:hover:text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-300 text-center group"
                       >
                         Start MedAlly Free
                         <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -837,12 +836,19 @@ const AIMedicalScribePage: FC = () => {
                   MedAlly uses <strong>Clinical Workflow Intelligence</strong> to describe this connected approach, keeping documentation synchronized with the broader care team workflow.
                 </p>
 
-                <div className="pt-4 border-t border-border/60">
+                <div className="pt-4 border-t border-border/60 flex flex-wrap gap-4 items-center justify-between">
                   <Link
                     to="/"
                     className="inline-flex items-center text-sm font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 hover:text-foreground transition-colors group"
                   >
                     Clinical AI Platform
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link
+                    to="/clinical-documentation-ai"
+                    className="inline-flex items-center text-sm font-bold uppercase tracking-wider text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors group"
+                  >
+                    Explore AI Clinical Documentation
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                 </div>
@@ -890,7 +896,7 @@ const AIMedicalScribePage: FC = () => {
                 href="https://app.medally.ai/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 dark:text-white font-bold text-base shadow-xl hover:scale-[1.02] transition-all text-center group"
+                className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 hover:text-slate-950 dark:text-white dark:hover:text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-300 text-center group"
               >
                 Start MedAlly Free
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -927,51 +933,42 @@ const AIMedicalScribePage: FC = () => {
             <div className="space-y-4">
               {faqs.map((faq, idx) => {
                 const isOpen = openFaq === idx;
-                const buttonId = `faq-button-${idx}`;
-                const panelId = `faq-panel-${idx}`;
                 return (
-                  <MotionReveal key={faq.q} delay={idx * 0.03}>
-                    <div className="rounded-2xl border border-border bg-muted/10 overflow-hidden transition-colors">
+                  <MotionReveal key={faq.q} delay={idx * 0.04}>
+                    <div className="rounded-2xl border border-border bg-background/80 overflow-hidden transition-all duration-300">
                       <button
-                        id={buttonId}
-                        aria-expanded={isOpen}
-                        aria-controls={panelId}
                         onClick={() => setOpenFaq(isOpen ? null : idx)}
-                        className="w-full p-6 text-left flex items-center justify-between gap-4 font-bold text-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+                        className="w-full py-5 px-6 text-left flex items-center justify-between gap-4 font-semibold text-foreground text-base sm:text-lg hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+                        aria-expanded={isOpen}
                       >
-                        <h3 className="text-base sm:text-lg font-bold text-left">{faq.q}</h3>
-                        <ChevronDown className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${isOpen ? 'rotate-180 text-teal-500' : ''}`} />
+                        <h3 className="font-editorial text-base sm:text-lg font-bold">{faq.q}</h3>
+                        <ChevronDown
+                          className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${
+                            isOpen ? 'rotate-180 text-teal-500' : ''
+                          }`}
+                        />
                       </button>
-
-                      <AnimatePresence>
-                        {isOpen && (
-                          <motion.div
-                            id={panelId}
-                            role="region"
-                            aria-labelledby={buttonId}
-                            initial={{ height: 0, opacity: 0 }}
-                            animate={{ height: 'auto', opacity: 1 }}
-                            exit={{ height: 0, opacity: 0 }}
-                            transition={{ duration: 0.2 }}
-                          >
-                            <div className="px-6 pb-6 text-sm sm:text-base text-muted-foreground font-light leading-relaxed border-t border-border/40 pt-4">
-                              {faq.a}
-                              {faq.linkHref && faq.linkText && (
-                                <>
-                                  {' '}
-                                  <Link
-                                    to={faq.linkHref}
-                                    className="font-semibold text-teal-600 dark:text-teal-400 underline underline-offset-4 hover:text-foreground"
-                                  >
-                                    {faq.linkText}
-                                  </Link>
-                                  {faq.postLinkText && <span>{faq.postLinkText}</span>}
-                                </>
-                              )}
-                            </div>
-                          </motion.div>
-                        )}
-                      </AnimatePresence>
+                      <div
+                        className={`transition-all duration-300 ease-in-out px-6 ${
+                          isOpen ? 'max-h-96 pb-6 opacity-100' : 'max-h-0 pb-0 opacity-0 overflow-hidden'
+                        }`}
+                      >
+                        <div className="border-t border-border/50 pt-4 space-y-3">
+                          <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed">
+                            {faq.a}{' '}
+                            {faq.linkHref && faq.linkText && (
+                              <Link
+                                to={faq.linkHref}
+                                className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 hover:text-foreground transition-colors group ml-1"
+                              >
+                                {faq.linkText}
+                                <ArrowRight className="ml-1.5 w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                              </Link>
+                            )}
+                            {faq.postLinkText && <span>{faq.postLinkText}</span>}
+                          </p>
+                        </div>
+                      </div>
                     </div>
                   </MotionReveal>
                 );
@@ -1008,7 +1005,7 @@ const AIMedicalScribePage: FC = () => {
                     href="https://app.medally.ai/"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 dark:text-white font-bold text-base shadow-xl hover:scale-[1.02] transition-all duration-300 group"
+                    className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 hover:text-slate-950 dark:text-white dark:hover:text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-300 text-center group"
                   >
                     Start MedAlly Free
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

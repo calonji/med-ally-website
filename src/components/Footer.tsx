@@ -15,6 +15,8 @@ const Footer: FC = () => {
     { name: 'About Us', path: '/about-us', isExternal: false },
     { name: 'How It Works', path: '/how-it-works', isExternal: false },
     { name: 'Features', path: '/features', isExternal: false },
+    { name: 'AI Clinical Documentation', path: '/clinical-documentation-ai', isExternal: false },
+    { name: 'AI Medical Scribe', path: '/ai-medical-scribe', isExternal: false },
     { name: 'Benefits', path: '/benefits', isExternal: false },
     { name: 'ROI Calculator', path: '/roi-calculator', isExternal: false },
     { name: 'FAQ', path: '/faq', isExternal: false },
@@ -36,7 +38,7 @@ const Footer: FC = () => {
       label: 'Facebook',
     },
     { Icon: Instagram, href: 'https://www.instagram.com/medally_saas', label: 'Instagram' },
-    { Icon: Youtube, href: 'https://www.youtube.com/@Med-Ally', label: 'YouTube' },
+    { Icon: Youtube, href: 'https://www.youtube.com/@Medally.global', label: 'YouTube' },
   ];
 
   return (

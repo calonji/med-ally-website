@@ -8,6 +8,7 @@ const shell = readFileSync(join(distDir, 'index.html'), 'utf8');
 
 const commonLinks = [
   ['Home', '/'],
+  ['AI Clinical Documentation', '/clinical-documentation-ai'],
   ['AI Medical Scribe', '/ai-medical-scribe'],
   ['Features', '/features'],
   ['How It Works', '/how-it-works'],
@@ -98,6 +99,45 @@ const scribeFaqs = [
   },
 ];
 
+const clinicalDocFaqs = [
+  {
+    q: 'What is AI clinical documentation?',
+    a: 'AI clinical documentation uses artificial intelligence to help create, organize, and structure clinical notes from patient-encounter information. MedAlly prepares documentation for physician review rather than treating AI output as a final clinical record.',
+  },
+  {
+    q: 'How does MedAlly help with clinical notes?',
+    a: 'MedAlly organizes encounter context and prepares structured clinical documentation, including SOAP-style documentation. Physicians review, edit, validate, and approve the work.',
+  },
+  {
+    q: 'Is AI clinical documentation the same as an AI medical scribe?',
+    a: 'Not exactly. An AI medical scribe primarily describes capturing a clinical encounter and drafting a note from the conversation. AI clinical documentation is the broader process of creating, structuring, reviewing, approving, and moving documentation through the clinical workflow.',
+  },
+  {
+    q: 'Does MedAlly generate SOAP notes?',
+    a: 'Yes. MedAlly prepares SOAP-style clinical documentation from encounter context for physician review. The clinician should review and edit the draft before approval.',
+  },
+  {
+    q: 'Can physicians edit AI-generated clinical documentation?',
+    a: 'Yes. MedAlly is designed around physician review. The clinician reviews and edits AI-prepared work as needed before approving it.',
+  },
+  {
+    q: 'Does MedAlly provide coding information with the documentation?',
+    a: 'MedAlly prepares ICD-10/CPT coding context around the encounter for review. Coding output should be reviewed and validated before use.',
+  },
+  {
+    q: 'What happens after a physician approves the documentation?',
+    a: 'After review and approval, the documentation is ready for the next step in the practice workflow. The exact handoff depends on the MedAlly deployment.',
+  },
+  {
+    q: 'Is MedAlly free to try?',
+    a: "Yes. MedAlly's Forever Free plan includes 10 encounters per month.",
+  },
+  {
+    q: 'Does MedAlly replace physician judgment?',
+    a: 'No. MedAlly prepares information for review. Physicians remain responsible for validating clinical documentation, coding context, and clinical decisions before approval or use.',
+  },
+];
+
 const pages = [
   {
     path: '/',
@@ -126,6 +166,40 @@ const pages = [
           'Start with 10 free encounters per month with ambient AI documentation, structured SOAP note generation, and clinician review gates.',
       },
     ],
+  },
+  {
+    path: '/clinical-documentation-ai',
+    title: 'AI Clinical Documentation for Physicians | MedAlly',
+    description:
+      'MedAlly helps physicians turn encounter context into structured, reviewable clinical documentation with SOAP-style notes and ICD-10/CPT coding context.',
+    h1: 'AI Clinical Documentation for Physicians — Structured, Reviewable Notes',
+    image: '/images/medally/clinical-hero.webp',
+    answer:
+      'AI clinical documentation uses artificial intelligence to help create and structure clinical notes from information captured during a patient encounter. Instead of asking the physician to build the note from a blank page, the system prepares documentation for review while the physician remains responsible for the final clinical record.',
+    bullets: [
+      'Structured documentation draft preparation',
+      'SOAP-style clinical note organization',
+      'Encounter context and ICD-10/CPT coding workflow',
+      'Physician-controlled review and approval gate',
+    ],
+    sections: [
+      {
+        heading: 'From Encounter Context to Reviewable Clinical Documentation',
+        content:
+          '1. Capture the encounter context. 2. Prepare structured clinical documentation in SOAP format. 3. Review the note and supporting coding context. 4. Prepare approved work for the next workflow step.',
+      },
+      {
+        heading: 'Interactive Review Workspace',
+        content:
+          'Physicians inspect structured SOAP drafts (Subjective, Objective, Assessment, Plan), test real-time edits, verify ICD-10 and CPT coding context, and approve documentation before it moves forward in the workflow.',
+      },
+      {
+        heading: 'Forever Free Plan — 10 Encounters Per Month',
+        content:
+          'MedAlly Forever Free includes 10 encounters per month, allowing physicians to evaluate structured clinical documentation before scaling.',
+      },
+    ],
+    faqs: clinicalDocFaqs,
   },
   {
     path: '/ai-medical-scribe',

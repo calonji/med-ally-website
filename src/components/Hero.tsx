@@ -84,7 +84,7 @@ const Hero: FC = () => {
                   href="https://app.medally.ai/"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-foreground text-background dark:bg-white dark:text-[#030712] font-bold shadow-xl hover:shadow-teal-500/10 hover:opacity-90 transition-all duration-300 hover:-translate-y-0.5 hover:scale-[1.02] group text-center"
+                  className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 hover:text-slate-950 dark:text-white dark:hover:text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-300 text-center group"
                 >
                   Start MedAlly Free
                   <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

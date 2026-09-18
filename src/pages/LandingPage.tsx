@@ -48,8 +48,8 @@ const coreCapabilities = [
     icon: FileText,
     title: 'AI Clinical Documentation',
     desc: 'Turn encounter information into structured clinical documentation for clinician review.',
-    link: '/clinical-documentation-ai/',
-    linkText: 'Explore Clinical Documentation AI',
+    link: '/clinical-documentation-ai',
+    linkText: 'Explore AI Clinical Documentation',
     tag: 'Documentation'
   },
   {
@@ -606,8 +606,8 @@ const LandingPage: FC = () => {
             <MotionReveal delay={0.4} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Link
                 to="/ai-medical-scribe"
-                className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-foreground text-background dark:bg-white dark:text-[#030712] font-bold text-sm shadow-xl hover:opacity-90 transition-all group"
-              >
+                className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 hover:text-slate-950 dark:text-white dark:hover:text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-300 text-center group" 
+                >
                 Explore AI Medical Scribe
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -677,8 +677,8 @@ const LandingPage: FC = () => {
             <MotionReveal delay={0.3} className="text-center">
               <Link
                 to="/how-it-works"
-                className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-foreground text-background dark:bg-white dark:text-[#030712] font-bold text-sm shadow-xl hover:opacity-90 transition-all group"
-              >
+                className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-foreground text-background dark:bg-white dark:text-[#030712] dark:hover:text-[#030712] hover:text-background font-bold text-sm shadow-xl hover:opacity-90 transition-all group"
+                >
                 See How MedAlly Works
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
               </Link>
@@ -724,7 +724,7 @@ const LandingPage: FC = () => {
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link
                       to="/features"
-                      className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-foreground text-background dark:bg-white dark:text-[#030712] font-bold text-sm shadow-xl hover:opacity-90 transition-all group"
+                      className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-foreground text-background dark:bg-white dark:text-[#030712] dark:hover:text-[#030712] hover:text-background font-bold text-sm shadow-xl hover:opacity-90 transition-all group"
                     >
                       Explore Clinical Workflow Features
                       <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -928,14 +928,25 @@ const LandingPage: FC = () => {
               </p>
             </MotionReveal>
 
-            <MotionReveal delay={0.2} className="flex justify-center items-center">
+            <MotionReveal delay={0.2} className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+              <Link
+                to="/clinical-documentation-ai"
+                onClick={() => {
+                  window.scrollTo(0, 0);
+                  document.documentElement.scrollTop = 0;
+                }}
+                className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 hover:text-slate-950 dark:text-white dark:hover:text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-300 text-center group"
+              >
+                Explore AI Clinical Documentation
+                <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+              </Link>
               <Link
                 to="/ai-medical-scribe"
                 onClick={() => {
                   window.scrollTo(0, 0);
                   document.documentElement.scrollTop = 0;
                 }}
-                className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-foreground text-background dark:bg-white dark:text-[#030712] font-bold shadow-xl hover:opacity-90 transition-all text-center group"
+                className="inline-flex h-14 items-center justify-center px-8 rounded-full border border-border bg-muted/40 backdrop-blur-md text-foreground hover:bg-muted font-bold text-base transition-all text-center group"
               >
                 Explore AI Medical Scribe
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
@@ -1053,7 +1064,7 @@ const LandingPage: FC = () => {
                 href="https://app.medally.ai/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 dark:text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-300 text-center group"
+                className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 hover:text-slate-950 dark:text-white dark:hover:text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-300 text-center group"
               >
                 Start MedAlly Free
                 <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

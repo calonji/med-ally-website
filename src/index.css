@@ -268,9 +268,9 @@ a:hover {
     transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
-  .medally-dark-page [class*='bg-gradient-to-br'],
-  .medally-dark-page [class*='bg-gradient-to-r'],
-  .medally-dark-page [class*='bg-gradient-to-b'] {
+  .medally-dark-page [class*='bg-gradient-to-br']:not(header):not(header *),
+  .medally-dark-page [class*='bg-gradient-to-r']:not(header):not(header *),
+  .medally-dark-page [class*='bg-gradient-to-b']:not(header):not(header *) {
     --tw-gradient-from: hsla(var(--teal-primary) / calc(var(--glow-intensity) * 0.6)) var(--tw-gradient-from-position) !important;
     --tw-gradient-via: hsla(var(--background) / 0.4) var(--tw-gradient-via-position) !important;
     --tw-gradient-to: hsla(var(--purple-accent) / calc(var(--glow-intensity) * 0.8)) var(--tw-gradient-to-position) !important;
