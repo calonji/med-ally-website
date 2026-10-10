@@ -23,6 +23,9 @@ const PAGE_ROUTES = {
   'src/pages/ROICalculatorPage.tsx': '/roi-calculator',
   'src/pages/FAQPage.tsx': '/faq',
   'src/pages/PricingPage.tsx': '/pricing',
+  'src/pages/ClinicalWorkflowSoftwarePage.tsx': '/clinical-workflow-software',
+  'src/pages/ClinicalDocumentationAIPage.tsx': '/clinical-documentation-ai',
+  'src/pages/AIMedicalScribePage.tsx': '/ai-medical-scribe',
   'src/pages/PrivacyPolicy.tsx': '/privacy-policy',
   'src/pages/TermsOfService.tsx': '/terms-of-service',
   'src/pages/Contact.tsx': '/contact'

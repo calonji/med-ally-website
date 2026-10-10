@@ -81,7 +81,7 @@ export const PageHero: FC<PageHeroProps> = ({
                 href={ctaHref}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 bg-foreground text-background font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-full hover:bg-teal-600 hover:text-white transition-all duration-300 hover:scale-[1.02]"
+                className="inline-flex items-center gap-2 bg-foreground text-background font-bold text-xs uppercase tracking-wider px-8 py-4 rounded-full hover:!text-background transition-all duration-300 hover:scale-[1.02]"
               >
                 {ctaLabel} <ArrowRight className="w-4 h-4" />
               </a>
