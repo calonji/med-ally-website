@@ -20,7 +20,8 @@ import {
   RefreshCw,
   Search,
   Stethoscope,
-  HelpCircle
+  HelpCircle,
+  Workflow
 } from 'lucide-react';
 import Layout from '@/components/Layout';
 import { SEO } from '@/components/SEO';
@@ -375,6 +376,14 @@ const workflowCards = [
     linkLabel: 'Examine AI Documentation',
     icon: FileText,
     badge: 'Structured SOAP',
+  },
+  {
+    title: 'Clinical Workflow Software',
+    description: 'Explore the broader software category and buyer-evaluation guidance.',
+    linkHref: '/clinical-workflow-software',
+    linkLabel: 'Explore Workflow Software',
+    icon: Workflow,
+    badge: 'Category & Evaluation',
   },
 ];
 
@@ -981,7 +990,7 @@ const PricingPage: FC = () => {
               </MotionReveal>
             </div>
 
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
               {workflowCards.map((card, idx) => {
                 const IconComponent = card.icon;
                 return (

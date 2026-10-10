@@ -64,7 +64,7 @@ const coreCapabilities = [
     icon: BrainCircuit,
     title: 'Clinical Decision Support',
     desc: 'Surface reviewable clinical information that can support physician reasoning and decision-making.',
-    link: '/clinical-decision-support-ai/',
+    link: '/ai-clinical-decision-support',
     linkText: 'Explore Decision Support',
     tag: 'Reasoning Support'
   },
@@ -72,7 +72,7 @@ const coreCapabilities = [
     icon: FileCheck2,
     title: 'Coding Context',
     desc: 'Prepare relevant coding information within the clinical workflow for clinician review.',
-    link: '/ai-medical-coding/',
+    link: '/ai-medical-coding',
     linkText: 'Explore Medical Coding Context',
     tag: 'Administrative Flow'
   },
@@ -80,7 +80,7 @@ const coreCapabilities = [
     icon: GitMerge,
     title: 'Clinical Workflow Support',
     desc: 'Connect documentation, context, decision-support information, and downstream administrative work around the encounter.',
-    link: '/clinical-workflow-software/',
+    link: '/clinical-workflow-software',
     linkText: 'Explore Workflow Software',
     tag: 'Integrated Hub'
   }
@@ -715,7 +715,14 @@ const LandingPage: FC = () => {
                       Clinical workflows often span documentation, EHR tasks, patient information, decision support, coding, and follow-up. When those activities are fragmented across different tools, clinicians spend more time switching between systems and less time working within one coherent flow.
                     </p>
                     <p className="text-foreground font-normal">
-                      MedAlly’s approach to clinical workflow intelligence is designed to help organize the work surrounding the patient encounter into a more connected review path.
+                      MedAlly’s approach to clinical workflow intelligence is designed to help organize the work surrounding the patient encounter into a more connected review path. MedAlly supports the physician encounter as part of a broader{' '}
+                      <Link
+                        to="/clinical-workflow-software"
+                        className="text-teal-600 dark:text-teal-400 font-bold underline underline-offset-4 hover:text-foreground transition-colors"
+                      >
+                        clinical workflow software
+                      </Link>{' '}
+                      approach that connects documentation, review, coding, follow-up, and downstream workflow steps.
                     </p>
                   </div>
                 </MotionReveal>
@@ -723,11 +730,17 @@ const LandingPage: FC = () => {
                 <MotionReveal delay={0.2}>
                   <div className="flex flex-col sm:flex-row gap-4">
                     <Link
-                      to="/features"
+                      to="/clinical-workflow-software"
                       className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-foreground text-background dark:bg-white dark:text-[#030712] dark:hover:text-[#030712] hover:text-background font-bold text-sm shadow-xl hover:opacity-90 transition-all group"
                     >
-                      Explore Clinical Workflow Features
+                      Clinical Workflow Software
                       <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                    </Link>
+                    <Link
+                      to="/features"
+                      className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-border bg-muted/40 backdrop-blur-md text-foreground hover:bg-muted font-bold text-sm transition-all group"
+                    >
+                      Explore Features
                     </Link>
                     <a
                       href="https://app.medally.ai/"
@@ -735,7 +748,7 @@ const LandingPage: FC = () => {
                       rel="noopener noreferrer"
                       className="inline-flex items-center justify-center px-8 py-4 rounded-full border border-border bg-muted/40 backdrop-blur-md text-foreground hover:bg-muted font-bold text-sm transition-all text-center"
                     >
-                      Launch App (app.medally.ai)
+                      Launch App
                     </a>
                   </div>
                 </MotionReveal>

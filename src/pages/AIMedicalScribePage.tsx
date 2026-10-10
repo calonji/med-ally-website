@@ -833,7 +833,14 @@ const AIMedicalScribePage: FC = () => {
                 </div>
 
                 <p className="pt-2">
-                  MedAlly uses <strong>Clinical Workflow Intelligence</strong> to describe this connected approach, keeping documentation synchronized with the broader care team workflow.
+                  MedAlly uses <strong>Clinical Workflow Intelligence</strong> to describe this connected approach, keeping documentation synchronized with the broader care team workflow. An AI medical scribe addresses one part of the encounter process. See how MedAlly fits within a{' '}
+                  <Link
+                    to="/clinical-workflow-software"
+                    className="text-teal-600 dark:text-teal-400 font-bold underline underline-offset-4 hover:text-foreground transition-colors"
+                  >
+                    broader clinical workflow
+                  </Link>
+                  .
                 </p>
 
                 <div className="pt-4 border-t border-border/60 flex flex-wrap gap-4 items-center justify-between">
@@ -845,8 +852,15 @@ const AIMedicalScribePage: FC = () => {
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <Link
+                    to="/clinical-workflow-software"
+                    className="inline-flex items-center text-sm font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 hover:text-foreground transition-colors group"
+                  >
+                    Clinical Workflow Software
+                    <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <Link
                     to="/clinical-documentation-ai"
-                    className="inline-flex items-center text-sm font-bold uppercase tracking-wider text-muted-foreground hover:text-teal-600 dark:hover:text-teal-400 transition-colors group"
+                    className="inline-flex items-center text-sm font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 hover:text-foreground transition-colors group"
                   >
                     Explore AI Clinical Documentation
                     <ArrowRight className="ml-2 w-4 h-4 group-hover:translate-x-1 transition-transform" />

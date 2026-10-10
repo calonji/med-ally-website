@@ -617,6 +617,15 @@ const HowItWorksPage: FC = () => {
                       <p className="text-sm text-muted-foreground italic border-l-2 border-teal-500/50 pl-3">
                         These outputs are presented to support clinician review and judgment, not to replace them.
                       </p>
+                      <div className="pt-2">
+                        <Link
+                          to="/ai-clinical-decision-support"
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-teal-600 dark:text-teal-400 hover:underline underline-offset-4"
+                        >
+                          Explore AI Clinical Decision Support
+                          <ArrowRight className="w-3.5 h-3.5" />
+                        </Link>
+                      </div>
                     </div>
 
                     <div className="lg:col-span-6">
@@ -1611,7 +1620,7 @@ const HowItWorksPage: FC = () => {
             <div className="text-center mt-12">
               <Link
                 to="/faq"
-                className="inline-flex items-center gap-2 text-sm font-semibold text-teal-600 dark:text-teal-400 hover:text-teal-700 dark:hover:text-teal-300 transition-colors group"
+                className="inline-flex items-center justify-center px-8 py-4 rounded-full bg-muted/60 border border-border text-foreground hover:bg-muted font-bold text-sm transition-all group"
               >
                 <span>View All FAQs</span>
                 <ArrowRight className="w-4 h-4 group-hover:translate-x-0.5 transition-transform" />
@@ -1631,8 +1640,18 @@ const HowItWorksPage: FC = () => {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-foreground text-editorial mb-6">
                 From Patient Encounter to the Next Step
               </h2>
-              <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-10 max-w-2xl mx-auto">
+              <p className="text-base sm:text-lg text-muted-foreground font-light leading-relaxed mb-4 max-w-2xl mx-auto">
                 MedAlly helps keep the work created by a patient encounter connected—from the conversation and SOAP-style note through clinical review, coding and billing information, follow-up, physician review, and the next workflow step.
+              </p>
+              <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed mb-10 max-w-2xl mx-auto">
+                For the broader software category and what practices should evaluate when comparing workflow platforms, see{' '}
+                <Link
+                  to="/clinical-workflow-software"
+                  className="text-teal-600 dark:text-teal-400 font-bold underline underline-offset-4 hover:text-foreground transition-colors"
+                >
+                  Clinical Workflow Software
+                </Link>
+                .
               </p>
 
               <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -1643,13 +1662,19 @@ const HowItWorksPage: FC = () => {
                   className="inline-flex h-14 items-center justify-center px-8 rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 hover:text-slate-950 dark:text-white dark:hover:text-white font-bold shadow-xl hover:scale-[1.02] transition-all duration-300 text-center group"
                 >
                   Start MedAlly Free
-                  <ArrowRight className="w-5 h-5" />
+                  <ArrowRight className="w-5 h-5 ml-1" />
                 </a>
                 <Link
                   to="/features"
                   className="inline-flex h-14 items-center justify-center px-8 rounded-full border border-border bg-muted/30 backdrop-blur-md text-foreground hover:text-foreground font-bold hover:bg-muted/60 hover:border-border/80 transition-all duration-300 text-center"
                 >
                   Explore MedAlly Features
+                </Link>
+                <Link
+                  to="/clinical-workflow-software"
+                  className="inline-flex h-14 items-center justify-center px-8 rounded-full border border-border bg-muted/30 backdrop-blur-md text-foreground hover:text-foreground font-bold hover:bg-muted/60 hover:border-border/80 transition-all duration-300 text-center"
+                >
+                  Clinical Workflow Software
                 </Link>
               </div>
 

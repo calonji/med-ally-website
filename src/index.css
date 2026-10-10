@@ -700,3 +700,15 @@ html:not(.dark) button[class*='hover:bg-black']:hover * {
   }
 }
 
+/* =========================================================================
+   Hide Scrollbar Utility
+   ========================================================================= */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+

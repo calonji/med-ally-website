@@ -84,7 +84,10 @@ const faqs = [
   },
   {
     q: 'Does MedAlly provide decision-support information?',
-    a: 'Yes. MedAlly organizes decision-support context for physician review, including information that can support differential review. Clinical interpretation and final decisions remain with the physician.',
+    a: 'Yes. MedAlly organizes decision-support context for physician review, including information that can support differential review. Clinical interpretation and final decisions remain with the physician. See',
+    linkText: 'AI Clinical Decision Support',
+    linkHref: '/ai-clinical-decision-support',
+    postLinkText: ' for full capability details.',
   },
   {
     q: 'Does MedAlly support lab information?',
@@ -839,6 +842,13 @@ const FeaturesPage: FC = () => {
                   >
                     How MedAlly Works
                   </Link>
+                  . For a broader category and buyer-evaluation view, see{' '}
+                  <Link
+                    to="/clinical-workflow-software"
+                    className="text-teal-600 dark:text-teal-400 font-bold underline underline-offset-4 hover:text-foreground transition-colors"
+                  >
+                    Clinical Workflow Software
+                  </Link>
                   . For the expected operational value, see{' '}
                   <Link
                     to="/benefits"
@@ -849,12 +859,20 @@ const FeaturesPage: FC = () => {
                   .
                 </p>
 
-                <div className="pt-4 border-t border-border/60 flex flex-wrap gap-4">
+                <div className="pt-4 border-t border-border/60 flex flex-wrap gap-4 items-center">
                   <Link
                     to="/how-it-works"
                     className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 hover:text-foreground transition-colors group"
                   >
                     How MedAlly Works
+                    <ArrowRight className="ml-1.5 w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
+                  </Link>
+                  <span className="text-border">•</span>
+                  <Link
+                    to="/clinical-workflow-software"
+                    className="inline-flex items-center text-xs font-bold uppercase tracking-wider text-teal-600 dark:text-teal-400 hover:text-foreground transition-colors group"
+                  >
+                    Clinical Workflow Software
                     <ArrowRight className="ml-1.5 w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </Link>
                   <span className="text-border">•</span>
@@ -1026,6 +1044,12 @@ const FeaturesPage: FC = () => {
                   className="inline-flex h-14 items-center justify-center px-8 rounded-full border border-border bg-muted/40 backdrop-blur-md text-foreground hover:bg-muted font-bold text-base transition-all text-center"
                 >
                   See How MedAlly Works
+                </Link>
+                <Link
+                  to="/clinical-workflow-software"
+                  className="inline-flex h-14 items-center justify-center px-8 rounded-full border border-border bg-muted/30 backdrop-blur-md text-foreground hover:text-foreground font-bold hover:bg-muted/60 hover:border-border/80 transition-all duration-300 text-center"
+                >
+                  Clinical Workflow Software
                 </Link>
               </div>
             </MotionReveal>

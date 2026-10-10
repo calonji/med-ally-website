@@ -83,6 +83,14 @@ const faqCategories: FaqCategory[] = [
         q: 'Is MedAlly only an AI medical scribe?',
         a: [
           'No. The AI medical scribe is one part of MedAlly. The broader workflow can also include structured clinical documentation, decision-support and differential-review information, lab-related information, treatment and follow-up support, ICD-10/CPT coding, billing information, and workflow handoff after physician review.'
+        ],
+        links: [
+          {
+            prefix: 'Explore ',
+            text: 'AI Clinical Decision Support',
+            href: '/ai-clinical-decision-support',
+            suffix: ' to see how differential and planning context are organized.'
+          }
         ]
       },
       {
@@ -452,6 +460,14 @@ const faqCategories: FaqCategory[] = [
         a: [
           'MedAlly supports practice / EHR workflow handoff after physician review and approval. The exact integration and handoff behavior can vary by deployment.',
           'Enterprise currently includes a Custom EPIC/Cerner integration offering. Discuss the required workflow with MedAlly before assuming a specific integration behavior.'
+        ],
+        links: [
+          {
+            prefix: 'For broader guidance on evaluating workflow platforms, integration, review responsibilities, and handoff, see ',
+            text: 'Clinical Workflow Software',
+            href: '/clinical-workflow-software',
+            suffix: '.'
+          }
         ]
       },
       {

@@ -10,6 +10,7 @@ const commonLinks = [
   ['Home', '/'],
   ['AI Clinical Documentation', '/clinical-documentation-ai'],
   ['AI Medical Scribe', '/ai-medical-scribe'],
+  ['Clinical Workflow Software', '/clinical-workflow-software'],
   ['Features', '/features'],
   ['How It Works', '/how-it-works'],
   ['Benefits', '/benefits'],
@@ -135,6 +136,41 @@ const clinicalDocFaqs = [
   {
     q: 'Does MedAlly replace physician judgment?',
     a: 'No. MedAlly prepares information for review. Physicians remain responsible for validating clinical documentation, coding context, and clinical decisions before approval or use.',
+  },
+];
+
+const clinicalWorkflowFaqs = [
+  {
+    q: 'What should a practice evaluate before choosing clinical workflow software?',
+    a: 'Start with the workflow problem, then ask vendors to demonstrate the actual process: what enters the system, what the software prepares, what clinicians must review, how exceptions are handled, and how approved work reaches the next step.',
+  },
+  {
+    q: 'How is encounter documentation different from workflow coordination?',
+    a: 'Encounter documentation focuses on capturing and structuring the clinical note. Workflow coordination is broader and can include review responsibilities, follow-up, task or status management, coding, handoff, integration, and other steps surrounding the encounter.',
+  },
+  {
+    q: 'Is healthcare workflow software the same as clinical workflow software?',
+    a: 'Not always. The terms can overlap, but healthcare workflow software may include broader administrative and operational processes in addition to clinician-facing clinical workflows.',
+  },
+  {
+    q: 'What should a practice confirm about EHR handoff?',
+    a: 'Confirm the exact transfer method, which systems are supported, what requires clinician approval, what setup is needed, and which behaviors vary by deployment. Do not assume that "EHR integration" means automatic chart commitment.',
+  },
+  {
+    q: 'How can a practice test whether software fits its workflow?',
+    a: 'Use a realistic fictional or de-identified scenario and ask the vendor to demonstrate the complete path from input through review, edits, exceptions, approval, and downstream handoff.',
+  },
+  {
+    q: 'Where does MedAlly fit within clinical workflow software?',
+    a: 'MedAlly focuses on the physician encounter workflow: encounter listening, SOAP-style documentation, reviewable clinical information, treatment/follow-up support, ICD-10/CPT and billing-related information, physician review, and the next workflow step after approval.',
+  },
+  {
+    q: 'Does MedAlly replace physician review?',
+    a: 'No. MedAlly prepares and organizes information for review. Clinical judgment and final clinical decisions remain with the physician.',
+  },
+  {
+    q: 'Can MedAlly support an EHR-connected workflow?',
+    a: 'MedAlly can support practice / EHR workflow handoff after physician review and approval. The exact integration and handoff method vary by deployment.',
   },
 ];
 
@@ -394,6 +430,45 @@ const pages = [
       },
     ],
     faqs: clinicalDocFaqs,
+  },
+  {
+    path: '/clinical-workflow-software',
+    title: 'Clinical Workflow Software for Physicians | MedAlly',
+    description:
+      'Learn what clinical workflow software should support, how to evaluate it, and where MedAlly fits across documentation, review, coding, follow-up, and handoff.',
+    h1: 'Clinical Workflow Software for Physicians Across the Patient Encounter',
+    image: '/images/medally/clinical-workflow-real.png',
+    answer:
+      'Clinical workflow software helps coordinate the tasks, information, reviews, and handoffs that make up clinical work. MedAlly focuses on the physician encounter workflow—from listening during the visit through documentation, reviewable clinical information, coding and follow-up work, physician approval, and the next practice or EHR workflow step.',
+    bullets: [
+      'Encounter documentation and SOAP-style note preparation',
+      'Reviewable clinical decision-support and lab information',
+      'Treatment planning, follow-up, and ICD-10/CPT coding context',
+      'Physician review and practice/EHR workflow handoff',
+    ],
+    sections: [
+      {
+        heading: 'What Is Clinical Workflow Software?',
+        content:
+          'Clinical workflow software helps organize how clinical tasks and information move between people, systems, and stages of care. The category describes a broad landscape that varies by product and setting, including encounter documentation, patient flow, task coordination, clinical review, follow-up, coding, operational handoffs, and EHR connections.',
+      },
+      {
+        heading: 'Where Does MedAlly Fit in the Clinical Workflow Category?',
+        content:
+          'MedAlly focuses on the physician encounter workflow. It listens during the patient encounter and prepares SOAP-style clinical documentation, decision-support and differential-review information, lab-related context, treatment-planning and follow-up information, ICD-10/CPT coding information, and billing-related information for physician review.',
+      },
+      {
+        heading: 'Physician Review and Approval Gate',
+        content:
+          'Physicians review and edit AI-prepared work before approval. Clinical judgment remains strictly with the physician. After approval, MedAlly supports the next practice or EHR workflow step, with the exact handoff method varying by deployment.',
+      },
+      {
+        heading: 'Forever Free Plan — 10 Encounters Per Month',
+        content:
+          'Forever Free includes 10 clinical encounters every month. One MedAlly session counts as one encounter, and the free allowance renews monthly.',
+      },
+    ],
+    faqs: clinicalWorkflowFaqs,
   },
   {
     path: '/ai-medical-scribe',

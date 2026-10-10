@@ -1157,8 +1157,18 @@ const ClinicalDocumentationAIPage: FC = () => {
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-foreground text-editorial leading-tight mb-6">
                 Move From Encounter to Reviewable Documentation
               </h2>
-              <p className="text-lg sm:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto mb-10">
+              <p className="text-lg sm:text-xl text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto mb-4">
                 Use MedAlly to prepare structured clinical documentation from the patient encounter while keeping physician review and approval at the center of the workflow.
+              </p>
+              <p className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed max-w-2xl mx-auto mb-10">
+                To see how documentation fits within a broader category of connected clinical tasks, review, and handoffs, see{' '}
+                <Link
+                  to="/clinical-workflow-software"
+                  className="text-teal-600 dark:text-teal-400 font-bold underline underline-offset-4 hover:text-foreground transition-colors"
+                >
+                  Clinical Workflow Software
+                </Link>
+                .
               </p>
 
               <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
@@ -1176,6 +1186,12 @@ const ClinicalDocumentationAIPage: FC = () => {
                   className="inline-flex h-14 items-center justify-center px-8 rounded-full border border-border bg-muted/40 backdrop-blur-md text-foreground hover:bg-muted font-bold text-base transition-all text-center"
                 >
                   See How MedAlly Works
+                </Link>
+                <Link
+                  to="/clinical-workflow-software"
+                  className="inline-flex h-14 items-center justify-center px-8 rounded-full border border-border bg-muted/40 backdrop-blur-md text-foreground hover:bg-muted font-bold text-base transition-all text-center"
+                >
+                  Clinical Workflow Software
                 </Link>
               </div>
             </MotionReveal>
