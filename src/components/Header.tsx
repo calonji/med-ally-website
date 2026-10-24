@@ -1,9 +1,10 @@
-import { type FC, useEffect, useState, useCallback } from 'react';
-import { motion, useScroll, useSpring } from 'framer-motion';
+import { type FC, useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Logo } from '@/components/ui/Logo';
 import { useNavigate, useLocation } from 'react-router-dom';
 import {
+  ArrowRight,
   Info,
   Settings,
   Star,
@@ -12,275 +13,211 @@ import {
   HelpCircle,
   Menu,
   MessageSquare,
-  BookOpen,
+  Sun,
+  Moon
 } from 'lucide-react';
-import WaitlistDialog from './WaitlistDialog';
+import { useTheme } from '@/providers/ThemeProvider';
 
 const Header: FC = () => {
+  const { theme, toggleTheme } = useTheme();
   const navigate = useNavigate();
   const location = useLocation();
+  const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { scrollYProgress } = useScroll();
-  const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-  const isLandingPage = location.pathname === '/';
 
-  // Handle initial path on page load
-  useEffect(() => {
-    if (isLandingPage) {
-      const path = location.pathname.slice(1); // Remove leading slash
-      if (path) {
-        const element = document.getElementById(path);
-        if (element) {
-          const headerOffset = 64;
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = window.scrollY + elementPosition - headerOffset;
-
-          // Add a small delay to ensure proper scrolling after page load
-          setTimeout(() => {
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth',
-            });
-          }, 100);
-        }
-      }
-    }
-  }, [location, isLandingPage]);
-
-  // Intersection Observer setup - only on landing page
-  useEffect(() => {
-    if (isLandingPage) {
-      const observer = new IntersectionObserver(
-        (entries) =>
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              // Update URL without triggering navigation
-              const newPath = entry.target.id === 'hero' ? '/' : `/${entry.target.id}`;
-              window.history.replaceState(null, '', newPath);
-            }
-          }),
-        {
-          rootMargin: '-64px 0px -90% 0px', // Adjusted rootMargin for better accuracy
-          threshold: 0.1, // Added threshold for better detection
-        }
-      );
-
-      document.querySelectorAll('section[id]').forEach((section) => observer.observe(section));
-      return () => observer.disconnect();
-    }
-  }, [isLandingPage]);
-
-  // Update navigation function to handle both scroll and regular navigation
-  const handleNavigation = useCallback(
-    (path: string) => {
-      setIsMenuOpen(false);
-
-      if (isLandingPage) {
-        // Scroll behavior on landing page
-        const element = document.getElementById(path);
-        if (element) {
-          const headerOffset = 64; // Adjusted for header height
-          const elementPosition = element.getBoundingClientRect().top;
-          const offsetPosition = window.scrollY + elementPosition - headerOffset;
-
-          window.scrollTo({
-            top: offsetPosition,
-            behavior: 'smooth',
-          });
-        }
-      } else {
-        // Regular navigation on other pages
-        navigate('/');
-        // Add a longer delay to ensure the landing page loads before scrolling
-        setTimeout(() => {
-          const element = document.getElementById(path);
-          if (element) {
-            const headerOffset = 64; // Adjusted for header height
-            const elementPosition = element.getBoundingClientRect().top;
-            const offsetPosition = window.scrollY + elementPosition - headerOffset;
-
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth',
-            });
-          }
-        }, 300); // Increased delay for better reliability
-      }
-    },
-    [navigate, isLandingPage]
-  );
-
-  // Handle click outside to close mobile menu
-  useEffect(() => {
-    const handleClickOutside = (event: MouseEvent) => {
-      const nav = document.getElementById('mobile-nav');
-      if (nav && !nav.contains(event.target as Node) && isMenuOpen) {
-        setIsMenuOpen(false);
-      }
-    };
-
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
-  }, [isMenuOpen]);
-
-  // Close menu on scroll
   useEffect(() => {
     const handleScroll = () => {
-      if (isMenuOpen) setIsMenuOpen(false);
+      setScrolled(window.scrollY > 50);
     };
-
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [isMenuOpen]);
+  }, []);
 
-  // Navigation items - updated without # in hrefs
-  const navItems = [
-    { name: 'About Us', href: 'about-us', icon: <Info className="w-4 h-4" />, isScroll: true },
+  // Navigation links - updated to use dedicated URLs
+  const navLinks = [
+    { name: 'About', href: '/about-us', icon: <Info className="w-4 h-4" /> },
     {
       name: 'How It Works',
-      href: 'how-it-works',
+      href: '/how-it-works',
       icon: <Settings className="w-4 h-4" />,
-      isScroll: true,
     },
-    { name: 'Features', href: 'features', icon: <Star className="w-4 h-4" />, isScroll: true },
-    { name: 'Benefits', href: 'benefits', icon: <BarChart className="w-4 h-4" />, isScroll: true },
+    { name: 'Features', href: '/features', icon: <Star className="w-4 h-4" /> },
+    { name: 'Benefits', href: '/benefits', icon: <BarChart className="w-4 h-4" /> },
     {
-      name: 'ROI Calculator',
-      href: 'roi-calculator',
+      name: 'ROI',
+      href: '/roi-calculator',
       icon: <Calculator className="w-4 h-4" />,
-      isScroll: true,
     },
-    { name: 'FAQ', href: 'faq', icon: <HelpCircle className="w-4 h-4" />, isScroll: true },
+    { name: 'FAQ', href: '/faq', icon: <HelpCircle className="w-4 h-4" /> },
     {
       name: 'Pricing',
-      href: 'pricing',
+      href: '/pricing',
       icon: <MessageSquare className="w-4 h-4" />,
-      isScroll: true,
     },
-    { name: 'Blog', href: '/blog', icon: <BookOpen className="w-4 h-4" />, isScroll: false },
   ];
+
+  const isHome = location.pathname === '/';
 
   return (
     <motion.header
-      className="fixed top-0 left-0 right-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200 w-full"
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
+      className={`fixed top-0 left-0 right-0 z-50 w-full flex justify-center transition-all duration-300 ${scrolled ? 'pt-3 sm:pt-5' : 'pt-0'
+        }`}
+      initial={isHome ? { y: -100, opacity: 0 } : { y: -12, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={
+        isHome
+          ? { type: 'spring', stiffness: 75, damping: 22 }
+          : { duration: 0.25, ease: [0.16, 1, 0.3, 1] }
+      }
     >
-      <motion.div
-        className="absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r from-blue-600 via-purple-600 to-blue-600 origin-left w-full"
-        style={{ scaleX }}
-      />
-
-      <div className="max-w-[1400px] mx-auto px-4">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
-          <motion.a
-            onClick={(e) => {
-              e.preventDefault();
-              navigate('/');
-            }}
-            className="flex items-center space-x-1 cursor-pointer"
-            whileHover={{ scale: 1.02 }}
-          >
-            <Logo className="w-10 h-10" />
-            <div className="flex flex-col">
-              <span className="text-2xl font-extrabold tracking-tight text-gray-900 font-display">
-                MedAlly
-              </span>
-              <span className="text-[10px] text-gray-500 tracking-wider -mt-1">
-                AI-Powered Healthcare
-              </span>
-            </div>
-          </motion.a>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-4">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                role="link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (item.isScroll) {
-                    handleNavigation(item.href);
-                  } else {
-                    navigate(item.href);
-                  }
-                }}
-                className="flex items-center px-2 py-1 rounded-full text-sm transition-all cursor-pointer text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                tabIndex={0}
+      <div
+        className={`relative w-full max-w-7xl mx-auto px-4 transition-all duration-300 flex justify-center ${scrolled ? 'px-6' : 'px-4'
+          }`}
+      >
+        <div
+          className={`flex w-full items-center justify-between gap-4 md:gap-8 transition-all duration-300 border ${scrolled
+            ? 'rounded-full border-border glass-medally px-6 py-2.5 max-w-6xl'
+            : 'rounded-none border-transparent bg-transparent border-b-border/30 px-4 py-5'
+            }`}
+        >
+          <div className="flex items-center">
+            <button
+              onClick={() => navigate('/')}
+              className="group flex items-center gap-3 rounded-full transition focus:outline-none focus-visible:ring-2 focus-visible:ring-primary/50"
+              aria-label="Go to homepage"
+            >
+              <span
+                className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-full ring-1 ring-border bg-muted/50 transition duration-300 group-hover:scale-105"
               >
-                <span className="mr-1.5">{item.icon}</span>
-                {item.name}
-              </a>
+                <Logo className="h-7 w-7 transition duration-300 group-hover:rotate-12" />
+              </span>
+              <div className="flex flex-col items-start leading-none">
+                <span className="text-lg font-bold tracking-tight text-foreground">MedAlly</span>
+                <span className="mt-0.5 hidden text-[9px] font-bold uppercase tracking-[0.22em] text-primary lg:block">
+                  Clinical AI
+                </span>
+              </div>
+            </button>
+          </div>
+
+          <nav
+            className="hidden items-center gap-1 rounded-full border border-border/60 bg-muted/30 px-1.5 py-1.5 xl:flex backdrop-blur-md"
+          >
+            {navLinks.map((link) => (
+              <Button
+                key={link.name}
+                variant="ghost"
+                size="sm"
+                className={`rounded-full px-4 text-sm font-medium transition-all duration-300 ${location.pathname === link.href
+                  ? 'bg-foreground/10 text-foreground shadow-sm'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  }`}
+                onClick={() => navigate(link.href)}
+              >
+                {link.name}
+              </Button>
             ))}
           </nav>
 
-          {/* CTA Buttons */}
-          <div className="hidden lg:flex items-center">
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <WaitlistDialog
-                trigger={
-                  <Button className="text-sm px-3 py-1.5 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500">
-                    Get Early Access
-                  </Button>
-                }
-              />
-            </motion.div>
+          <div className="hidden items-center gap-3 xl:flex">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              className="h-10 w-10 rounded-full border border-border bg-muted/40 text-foreground hover:bg-muted transition-all duration-300 flex items-center justify-center p-0"
+              aria-label="Toggle light and dark theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-[1.1rem] w-[1.1rem] text-yellow-400 animate-spin-slow shrink-0" />
+              ) : (
+                <Moon className="h-[1.1rem] w-[1.1rem] text-slate-600 dark:text-slate-400 shrink-0" />
+              )}
+            </Button>
+            <a
+              href="https://www.calonji.com/contact"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 items-center justify-center rounded-full border border-border bg-muted/40 px-5 text-sm font-semibold text-foreground transition hover:bg-muted hover:scale-[1.02] active:scale-95"
+            >
+              Demo
+            </a>
+            <a
+              href="https://app.medally.ai/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] px-5 text-sm font-bold text-slate-950 dark:text-white shadow-md shadow-teal-500/10 hover:shadow-teal-500/25 transition hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
+            >
+              Join now
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </a>
           </div>
 
-          {/* Mobile Menu Toggle */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="lg:hidden p-2 rounded-lg hover:bg-gray-50"
-            aria-label="Toggle Menu"
-            aria-expanded={isMenuOpen}
-            aria-controls="mobile-menu"
-          >
-            <Menu className="w-6 h-6 text-gray-600" />
-          </button>
+          <div className="xl:hidden flex items-center gap-2">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={toggleTheme}
+              className="h-10 w-10 rounded-full border border-border bg-muted/40 text-foreground hover:bg-muted transition-all duration-300 flex items-center justify-center p-0"
+              aria-label="Toggle light and dark theme"
+            >
+              {theme === 'dark' ? (
+                <Sun className="h-[1.1rem] w-[1.1rem] text-yellow-400 shrink-0" />
+              ) : (
+                <Moon className="h-[1.1rem] w-[1.1rem] text-slate-600 dark:text-slate-400 shrink-0" />
+              )}
+            </Button>
+            <Button
+              variant="ghost"
+              className="h-10 rounded-full px-4 border border-border bg-muted/40 text-foreground hover:bg-muted"
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              aria-label="Toggle menu"
+            >
+              <Menu className="mr-2 h-4 w-4 text-foreground/70" />
+              Menu
+            </Button>
+          </div>
         </div>
+      </div>
 
-        {/* Mobile Navigation */}
-        <motion.nav
-          id="mobile-menu"
-          aria-label="mobile-nav"
-          className={`lg:hidden absolute top-full left-0 right-0 bg-white/95 backdrop-blur-sm shadow-lg w-full ${
-            isMenuOpen ? 'block' : 'hidden'
-          }`}
+      {/* Mobile Navigation */}
+      {isMenuOpen && (
+        <motion.div
+          className="absolute top-full left-4 right-4 mt-2 rounded-3xl border border-border glass-medally shadow-2xl shadow-foreground/5 xl:hidden overflow-hidden z-50"
+          initial={{ opacity: 0, y: -10, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
         >
-          <div className="px-4 py-3 space-y-1">
-            {navItems.map((item) => (
-              <a
-                key={item.name}
-                role="link"
-                onClick={(e) => {
-                  e.preventDefault();
-                  if (item.isScroll) {
-                    handleNavigation(item.href);
-                  } else {
-                    navigate(item.href);
-                  }
+          <div className="grid gap-1 p-4">
+            {navLinks.map((link) => (
+              <Button
+                key={link.name}
+                variant="ghost"
+                className={`mb-1 w-full justify-start rounded-2xl text-left h-12 ${location.pathname === link.href
+                  ? 'bg-muted text-foreground'
+                  : 'text-muted-foreground hover:bg-muted hover:text-foreground'
+                  }`}
+                onClick={() => {
+                  navigate(link.href);
+                  setIsMenuOpen(false);
                 }}
-                className="flex items-center px-3 py-2 rounded-lg text-sm transition-all cursor-pointer text-gray-600 hover:text-blue-600 hover:bg-gray-50"
-                tabIndex={0}
               >
-                <span className="mr-2">{item.icon}</span>
-                {item.name}
-              </a>
+                <span className="mr-3 text-primary">{link.icon}</span>
+                {link.name}
+              </Button>
             ))}
-            <div className="pt-2 pb-1">
-              <WaitlistDialog
-                trigger={
-                  <Button className="w-full text-sm py-2 bg-gradient-to-r from-orange-500 to-orange-400 hover:from-orange-600 hover:to-orange-500">
-                    Get Early Access
-                  </Button>
-                }
-              />
+            <div className="mt-4 flex flex-col gap-2">
+              <a
+                href="https://app.medally.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-12 w-full items-center justify-center rounded-2xl bg-foreground text-background font-bold shadow-md hover:opacity-90 transition"
+              >
+                Join now
+              </a>
             </div>
           </div>
-        </motion.nav>
-      </div>
+        </motion.div>
+      )}
     </motion.header>
   );
 };

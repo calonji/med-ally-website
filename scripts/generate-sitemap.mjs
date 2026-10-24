@@ -1,8 +1,42 @@
 import fs from 'fs';
+import path from 'path';
 import { globby } from 'globby';
 import prettier from 'prettier';
 
-const DOMAIN = 'https://medally.ai';
+const DOMAIN = 'https://www.medally.ai';
+
+/**
+ * IMPORTANT: This mapping must be kept in sync with the routes defined in src/App.tsx
+ * If you add or change routes in App.tsx, make sure to update this mapping accordingly.
+ *
+ * The keys are the file paths in the src/pages directory.
+ * The values are the actual URL paths used in the application's routing.
+ *
+ * Set a value to null to exclude that page from the sitemap.
+ */
+const PAGE_ROUTES = {
+  'src/pages/LandingPage.tsx': '/',
+  'src/pages/AboutUsPage.tsx': '/about-us',
+  'src/pages/HowItWorksPage.tsx': '/how-it-works',
+  'src/pages/FeaturesPage.tsx': '/features',
+  'src/pages/BenefitsPage.tsx': '/benefits',
+  'src/pages/ROICalculatorPage.tsx': '/roi-calculator',
+  'src/pages/FAQPage.tsx': '/faq',
+  'src/pages/PricingPage.tsx': '/pricing',
+  'src/pages/PrivacyPolicy.tsx': '/privacy-policy',
+  'src/pages/TermsOfService.tsx': '/terms-of-service',
+  'src/pages/Contact.tsx': '/contact'
+};
+
+function getSitemapOutputDir() {
+  const configuredOutputDir = process.env.SITEMAP_OUTPUT_DIR;
+  if (configuredOutputDir) {
+    return path.resolve(process.cwd(), configuredOutputDir);
+  }
+
+  const buildOutputDir = path.join(process.cwd(), 'dist');
+  return fs.existsSync(buildOutputDir) ? buildOutputDir : path.join(process.cwd(), 'public');
+}
 
 async function generateSitemap() {
   try {
@@ -14,18 +48,22 @@ async function generateSitemap() {
       '!src/pages/404.tsx'
     ]);
 
-    // Get all blog posts
-    const blogPosts = await globby(['public/blog/**/*.md']);
-
     // Get all public images
     const images = await globby(['public/images/**/*.{jpg,jpeg,png,gif,webp}']);
 
     // Generate sitemap entries for pages
     const pageEntries = pages.map(page => {
-      const path = page
+      // Skip pages that are explicitly excluded (mapped to null)
+      if (PAGE_ROUTES[page] === null) {
+        return '';
+      }
+
+      // Use the route mapping if available, otherwise use the default path transformation
+      const path = PAGE_ROUTES[page] || page
         .replace('src/pages', '')
         .replace('.tsx', '')
         .replace('/index', '');
+
       return `
         <url>
           <loc>${DOMAIN}${path}</loc>
@@ -33,21 +71,7 @@ async function generateSitemap() {
           <changefreq>weekly</changefreq>
           <priority>0.8</priority>
         </url>`;
-    });
-
-    // Generate sitemap entries for blog posts
-    const blogEntries = blogPosts.map(post => {
-      const path = post
-        .replace('public', '')
-        .replace('.md', '');
-      return `
-        <url>
-          <loc>${DOMAIN}${path}</loc>
-          <lastmod>${new Date().toISOString()}</lastmod>
-          <changefreq>weekly</changefreq>
-          <priority>0.7</priority>
-        </url>`;
-    });
+    }).filter(entry => entry !== ''); // Remove empty entries
 
     // Generate sitemap entries for images
     const imageEntries = images.map(image => {
@@ -65,7 +89,6 @@ async function generateSitemap() {
     const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
       <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
         ${pageEntries.join('')}
-        ${blogEntries.join('')}
         ${imageEntries.join('')}
       </urlset>`;
 
@@ -82,7 +105,9 @@ async function generateSitemap() {
     const formattedSitemap = await prettier.format(sitemap, prettierConfig);
 
     // Write the sitemap
-    fs.writeFileSync('public/sitemap.xml', formattedSitemap);
+    const outputDir = getSitemapOutputDir();
+    fs.mkdirSync(outputDir, { recursive: true });
+    fs.writeFileSync(path.join(outputDir, 'sitemap.xml'), formattedSitemap);
 
     console.log('Sitemap generated successfully!');
   } catch (error) {
@@ -91,4 +116,4 @@ async function generateSitemap() {
   }
 }
 
-generateSitemap(); 
+generateSitemap();

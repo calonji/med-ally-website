@@ -47,7 +47,7 @@ const CaseStudies: React.FC = () => {
   ];
 
   return (
-    <section id="case-studies" className="py-24 bg-white">
+    <section id="case-studies" className=" bg-white">
       <div className="container mx-auto px-4">
         <motion.div 
           initial={{ opacity: 0, y: 20 }}

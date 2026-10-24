@@ -1,7 +1,6 @@
 // src/components/AboutUs.tsx
 import { type FC } from 'react';
 import { motion } from 'framer-motion';
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { BackgroundEffects } from "@/components/ui/background-effects";
 import { Heart, Brain, Shield, Award, BookOpen, Users } from 'lucide-react';
@@ -36,22 +35,11 @@ const AboutUs: FC = () => {
   ];
 
   return (
-    <section className="relative py-20 overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
+    <section className="relative  overflow-hidden bg-gradient-to-br from-blue-50 via-white to-purple-50">
       <BackgroundEffects variant="mesh" />
       
       <div className="container relative z-10">
-        {/* Header Section - Reduced vertical spacing */}
-        <motion.div className="text-center mb-16">
-          <Badge className="mb-3 bg-blue-100 text-blue-800 hover:bg-blue-200">
-            About Us
-          </Badge>
-          <h2 className="text-4xl font-bold text-gray-900 mb-4 tracking-tight">
-            Our Story & Values
-          </h2>
-          <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-            A solution designed by physicians, for physicians. Combining cutting-edge AI technology with a deep understanding of clinical workflow.
-          </p>
-        </motion.div>
+     
 
         <div className="grid lg:grid-cols-2 gap-12 max-w-7xl mx-auto">
           {/* Left Column - Story */}

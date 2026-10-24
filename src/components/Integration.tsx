@@ -70,7 +70,7 @@ const Integration: React.FC = () => {
   ];
 
   return (
-    <section id="integration" className="py-24 bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
+    <section id="integration" className=" bg-gradient-to-br from-gray-50 to-white relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-5">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_30%_70%,#3182CE,transparent_70%)]" />

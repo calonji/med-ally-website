@@ -9,11 +9,26 @@ export default {
     ],
     safelist: [
         {
-            pattern: /^(bg|text|border)-(emerald|blue|purple|indigo)-(100|500|600|700)/,
+            pattern: /^(bg|text|border|from|to|ring)-(emerald|blue|purple|indigo|red|green|cyan|amber|orange|rose|pink|violet|yellow|teal|sky|lime)-(50|100|200|400|500|600|700)/,
         },
-        {
-            pattern: /^hover:bg-(emerald|blue|purple|indigo)-(200|600|700)/,
-        }
+        ...[
+            'emerald',
+            'blue',
+            'purple',
+            'indigo',
+            'red',
+            'green',
+            'cyan',
+            'amber',
+            'orange',
+            'rose',
+            'pink',
+            'violet',
+            'yellow',
+            'teal',
+            'sky',
+            'lime',
+        ].flatMap((color) => [200, 600, 700].map((shade) => `hover:bg-${color}-${shade}`)),
     ],
     theme: {
         container: {
@@ -81,10 +96,17 @@ export default {
                 heartbeat: {
                     '0%, 100%': { transform: 'scale(1)' },
                     '50%': { transform: 'scale(1.1)' },
+                },
+                blob: {
+                    '0%': { transform: 'translate(0px, 0px) scale(1)' },
+                    '33%': { transform: 'translate(30px, -50px) scale(1.1)' },
+                    '66%': { transform: 'translate(-20px, 20px) scale(0.9)' },
+                    '100%': { transform: 'translate(0px, 0px) scale(1)' },
                 }
             },
             animation: {
                 heartbeat: 'heartbeat 1s ease-in-out infinite',
+                blob: 'blob 7s infinite',
             }
         },
     },
