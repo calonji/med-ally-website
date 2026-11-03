@@ -1,4 +1,4 @@
-import { type FC, useState, useMemo, useEffect } from 'react';
+import { type FC, useState, useMemo, useEffect, useCallback, memo } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ChevronDown,
@@ -97,6 +97,102 @@ const structuredData = {
   ],
 };
 
+interface FaqAccordionItemProps {
+  faq: FaqItem;
+  isOpen: boolean;
+  onToggle: (id: string) => void;
+}
+
+const FaqAccordionItem: FC<FaqAccordionItemProps> = memo(({ faq, isOpen, onToggle }) => {
+  return (
+    <div
+      className={`rounded-2xl border transition-colors duration-150 ${
+        isOpen
+          ? 'border-teal-500/40 bg-card/90 shadow-md ring-1 ring-teal-500/10'
+          : 'border-border bg-card/60 hover:border-border/90 hover:bg-card'
+      }`}
+    >
+      <button
+        type="button"
+        onClick={() => onToggle(faq.id)}
+        className="w-full py-5 px-6 sm:px-7 text-left flex items-center justify-between gap-4 font-semibold text-foreground text-base sm:text-lg hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
+        aria-expanded={isOpen}
+        aria-controls={`faq-answer-${faq.id}`}
+      >
+        <h3 className="font-editorial text-base sm:text-lg text-foreground font-bold leading-snug">
+          {faq.q}
+        </h3>
+        <ChevronDown
+          className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-200 ${
+            isOpen ? 'rotate-180 text-teal-500' : ''
+          }`}
+        />
+      </button>
+
+      <div
+        id={`faq-answer-${faq.id}`}
+        className={`grid transition-[grid-template-rows] duration-200 ease-out ${
+          isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
+        }`}
+      >
+        <div className="overflow-hidden">
+          <div className="px-6 sm:px-7 pb-6 sm:pb-7">
+            <div className="border-t border-border/50 pt-4 space-y-3">
+              {faq.a.map((paragraph, pIdx) => (
+                <p
+                  key={pIdx}
+                  className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed"
+                >
+                  {paragraph}
+                </p>
+              ))}
+
+              {faq.links && faq.links.length > 0 && (
+                <div className="pt-2 flex flex-wrap items-center gap-x-1.5 text-xs sm:text-sm font-medium">
+                  {faq.links.map((link, lIdx) => (
+                    <span key={lIdx} className="inline-flex items-center">
+                      {link.prefix && (
+                        <span className="text-muted-foreground mr-1">
+                          {link.prefix}
+                        </span>
+                      )}
+                      {link.isExternal ? (
+                        <a
+                          href={link.href}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-teal-600 dark:text-teal-400 font-bold hover:underline inline-flex items-center gap-1 group"
+                        >
+                          <span>{link.text}</span>
+                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </a>
+                      ) : (
+                        <Link
+                          to={link.href}
+                          className="text-teal-600 dark:text-teal-400 font-bold hover:underline inline-flex items-center gap-1 group"
+                        >
+                          <span>{link.text}</span>
+                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                        </Link>
+                      )}
+                      {link.suffix && (
+                        <span className="text-muted-foreground ml-1">
+                          {link.suffix}
+                        </span>
+                      )}
+                    </span>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+});
+FaqAccordionItem.displayName = 'FaqAccordionItem';
+
 const FAQPage: FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isMarqueePaused, setIsMarqueePaused] = useState(false);
@@ -141,12 +237,12 @@ const FAQPage: FC = () => {
     }
   };
 
-  const toggleItem = (id: string) => {
+  const toggleItem = useCallback((id: string) => {
     setOpenItems((prev) => ({
       ...prev,
       [id]: !prev[id]
     }));
-  };
+  }, []);
 
   const filteredCategories = useMemo(() => {
     if (!searchQuery.trim()) {
@@ -442,97 +538,14 @@ const FAQPage: FC = () => {
 
                       {/* Accordion List of H3 Questions */}
                       <div className="space-y-4">
-                        {category.faqs.map((faq, idx) => {
-                          const isOpen = openItems[faq.id] ?? false;
-                          return (
-                            <MotionReveal key={faq.id} delay={idx * 0.04}>
-                              <div
-                                className={`rounded-2xl border transition-all duration-300 ${
-                                  isOpen
-                                    ? 'border-teal-500/40 bg-card/90 shadow-md ring-1 ring-teal-500/10'
-                                    : 'border-border bg-card/60 hover:border-border/90 hover:bg-card'
-                                }`}
-                              >
-                                <button
-                                  type="button"
-                                  onClick={() => toggleItem(faq.id)}
-                                  className="w-full py-5 px-6 sm:px-7 text-left flex items-center justify-between gap-4 font-semibold text-foreground text-base sm:text-lg hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
-                                  aria-expanded={isOpen}
-                                  aria-controls={`faq-answer-${faq.id}`}
-                                >
-                                  {/* Semantic H3 tag inside the button */}
-                                  <h3 className="font-editorial text-base sm:text-lg text-foreground font-bold leading-snug">
-                                    {faq.q}
-                                  </h3>
-                                  <ChevronDown
-                                    className={`w-5 h-5 text-muted-foreground shrink-0 transition-transform duration-300 ${
-                                      isOpen ? 'rotate-180 text-teal-500' : ''
-                                    }`}
-                                  />
-                                </button>
-
-                                <div
-                                  id={`faq-answer-${faq.id}`}
-                                  className={`transition-all duration-300 ease-in-out px-6 sm:px-7 ${
-                                    isOpen
-                                      ? 'max-h-[600px] pb-6 sm:pb-7 opacity-100'
-                                      : 'max-h-0 pb-0 opacity-0 overflow-hidden pointer-events-none'
-                                  }`}
-                                >
-                                  <div className="border-t border-border/50 pt-4 space-y-3">
-                                    {faq.a.map((paragraph, pIdx) => (
-                                      <p
-                                        key={pIdx}
-                                        className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed"
-                                      >
-                                        {paragraph}
-                                      </p>
-                                    ))}
-
-                                    {/* Action Links & Deep References */}
-                                    {faq.links && faq.links.length > 0 && (
-                                      <div className="pt-2 flex flex-wrap items-center gap-x-1.5 text-xs sm:text-sm font-medium">
-                                        {faq.links.map((link, lIdx) => (
-                                          <span key={lIdx} className="inline-flex items-center">
-                                            {link.prefix && (
-                                              <span className="text-muted-foreground mr-1">
-                                                {link.prefix}
-                                              </span>
-                                            )}
-                                            {link.isExternal ? (
-                                              <a
-                                                href={link.href}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                className="text-teal-600 dark:text-teal-400 font-bold hover:underline inline-flex items-center gap-1 group"
-                                              >
-                                                <span>{link.text}</span>
-                                                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                                              </a>
-                                            ) : (
-                                              <Link
-                                                to={link.href}
-                                                className="text-teal-600 dark:text-teal-400 font-bold hover:underline inline-flex items-center gap-1 group"
-                                              >
-                                                <span>{link.text}</span>
-                                                <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                                              </Link>
-                                            )}
-                                            {link.suffix && (
-                                              <span className="text-muted-foreground ml-1">
-                                                {link.suffix}
-                                              </span>
-                                            )}
-                                          </span>
-                                        ))}
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            </MotionReveal>
-                          );
-                        })}
+                        {category.faqs.map((faq) => (
+                          <FaqAccordionItem
+                            key={faq.id}
+                            faq={faq}
+                            isOpen={openItems[faq.id] ?? false}
+                            onToggle={toggleItem}
+                          />
+                        ))}
                       </div>
                     </section>
                   );
