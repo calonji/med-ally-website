@@ -228,48 +228,13 @@ function validateFaqSchemaParity(schemaEntities, renderedQA) {
   }
 }
 
-test('FAQ output-level schema regression coverage verifies generated HTML Q&A parity and resists mutations', () => {
-  let faqHtml;
-  if (existsSync(new URL('../dist/faq/index.html', import.meta.url))) {
-    faqHtml = read('dist/faq/index.html');
-  } else {
-    // In-memory generator with HTML shell for environments before build
-    const rawFaqData = JSON.parse(read('src/data/faqData.json'));
-    const shell = read('index.html');
-    const faqs = rawFaqData.flatMap((cat) =>
-      cat.faqs.map((faq) => {
-        const paragraphs = faq.a.join(' ');
-        const linksText =
-          faq.links && faq.links.length > 0
-            ? ' ' + faq.links.map((l) => `${l.prefix || ''}${l.text}${l.suffix || ''}`).join(' ')
-            : '';
-        return {
-          q: faq.q,
-          a: `${paragraphs}${linksText}`.trim().replace(/\s+/g, ' '),
-        };
-      })
-    );
-    const schema = [
-      {
-        '@context': 'https://schema.org',
-        '@type': 'FAQPage',
-        mainEntity: faqs.map((f) => ({
-          '@type': 'Question',
-          name: f.q,
-          acceptedAnswer: { '@type': 'Answer', text: f.a },
-        })),
-      },
-    ];
-    const faqsBody = `<section aria-label="Frequently Asked Questions"><h2>Frequently Asked Questions</h2><dl>${faqs
-      .map(
-        (f) =>
-          `<dt><strong>${f.q.replace(/&/g, '&amp;').replace(/'/g, '&#39;')}</strong></dt><dd>${f.a.replace(/&/g, '&amp;').replace(/'/g, '&#39;')}</dd>`
-      )
-      .join('')}</dl></section>`;
-    faqHtml = shell
-      .replace(/<title>.*?<\/title>/s, `<title>FAQ</title><script type="application/ld+json">${JSON.stringify(schema)}<\/script>`)
-      .replace(/<div id="root"><\/div>/, `<div id="root">${faqsBody}</div>`);
-  }
+test('FAQ output-level schema regression coverage verifies generated HTML Q&A parity against production build', () => {
+  const faqDistPath = new URL('../dist/faq/index.html', import.meta.url);
+  assert.ok(
+    existsSync(faqDistPath),
+    "dist/faq/index.html is missing. Run 'npm run build' before running this test to generate production prerender artifacts."
+  );
+  const faqHtml = read('dist/faq/index.html');
   const scriptMatches = [...faqHtml.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)];
   let faqSchema = null;
   for (const match of scriptMatches) {
@@ -293,29 +258,44 @@ test('FAQ output-level schema regression coverage verifies generated HTML Q&A pa
   assert.equal(ddMatches.length, 35, 'Rendered HTML should contain 35 <dd> answers');
   const renderedQA = dtMatches.map((q, i) => ({ q, a: ddMatches[i] }));
 
-  // Strict output-level validation
+  // Strict output-level validation against real production build
   validateFaqSchemaParity(schemaEntities, renderedQA);
+});
 
-  // Mutation regression validation: changing or removing an entry MUST fail the test
+test('validateFaqSchemaParity validator unit fixture detects count mismatch, missing questions, answer mutations, and duplicates', () => {
+  const mockSchema = [
+    { name: 'What is MedAlly?', acceptedAnswer: { text: 'MedAlly is a clinical AI platform for physicians.' } },
+    { name: 'Is MedAlly HIPAA compliant?', acceptedAnswer: { text: 'Yes, MedAlly is HIPAA compliant.' } },
+  ];
+  const mockRendered = [
+    { q: 'What is MedAlly?', a: 'MedAlly is a clinical AI platform for physicians.' },
+    { q: 'Is MedAlly HIPAA compliant?', a: 'Yes, MedAlly is HIPAA compliant.' },
+  ];
+
+  // Baseline passes
+  validateFaqSchemaParity(mockSchema, mockRendered);
+
+  // Mutation regression validation: count mismatch
   assert.throws(() => {
-    validateFaqSchemaParity(schemaEntities.slice(1), renderedQA);
+    validateFaqSchemaParity(mockSchema.slice(1), mockRendered);
   }, /Count mismatch|Missing rendered question/);
 
+  // Mutation regression validation: answer text mismatch
   assert.throws(() => {
-    const mutated = schemaEntities.map((e, idx) =>
-      idx === 0
-        ? { ...e, acceptedAnswer: { ...e.acceptedAnswer, text: 'Mutated invalid answer text' } }
-        : e
-    );
-    validateFaqSchemaParity(mutated, renderedQA);
+    const mutated = [
+      { ...mockSchema[0], acceptedAnswer: { text: 'Mutated answer' } },
+      mockSchema[1],
+    ];
+    validateFaqSchemaParity(mutated, mockRendered);
   }, /Answer text mismatch/);
 
+  // Mutation regression validation: duplicate question
   assert.throws(() => {
-    validateFaqSchemaParity([...schemaEntities, schemaEntities[0]], [...renderedQA, renderedQA[0]]);
+    validateFaqSchemaParity([...mockSchema, mockSchema[0]], [...mockRendered, mockRendered[0]]);
   }, /Duplicate questions found/);
 });
 
-test('FAQ content definition is consolidated and JavaScript rendered FAQ with expanded accordions matches schema', () => {
+test('FAQ source data consolidation and static contract integrity', () => {
   const faqDataRaw = JSON.parse(read('src/data/faqData.json'));
   const faqPage = read('src/pages/FAQPage.tsx');
   const pricingPage = read('src/pages/PricingPage.tsx');
@@ -328,7 +308,7 @@ test('FAQ content definition is consolidated and JavaScript rendered FAQ with ex
   const allFaqs = faqDataRaw.flatMap((cat) => cat.faqs);
   assert.equal(allFaqs.length, 35, 'faqData.json must have 35 questions across 6 categories');
 
-  // Verify each question when rendered with accordions expanded matches the canonical answer text
+  // Verify each question answer text length
   for (const faq of allFaqs) {
     const paragraphs = faq.a.join(' ');
     const linksText =
@@ -352,4 +332,13 @@ test('sitemap scripts use actual public routes and MedAlly image metadata', () =
   assert.ok(imageSitemap.includes('/images/medally/clinical-hero.webp'));
   assert.ok(imageSitemap.includes('MedAlly clinical AI platform'));
   assert.ok(imageSitemap.includes('product-ambient-scribe.png'));
+});
+
+test('build metadata generator writes traceable build-info.json to build output', () => {
+  const buildInfoPath = new URL('../dist/build-info.json', import.meta.url);
+  assert.ok(existsSync(buildInfoPath), 'dist/build-info.json must exist in build output');
+  const info = JSON.parse(read('dist/build-info.json'));
+  assert.ok(info.commit_sha, 'build-info must record commit_sha');
+  assert.ok(info.built_at, 'build-info must record built_at timestamp');
+  assert.equal(info.generator, 'med-ally-website');
 });

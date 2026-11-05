@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build && npm run prerender-seo && npm run update-sitemaps-js",
+    "build": "tsc && vite build && npm run prerender-seo && npm run update-sitemaps-js && npm run generate-build-info",
+    "generate-build-info": "node scripts/generate-build-info.mjs",
     "lint": "eslint src --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview",
     "generate-sitemap": "node scripts/generate-sitemap.mjs",
@@ -14,7 +15,7 @@
     "compile-scripts": "tsc -p tsconfig.scripts.json",
     "prerender-seo": "node scripts/prerender-static-seo.mjs",
     "update-sitemaps-js": "npm run compile-scripts && node dist-scripts/update-sitemaps.js",
-    "test": "node --test tests/review-findings.test.mjs",
+    "test": "node --test tests/review-findings.test.mjs && vitest run",
     "audit": "npm audit --audit-level=moderate",
     "audit:prod": "npm audit --omit=dev --audit-level=moderate"
   },

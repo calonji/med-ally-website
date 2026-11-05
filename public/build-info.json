@@ -1,0 +1,9 @@
+{
+  "commit_sha": "7cc6927a1d5a2661d5a68a81e5edeaffa4559335",
+  "head_sha": "7cc6927a1d5a2661d5a68a81e5edeaffa4559335",
+  "branch": "feat/seo-homepage-ai-scribe-pages",
+  "built_at": "2026-11-05T12:35:25.543Z",
+  "ci_run_url": "local",
+  "generator": "med-ally-website",
+  "prerendered_routes_count": 18
+}

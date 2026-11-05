@@ -1,5 +1,6 @@
-import { type FC, useState, useMemo, useEffect, useCallback, memo } from 'react';
+import { type FC, useState, useMemo, useEffect, useRef, memo } from 'react';
 import { Link } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   ChevronDown,
   Search,
@@ -97,13 +98,36 @@ const structuredData = {
   ],
 };
 
+const DEFAULT_OPEN_IDS = new Set([
+  'what-is-medally',
+  'does-medally-include-scribe',
+  'decision-support-or-differential',
+  'clinical-decisions',
+  'plans-available',
+  'where-to-start-evaluating-myself',
+]);
+
 interface FaqAccordionItemProps {
   faq: FaqItem;
-  isOpen: boolean;
-  onToggle: (id: string) => void;
+  defaultOpen?: boolean;
 }
 
-const FaqAccordionItem: FC<FaqAccordionItemProps> = memo(({ faq, isOpen, onToggle }) => {
+const FaqAccordionItem: FC<FaqAccordionItemProps> = memo(({ faq, defaultOpen = false }) => {
+  const [isOpen, setIsOpen] = useState(defaultOpen);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+
+  const handleToggle = () => {
+    setIsOpen((prev) => {
+      if (prev) {
+        const panel = document.getElementById(`faq-answer-${faq.id}`);
+        if (panel && panel.contains(document.activeElement)) {
+          buttonRef.current?.focus();
+        }
+      }
+      return !prev;
+    });
+  };
+
   return (
     <div
       className={`rounded-2xl border transition-colors duration-150 ${
@@ -113,8 +137,10 @@ const FaqAccordionItem: FC<FaqAccordionItemProps> = memo(({ faq, isOpen, onToggl
       }`}
     >
       <button
+        ref={buttonRef}
+        id={`faq-trigger-${faq.id}`}
         type="button"
-        onClick={() => onToggle(faq.id)}
+        onClick={handleToggle}
         className="w-full py-5 px-6 sm:px-7 text-left flex items-center justify-between gap-4 font-semibold text-foreground text-base sm:text-lg hover:text-teal-600 dark:hover:text-teal-400 transition-colors"
         aria-expanded={isOpen}
         aria-controls={`faq-answer-${faq.id}`}
@@ -129,65 +155,76 @@ const FaqAccordionItem: FC<FaqAccordionItemProps> = memo(({ faq, isOpen, onToggl
         />
       </button>
 
-      <div
-        id={`faq-answer-${faq.id}`}
-        className={`grid transition-[grid-template-rows] duration-200 ease-out ${
-          isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'
-        }`}
-      >
-        <div className="overflow-hidden">
-          <div className="px-6 sm:px-7 pb-6 sm:pb-7">
-            <div className="border-t border-border/50 pt-4 space-y-3">
-              {faq.a.map((paragraph, pIdx) => (
-                <p
-                  key={pIdx}
-                  className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed"
-                >
-                  {paragraph}
-                </p>
-              ))}
-
-              {faq.links && faq.links.length > 0 && (
-                <div className="pt-2 flex flex-wrap items-center gap-x-1.5 text-xs sm:text-sm font-medium">
-                  {faq.links.map((link, lIdx) => (
-                    <span key={lIdx} className="inline-flex items-center">
-                      {link.prefix && (
-                        <span className="text-muted-foreground mr-1">
-                          {link.prefix}
-                        </span>
-                      )}
-                      {link.isExternal ? (
-                        <a
-                          href={link.href}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-teal-600 dark:text-teal-400 font-bold hover:underline inline-flex items-center gap-1 group"
-                        >
-                          <span>{link.text}</span>
-                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                        </a>
-                      ) : (
-                        <Link
-                          to={link.href}
-                          className="text-teal-600 dark:text-teal-400 font-bold hover:underline inline-flex items-center gap-1 group"
-                        >
-                          <span>{link.text}</span>
-                          <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
-                        </Link>
-                      )}
-                      {link.suffix && (
-                        <span className="text-muted-foreground ml-1">
-                          {link.suffix}
-                        </span>
-                      )}
-                    </span>
-                  ))}
-                </div>
-              )}
+      <AnimatePresence initial={false}>
+        {isOpen && (
+          <motion.div
+            id={`faq-answer-${faq.id}`}
+            key="content"
+            role="region"
+            aria-labelledby={`faq-trigger-${faq.id}`}
+            initial="collapsed"
+            animate="open"
+            exit="collapsed"
+            variants={{
+              open: { opacity: 1, height: 'auto' },
+              collapsed: { opacity: 0, height: 0 },
+            }}
+            transition={{ duration: 0.25, ease: [0.04, 0.62, 0.23, 0.98] }}
+            className="overflow-hidden"
+          >
+            <div className="px-6 sm:px-7 pb-6 sm:pb-7">
+              <div className="border-t border-border/50 pt-4 space-y-3">
+                {faq.a.map((paragraph, pIdx) => (
+                  <p
+                    key={pIdx}
+                    className="text-sm sm:text-base text-muted-foreground font-light leading-relaxed"
+                  >
+                    {paragraph}{' '}
+                  </p>
+                ))}
+                {' '}
+                {faq.links && faq.links.length > 0 && (
+                  <div className="pt-2 flex flex-wrap items-center gap-x-1.5 text-xs sm:text-sm font-medium">
+                    {faq.links.map((link, lIdx) => (
+                      <span key={lIdx} className="inline-flex items-center">
+                        {link.prefix && (
+                          <span className="text-muted-foreground mr-1">
+                            {link.prefix}
+                          </span>
+                        )}
+                        {link.isExternal ? (
+                          <a
+                            href={link.href}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-teal-600 dark:text-teal-400 font-bold hover:underline inline-flex items-center gap-1 group"
+                          >
+                            <span>{link.text}</span>
+                            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                          </a>
+                        ) : (
+                          <Link
+                            to={link.href}
+                            className="text-teal-600 dark:text-teal-400 font-bold hover:underline inline-flex items-center gap-1 group"
+                          >
+                            <span>{link.text}</span>
+                            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
+                          </Link>
+                        )}
+                        {link.suffix && (
+                          <span className="text-muted-foreground ml-1">
+                            {link.suffix}
+                          </span>
+                        )}
+                      </span>
+                    ))}
+                  </div>
+                )}
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 });
@@ -198,15 +235,6 @@ const FAQPage: FC = () => {
   const [isMarqueePaused, setIsMarqueePaused] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
   const [activeCategory, setActiveCategory] = useState<string>(faqCategories[0].id);
-  const [openItems, setOpenItems] = useState<Record<string, boolean>>({
-    'what-is-medally': true,
-    'does-medally-include-scribe': true,
-    'decision-support-or-differential': true,
-    'clinical-decisions': true,
-    'plans-available': true,
-    'where-to-start-evaluating-myself': true
-  });
-
   useEffect(() => {
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 220;
@@ -236,13 +264,6 @@ const FAQPage: FC = () => {
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
   };
-
-  const toggleItem = useCallback((id: string) => {
-    setOpenItems((prev) => ({
-      ...prev,
-      [id]: !prev[id]
-    }));
-  }, []);
 
   const filteredCategories = useMemo(() => {
     if (!searchQuery.trim()) {
@@ -298,7 +319,7 @@ const FAQPage: FC = () => {
             ========================================================================= */}
         <section className="relative pt-32 pb-16 lg:pt-40 lg:pb-24 overflow-hidden">
           {/* Ambient Lighting Gradients */}
-          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-teal-500/10 dark:bg-teal-500/5 blur-[140px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[450px] bg-teal-500/10 dark:bg-teal-500/5 blur-[140px] rounded-full pointer-events-none transform-gpu" />
 
           <div className="max-w-6xl mx-auto px-6 relative z-10">
             <div className="text-center max-w-4xl mx-auto">
@@ -370,7 +391,7 @@ const FAQPage: FC = () => {
         {/* =========================================================================
             SECTION 2: CREATIVE AUTO-ROTATING CATEGORY RADAR (PAUSE ON HOVER)
             ========================================================================= */}
-        <section className="sticky top-16 md:top-20 z-30 py-4 backdrop-blur-xl bg-background/80 transition-all duration-300">
+        <section className="sticky top-16 md:top-20 z-30 py-4 backdrop-blur-xl bg-background/80">
           {/* Header & Controls Bar */}
           <div className="max-w-7xl mx-auto px-4 sm:px-6 mb-1.5">
             <div className="flex items-center justify-between px-2">
@@ -540,10 +561,9 @@ const FAQPage: FC = () => {
                       <div className="space-y-4">
                         {category.faqs.map((faq) => (
                           <FaqAccordionItem
-                            key={faq.id}
+                            key={`${faq.id}-${searchQuery ? 'search' : 'static'}`}
                             faq={faq}
-                            isOpen={openItems[faq.id] ?? false}
-                            onToggle={toggleItem}
+                            defaultOpen={Boolean(searchQuery) || DEFAULT_OPEN_IDS.has(faq.id)}
                           />
                         ))}
                       </div>
@@ -559,7 +579,7 @@ const FAQPage: FC = () => {
             SECTION 4: STILL HAVE A QUESTION? (CONVERSION & EXPLORATION HUB)
             ========================================================================= */}
         <section className="relative py-20 lg:py-28 overflow-hidden border-t border-border bg-muted/20">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-teal-500/10 dark:bg-teal-500/5 blur-[140px] rounded-full pointer-events-none" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[350px] bg-teal-500/10 dark:bg-teal-500/5 blur-[140px] rounded-full pointer-events-none transform-gpu" />
 
           <div className="max-w-5xl mx-auto px-6 relative z-10 text-center">
             <MotionReveal>
