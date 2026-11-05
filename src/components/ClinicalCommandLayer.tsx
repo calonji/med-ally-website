@@ -5,16 +5,16 @@ import { Activity, BrainCircuit, FileCheck2, ShieldCheck, WalletCards } from 'lu
 import { Logo } from '@/components/ui/Logo';
 
 const signals = [
-  { label: 'Listen', icon: <Activity className="h-4 w-4" />, x: '14%', y: '47%' },
-  { label: 'Note', icon: <FileCheck2 className="h-4 w-4" />, x: '33%', y: '14%' },
-  { label: 'Reason', icon: <BrainCircuit className="h-4 w-4" />, x: '68%', y: '16%' },
-  { label: 'Code', icon: <WalletCards className="h-4 w-4" />, x: '83%', y: '55%' },
-  { label: 'Guard', icon: <ShieldCheck className="h-4 w-4" />, x: '48%', y: '80%' },
+  { label: 'Listen', icon: <Activity className="h-4 w-4" />, x: '6%', y: '46%' },
+  { label: 'Note', icon: <FileCheck2 className="h-4 w-4" />, x: '22%', y: '10%' },
+  { label: 'Reason', icon: <BrainCircuit className="h-4 w-4" />, x: '58%', y: '12%' },
+  { label: 'Code', icon: <WalletCards className="h-4 w-4" />, x: '64%', y: '52%' },
+  { label: 'Guard', icon: <ShieldCheck className="h-4 w-4" />, x: '36%', y: '82%' },
 ];
 
 const ClinicalCommandLayer: FC = () => {
   return (
-    <div className="clinical-command-layer relative mx-auto aspect-square w-full max-w-[34rem]">
+    <div className="clinical-command-layer relative mx-auto aspect-square w-full max-w-[29rem] xl:max-w-[32rem]">
       <div className="absolute inset-0 rounded-full bg-teal-300/10 blur-3xl" />
       <motion.div
         className="absolute inset-[5%] rounded-full border border-teal-200/25"

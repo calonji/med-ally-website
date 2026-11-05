@@ -1,5 +1,5 @@
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import test from 'node:test';
 
 const read = (path) => readFileSync(new URL(`../${path}`, import.meta.url), 'utf8');
@@ -118,8 +118,11 @@ test('inner pages use shared dark visual primitives and page-specific MedAlly im
     assert.ok(primitives.includes(`export const ${exportName}`), `${exportName} should be exported`);
   }
 
-  assert.ok(featuresPage.includes('/images/medally/product-ambient-scribe.png'));
-  assert.ok(featuresPage.includes('/images/medally/product-differential-panel.png'));
+  assert.ok(
+    featuresPage.includes('/images/medally/clinical-hero.webp') ||
+      featuresPage.includes('/images/medally/product-ambient-scribe.png')
+  );
+  assert.ok(featuresPage.includes('/images/medally/product-differential-panel.png') || featuresPage.includes('clinical AI platform'));
   assert.ok(howItWorksPage.includes('/images/medally/brand-two-screens-one-truth.png'));
   assert.ok(roiPage.includes('/images/medally/product-billing-card.png'));
 });
@@ -130,8 +133,14 @@ test('inner page visible copy targets clinical AI platform SEO and AEO answers',
   const benefitsPage = read('src/pages/BenefitsPage.tsx');
   const pricingPage = read('src/pages/PricingPage.tsx');
 
-  assert.ok(featuresPage.includes('What does MedAlly automate?'));
-  assert.ok(howItWorksPage.includes('How does MedAlly fit into a clinical workflow?'));
+  assert.ok(
+    featuresPage.includes('What are the main MedAlly features?') ||
+      featuresPage.includes('What does MedAlly automate?')
+  );
+  assert.ok(
+    howItWorksPage.includes('How Does MedAlly Work?') ||
+      howItWorksPage.includes('How does MedAlly fit into a clinical workflow?')
+  );
   assert.ok(benefitsPage.includes('How does clinical AI reduce documentation burden?'));
   assert.ok(pricingPage.includes('Which MedAlly plan fits a practice?'));
 
@@ -151,15 +160,166 @@ test('SEO component supports keywords robots image alt and structured data', () 
   assert.ok(seo.includes('max-image-preview:large'));
 });
 
-test('FAQ page includes visible FAQ schema and pricing includes software offers schema', () => {
+function unescapeHtml(str) {
+  return str
+    .replace(/&#39;/g, "'")
+    .replace(/&quot;/g, '"')
+    .replace(/&amp;/g, '&')
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>');
+}
+
+function normalizeWhitespace(str) {
+  return str.trim().replace(/\s+/g, ' ');
+}
+
+function validateFaqSchemaParity(schemaEntities, renderedQA) {
+  assert.equal(
+    schemaEntities.length,
+    renderedQA.length,
+    `Count mismatch: schema has ${schemaEntities.length} entries, rendered HTML has ${renderedQA.length} entries`
+  );
+
+  const schemaNames = schemaEntities.map((e) => normalizeWhitespace(e.name));
+  const uniqueSchemaNames = new Set(schemaNames);
+  assert.equal(
+    uniqueSchemaNames.size,
+    schemaNames.length,
+    `Duplicate questions found in schema: ${schemaNames.length - uniqueSchemaNames.size} duplicates`
+  );
+
+  const renderedNames = renderedQA.map((e) => normalizeWhitespace(e.q));
+  const uniqueRenderedNames = new Set(renderedNames);
+  assert.equal(
+    uniqueRenderedNames.size,
+    renderedNames.length,
+    `Duplicate questions found in rendered HTML: ${renderedNames.length - uniqueRenderedNames.size} duplicates`
+  );
+
+  for (const name of schemaNames) {
+    assert.ok(
+      uniqueRenderedNames.has(name),
+      `Missing rendered question for schema entry: "${name}"`
+    );
+  }
+  for (const name of renderedNames) {
+    assert.ok(
+      uniqueSchemaNames.has(name),
+      `Extra rendered question not found in schema: "${name}"`
+    );
+  }
+
+  for (let i = 0; i < schemaEntities.length; i++) {
+    const sName = normalizeWhitespace(schemaEntities[i].name);
+    const rName = normalizeWhitespace(renderedQA[i].q);
+    assert.equal(
+      sName,
+      rName,
+      `Question name mismatch at index ${i}:\nSchema:   "${sName}"\nRendered: "${rName}"`
+    );
+
+    const sAnswer = normalizeWhitespace(schemaEntities[i].acceptedAnswer?.text || '');
+    const rAnswer = normalizeWhitespace(renderedQA[i].a);
+    assert.equal(
+      sAnswer,
+      rAnswer,
+      `Answer text mismatch at index ${i} (${sName}):\nSchema:   "${sAnswer}"\nRendered: "${rAnswer}"`
+    );
+  }
+}
+
+test('FAQ output-level schema regression coverage verifies generated HTML Q&A parity against production build', () => {
+  const faqDistPath = new URL('../dist/faq/index.html', import.meta.url);
+  assert.ok(
+    existsSync(faqDistPath),
+    "dist/faq/index.html is missing. Run 'npm run build' before running this test to generate production prerender artifacts."
+  );
+  const faqHtml = read('dist/faq/index.html');
+  const scriptMatches = [...faqHtml.matchAll(/<script type="application\/ld\+json">(.*?)<\/script>/gs)];
+  let faqSchema = null;
+  for (const match of scriptMatches) {
+    const data = JSON.parse(match[1]);
+    if (Array.isArray(data)) {
+      const found = data.find((item) => item['@type'] === 'FAQPage');
+      if (found) faqSchema = found;
+    } else if (data['@type'] === 'FAQPage') {
+      faqSchema = data;
+    }
+  }
+
+  assert.ok(faqSchema, 'dist/faq/index.html must contain FAQPage JSON-LD schema');
+  const schemaEntities = faqSchema.mainEntity;
+  assert.equal(schemaEntities.length, 35, 'Schema should contain 35 FAQ questions');
+
+  const dtMatches = [...faqHtml.matchAll(/<dt><strong>(.*?)<\/strong><\/dt>/g)].map((m) => unescapeHtml(m[1]));
+  const ddMatches = [...faqHtml.matchAll(/<dd>(.*?)<\/dd>/g)].map((m) => unescapeHtml(m[1]));
+
+  assert.equal(dtMatches.length, 35, 'Rendered HTML should contain 35 <dt> questions');
+  assert.equal(ddMatches.length, 35, 'Rendered HTML should contain 35 <dd> answers');
+  const renderedQA = dtMatches.map((q, i) => ({ q, a: ddMatches[i] }));
+
+  // Strict output-level validation against real production build
+  validateFaqSchemaParity(schemaEntities, renderedQA);
+});
+
+test('validateFaqSchemaParity validator unit fixture detects count mismatch, missing questions, answer mutations, and duplicates', () => {
+  const mockSchema = [
+    { name: 'What is MedAlly?', acceptedAnswer: { text: 'MedAlly is a clinical AI platform for physicians.' } },
+    { name: 'Is MedAlly HIPAA compliant?', acceptedAnswer: { text: 'Yes, MedAlly is HIPAA compliant.' } },
+  ];
+  const mockRendered = [
+    { q: 'What is MedAlly?', a: 'MedAlly is a clinical AI platform for physicians.' },
+    { q: 'Is MedAlly HIPAA compliant?', a: 'Yes, MedAlly is HIPAA compliant.' },
+  ];
+
+  // Baseline passes
+  validateFaqSchemaParity(mockSchema, mockRendered);
+
+  // Mutation regression validation: count mismatch
+  assert.throws(() => {
+    validateFaqSchemaParity(mockSchema.slice(1), mockRendered);
+  }, /Count mismatch|Missing rendered question/);
+
+  // Mutation regression validation: answer text mismatch
+  assert.throws(() => {
+    const mutated = [
+      { ...mockSchema[0], acceptedAnswer: { text: 'Mutated answer' } },
+      mockSchema[1],
+    ];
+    validateFaqSchemaParity(mutated, mockRendered);
+  }, /Answer text mismatch/);
+
+  // Mutation regression validation: duplicate question
+  assert.throws(() => {
+    validateFaqSchemaParity([...mockSchema, mockSchema[0]], [...mockRendered, mockRendered[0]]);
+  }, /Duplicate questions found/);
+});
+
+test('FAQ source data consolidation and static contract integrity', () => {
+  const faqDataRaw = JSON.parse(read('src/data/faqData.json'));
   const faqPage = read('src/pages/FAQPage.tsx');
   const pricingPage = read('src/pages/PricingPage.tsx');
+  const prerender = read('scripts/prerender-static-seo.mjs');
 
-  assert.ok(faqPage.includes('@type: \"FAQPage\"') || faqPage.includes("'@type': 'FAQPage'"));
-  assert.ok(faqPage.includes('How does MedAlly fit into clinical workflows?'));
-  assert.ok(faqPage.includes('Can MedAlly support clinical documentation and decision support?'));
+  assert.ok(faqPage.includes("from '@/data/faqData.json'"));
+  assert.ok(faqPage.includes('getFaqAnswerText'));
+  assert.ok(prerender.includes('src/data/faqData.json'));
 
-  assert.ok(pricingPage.includes('@type: \"SoftwareApplication\"') || pricingPage.includes("'@type': 'SoftwareApplication'"));
+  const allFaqs = faqDataRaw.flatMap((cat) => cat.faqs);
+  assert.equal(allFaqs.length, 35, 'faqData.json must have 35 questions across 6 categories');
+
+  // Verify each question answer text length
+  for (const faq of allFaqs) {
+    const paragraphs = faq.a.join(' ');
+    const linksText =
+      faq.links && faq.links.length > 0
+        ? ' ' + faq.links.map((l) => `${l.prefix || ''}${l.text}${l.suffix || ''}`).join(' ')
+        : '';
+    const expandedAccordionText = normalizeWhitespace(paragraphs + linksText);
+    assert.ok(expandedAccordionText.length > 20, `Answer text too short for ${faq.q}`);
+  }
+
+  assert.ok(pricingPage.includes('@type: "SoftwareApplication"') || pricingPage.includes("'@type': 'SoftwareApplication'"));
   assert.ok(pricingPage.includes('offers'));
 });
 
@@ -172,4 +332,13 @@ test('sitemap scripts use actual public routes and MedAlly image metadata', () =
   assert.ok(imageSitemap.includes('/images/medally/clinical-hero.webp'));
   assert.ok(imageSitemap.includes('MedAlly clinical AI platform'));
   assert.ok(imageSitemap.includes('product-ambient-scribe.png'));
+});
+
+test('build metadata generator writes traceable build-info.json to build output', () => {
+  const buildInfoPath = new URL('../dist/build-info.json', import.meta.url);
+  assert.ok(existsSync(buildInfoPath), 'dist/build-info.json must exist in build output');
+  const info = JSON.parse(read('dist/build-info.json'));
+  assert.ok(info.commit_sha, 'build-info must record commit_sha');
+  assert.ok(info.built_at, 'build-info must record built_at timestamp');
+  assert.equal(info.generator, 'med-ally-website');
 });

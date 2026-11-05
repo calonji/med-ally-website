@@ -7,6 +7,14 @@
   "public": true,
   "rewrites": [
     {
+      "source": "/ai-medical-scribe",
+      "destination": "/ai-medical-scribe/index.html"
+    },
+    {
+      "source": "/clinical-workflow-intelligence",
+      "destination": "/how-it-works/index.html"
+    },
+    {
       "source": "/features",
       "destination": "/features/index.html"
     },

@@ -149,6 +149,11 @@ a {
 }
 
 a:hover {
+  color: hsl(var(--teal-primary));
+  opacity: 0.9;
+}
+
+.dark a:hover {
   color: hsl(var(--accent));
   opacity: 0.9;
 }
@@ -263,9 +268,9 @@ a:hover {
     transition: background-color 0.3s ease, border-color 0.3s ease;
   }
 
-  .medally-dark-page [class*='bg-gradient-to-br'],
-  .medally-dark-page [class*='bg-gradient-to-r'],
-  .medally-dark-page [class*='bg-gradient-to-b'] {
+  .medally-dark-page [class*='bg-gradient-to-br']:not(header):not(header *):not(button):not(button *):not(a):not(a *),
+  .medally-dark-page [class*='bg-gradient-to-r']:not(header):not(header *):not(button):not(button *):not(a):not(a *),
+  .medally-dark-page [class*='bg-gradient-to-b']:not(header):not(header *):not(button):not(button *):not(a):not(a *) {
     --tw-gradient-from: hsla(var(--teal-primary) / calc(var(--glow-intensity) * 0.6)) var(--tw-gradient-from-position) !important;
     --tw-gradient-via: hsla(var(--background) / 0.4) var(--tw-gradient-via-position) !important;
     --tw-gradient-to: hsla(var(--purple-accent) / calc(var(--glow-intensity) * 0.8)) var(--tw-gradient-to-position) !important;
@@ -625,5 +630,85 @@ section {
   }
 }
 
+/* Light theme: ensure white/light background buttons turn text to black on hover */
+html:not(.dark) a[class*='border-border']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) button[class*='border-border']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) a[class*='bg-muted']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) button[class*='bg-muted']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) a[class*='bg-white']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) button[class*='bg-white']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) a[class*='bg-card']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) button[class*='bg-card']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) a[class*='bg-background']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) button[class*='bg-background']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) a[class*='border-input']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover,
+html:not(.dark) button[class*='border-input']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover {
+  color: #000000 !important;
+}
 
-/* Clean space at end of file */
+html:not(.dark) a[class*='border-border']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) button[class*='border-border']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) a[class*='bg-muted']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) button[class*='bg-muted']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) a[class*='bg-white']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) button[class*='bg-white']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) a[class*='bg-card']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) button[class*='bg-card']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) a[class*='bg-background']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) button[class*='bg-background']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) a[class*='border-input']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover *,
+html:not(.dark) button[class*='border-input']:not([class*='bg-foreground']):not([class*='bg-gradient']):not([class*='hover:bg-black']):hover * {
+  color: #000000 !important;
+}
+
+/* Ensure buttons with black hover background turn text to white on hover in light theme */
+html:not(.dark) a[class*='hover:bg-black']:hover,
+html:not(.dark) button[class*='hover:bg-black']:hover,
+html:not(.dark) a[class*='hover:bg-black']:hover *,
+html:not(.dark) button[class*='hover:bg-black']:hover * {
+  color: #ffffff !important;
+}
+
+/* =========================================================================
+   Smooth Auto-Rotating Marquee Utilities
+   ========================================================================= */
+@keyframes marquee-horizontal {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(-50%, 0, 0);
+  }
+}
+
+.animate-marquee-horizontal {
+  display: flex;
+  width: max-content;
+  animation: marquee-horizontal 32s linear infinite;
+  will-change: transform;
+}
+
+.animate-marquee-horizontal:hover,
+.marquee-paused {
+  animation-play-state: paused !important;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee-horizontal {
+    animation-duration: 0s;
+    animation-play-state: paused;
+  }
+}
+
+/* =========================================================================
+   Hide Scrollbar Utility
+   ========================================================================= */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+

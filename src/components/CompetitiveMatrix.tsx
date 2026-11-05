@@ -24,34 +24,34 @@ const items: ComparisonItem[] = [
     medally: { has: true, label: 'Smart Voice Isolation & Noise Suppression', pill: 'Advanced' }
   },
   {
-    feature: 'Multi-Agent Fleet Orchestration',
-    description: 'Coordinated sub-nodes working in parallel on different clinical contexts.',
+    feature: 'Multi-Module Workflow Orchestration',
+    description: 'Coordinated modules working in parallel across documentation and encounter context.',
     scribe: { has: false, label: 'Single LLM prompt loop' },
-    medally: { has: true, label: '16 Specialized Autonomous Agents', pill: 'Core USP' }
+    medally: { has: true, label: '16 Specialized Documentation & Workflow Modules', pill: 'Modular Flow' }
   },
   {
     feature: 'Differential Diagnostic Synthesis',
-    description: 'Analyzing dialogue context against real-world databases to surface likely conditions.',
+    description: 'Analyzing dialogue context against clinical reference patterns to surface reviewable support.',
     scribe: { has: false, label: 'Not Available' },
-    medally: { has: true, label: 'Predictive Diff Engine (93% precision)' }
+    medally: { has: true, label: 'Predictive Differential Support (Physician Evaluated)' }
   },
   {
     feature: 'EHR Mapping & Verification',
     description: 'Direct parsing of unstructured records into push-ready chart structures.',
     scribe: { has: 'partial', label: 'Basic Text Copier' },
-    medally: { has: true, label: 'Deep Structure & Logical Field Alignment', pill: 'Native Sync' }
+    medally: { has: true, label: 'Deep Structure & Logical Field Alignment', pill: 'EHR Handoff' }
   },
   {
     feature: 'CPT / ICD-10 Billing Code Mapping',
-    description: 'Generating high-precision revenue maps based directly on encounter proof.',
+    description: 'Generating draft coding suggestions based directly on encounter documentation.',
     scribe: { has: false, label: 'No revenue capabilities' },
-    medally: { has: true, label: 'MedAlly Codex (99.7% precision)' }
+    medally: { has: true, label: 'MedAlly Codex Billing Support Context' }
   },
   {
     feature: 'Continuous Safety Screening',
     description: 'Validating pharmaceutical scripts against active longitudinal patient records.',
     scribe: { has: false, label: 'No safe guards' },
-    medally: { has: true, label: 'Autonomous Contraindication Validation', pill: 'Clinician Led' }
+    medally: { has: true, label: 'Safety Screening & Contraindication Sentry', pill: 'Clinician Led' }
   }
 ];
 
@@ -100,7 +100,7 @@ const CompetitiveMatrix: FC = () => {
                   <Sparkles className="w-4 h-4 text-[#36b7b5]" />
                   <span className="font-bold text-lg text-foreground tracking-tight">MedAlly Command</span>
                 </div>
-                <span className="text-[10px] font-mono font-bold uppercase text-teal-600 dark:text-teal-400">Multi-Agent Autonomous Layer</span>
+                <span className="text-[10px] font-mono font-bold uppercase text-teal-600 dark:text-teal-400">Multi-Module Clinical AI Layer</span>
               </div>
             </div>
 

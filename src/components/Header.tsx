@@ -137,7 +137,7 @@ const Header: FC = () => {
               href="https://www.calonji.com/contact"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-10 items-center justify-center rounded-full border border-border bg-muted/40 px-5 text-sm font-semibold text-foreground transition hover:bg-muted hover:scale-[1.02] active:scale-95"
+              className="inline-flex h-10 items-center justify-center rounded-full border border-border bg-muted/40 px-5 text-sm font-semibold text-muted-foreground transition hover:bg-muted/40 hover:!text-white hover:scale-[1.02] active:scale-95"
             >
               Demo
             </a>
@@ -145,7 +145,7 @@ const Header: FC = () => {
               href="https://app.medally.ai/"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex h-10 items-center justify-center rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] px-5 text-sm font-bold text-slate-950 dark:text-white shadow-md shadow-teal-500/10 hover:shadow-teal-500/25 transition hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
+              className="inline-flex h-10 items-center justify-center rounded-full bg-gradient-to-r from-[#36b7b5] to-[#2da19f] px-5 text-sm font-bold text-slate-950 hover:text-slate-950 dark:text-white dark:hover:text-white shadow-md shadow-teal-500/10 hover:shadow-teal-500/25 transition hover:-translate-y-0.5 hover:scale-[1.02] active:scale-95"
             >
               Join now
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -168,7 +168,7 @@ const Header: FC = () => {
             </Button>
             <Button
               variant="ghost"
-              className="h-10 rounded-full px-4 border border-border bg-muted/40 text-foreground hover:bg-muted"
+              className="h-10 rounded-full px-4 border border-border bg-muted/40 text-foreground dark:text-white hover:bg-muted"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -210,7 +210,7 @@ const Header: FC = () => {
                 href="https://app.medally.ai/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex h-12 w-full items-center justify-center rounded-2xl bg-foreground text-background font-bold shadow-md hover:opacity-90 transition"
+                className="inline-flex h-12 w-full items-center justify-center rounded-2xl bg-gradient-to-r from-[#36b7b5] to-[#2da19f] text-slate-950 hover:text-slate-950 dark:text-white dark:hover:text-white font-bold shadow-md shadow-teal-500/10 hover:shadow-teal-500/25 transition hover:scale-[1.02] active:scale-95"
               >
                 Join now
               </a>

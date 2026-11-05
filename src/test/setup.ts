@@ -1,10 +1,8 @@
-import '@testing-library/jest-dom';
 import { cleanup } from '@testing-library/react';
 import { afterEach, beforeAll, vi } from 'vitest';
 
 beforeAll(() => {
   global.IntersectionObserver = class IntersectionObserver {
-    constructor() {}
     observe() { return null; }
     unobserve() { return null; }
     disconnect() { return null; }
@@ -20,4 +18,4 @@ beforeAll(() => {
 afterEach(() => {
   cleanup();
   vi.clearAllMocks();
-}); 
+});
